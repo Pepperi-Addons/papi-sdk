@@ -1,6 +1,9 @@
 import Endpoint from "./endpoint";
 import UserDefinedTableMetaData from "./entities/user-defined-tables-meta-data";
 import UserDefinedTableRow from "./entities/user-defined-table";
+import {AddonEndpoint} from './endpoints/addons';
+
+
 
 
 type HttpClientRequest = {
@@ -18,6 +21,8 @@ interface PapiClientOptions {
 };
 
 
+
+
 export class PapiClient {
     
     metaData = {
@@ -25,7 +30,9 @@ export class PapiClient {
     };
 
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
-
+    addons = new AddonEndpoint(this);
+  
+    
     constructor(
         private httpClient: HttpClient, 
         private options: PapiClientOptions
