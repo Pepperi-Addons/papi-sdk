@@ -14,13 +14,13 @@ interface FindOptions {
 
 export default class Endpoint<T> {
     constructor(
-        private service: PapiClient,
-        private endpoint: string
+        protected service: PapiClient,
+        protected endpoint: string
     ) {
 
     }
 
-    async find(options: FindOptions = {}) : Promise<[T]> {
+    async find(options: FindOptions = {}) : Promise<T[]> {
         let url = this.endpoint;
         let query = this.encodeQueryParams(options);
         url = query ? url + "?" + query : url;
