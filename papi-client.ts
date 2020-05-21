@@ -2,21 +2,13 @@ import Endpoint from "./endpoint";
 import { AddonEndpoint } from "./endpoints";
 import { UserDefinedTableMetaData, UserDefinedTableRow } from "./entities" ;
 import { performance } from 'perf_hooks';
+import fetch, { FetchError } from 'node-fetch'
 
 type HttpMethod =  'POST' | 'GET' | 'PUT' | 'DELETE';
 
-type HttpClientRequest = {
-    uri: string,
-    method: HttpMethod,
-    headers: any,
-    body: any | undefined, 
-    json: boolean
-};
-
-type HttpClient = (req: HttpClientRequest) => Promise<any>;
 interface PapiClientOptions {
     token: string, 
-    papiBaseURL: string
+    baseURL: string
 };
 
 export class PapiClient {
@@ -30,7 +22,6 @@ export class PapiClient {
   
     
     constructor(
-        private httpClient: HttpClient, 
         private options: PapiClientOptions
         ) {
         
@@ -44,24 +35,26 @@ export class PapiClient {
         return this.apiCall('POST', url, body);
     }
 
-    private async apiCall(method: HttpMethod, url: string, body: any = null) {
+    private async apiCall(method: HttpMethod, url: string, body: any = undefined) {
         
-        const options = {
-            uri: this.options.papiBaseURL + url,
+        const fullURL = this.options.baseURL + url;
+        const options: any = {
             method: method,
             headers: {
                 authorization: 'Bearer ' + this.options.token
-            },
-            json: true,
-            body: body
+            }
         };
         
+        if (body) {
+            options.body = body;
+        }
+
         const t0 = performance.now();
-        const res = await this.httpClient(options);
+        const res = await fetch(fullURL, options);
         const t1 = performance.now();
 
-        console.log(method, options.uri, 'took', (t1 - t0).toFixed(2), 'milliseconds');
+        console.log(method, fullURL, 'took', (t1 - t0).toFixed(2), 'milliseconds');
 
-        return res;
+        return await res.json();
     }
 }

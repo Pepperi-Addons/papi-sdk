@@ -12,9 +12,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  },
   "devDependencies": {
     "@types/node": "^14.0.4",
+    "@types/node-fetch": "^2.5.7",
     "typescript": "^3.9.3"
   },
   "files": [
