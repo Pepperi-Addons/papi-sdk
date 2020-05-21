@@ -17,8 +17,8 @@ import { PapiClient } from '@pepperi-addons/papi-sdk'
 export async function foo(client: Client, request: Request) {
   
     // we need to supply the PapiClient with an HttpClient, the papi BaseURL and an access token
-    const api = new PapiClient(client.Module.rp, {
-        papiBaseURL: client.BaseURL, 
+    const api = new PapiClient({
+        baseURL: client.BaseURL, 
         token: client.OAuthAccessToken
     });
 
