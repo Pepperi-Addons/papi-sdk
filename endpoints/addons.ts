@@ -1,6 +1,6 @@
 import Endpoint from "../endpoint"
 import { Addon, InstalledAddon } from "../entities"
-import { PapiClient } from "../index"
+import { PapiClient } from "../papi-client";
 
 export class AddonEndpoint extends Endpoint<Addon> {
     constructor(service: PapiClient) { 

@@ -24,8 +24,6 @@ export default class Endpoint<T> {
         let url = this.endpoint;
         let query = this.encodeQueryParams(options);
         url = query ? url + "?" + query : url;
-        console.log(url);
-
         return this.service.get(url);
     }
 
@@ -34,9 +32,11 @@ export default class Endpoint<T> {
     }
 
     private encodeQueryParams(params: any) {
-        const ret = [];
-        for (let d in params)
-            ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(params[d]));
+        const ret: string[] = [];
+
+        Object.keys(params).forEach(key => {
+            ret.push(key + '=' + encodeURIComponent(params[key]));
+        });
 
         return ret.join('&');
     }
