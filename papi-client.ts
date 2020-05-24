@@ -2,7 +2,7 @@ import Endpoint from "./endpoint";
 import { AddonEndpoint } from "./endpoints";
 import { UserDefinedTableMetaData, UserDefinedTableRow } from "./entities" ;
 import { performance } from 'perf_hooks';
-import fetch, { FetchError } from 'node-fetch'
+import fetch from 'node-fetch'
 
 type HttpMethod =  'POST' | 'GET' | 'PUT' | 'DELETE';
 
