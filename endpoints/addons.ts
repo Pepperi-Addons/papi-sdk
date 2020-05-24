@@ -1,10 +1,10 @@
 import Endpoint from "../endpoint"
-import { Addon, InstalledAddon } from "../entities/addons"
+import { Addon, InstalledAddon } from "../entities"
 import { PapiClient } from "../index"
 
 export class AddonEndpoint extends Endpoint<Addon> {
     constructor(service: PapiClient) { 
-        super(service, 'addons');
+        super(service, '/addons');
     }
 
     installedAddons = new Endpoint<InstalledAddon>(this.service, this.endpoint + '/installed_addons')

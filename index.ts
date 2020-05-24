@@ -5,7 +5,6 @@ import {AddonEndpoint} from './endpoints/addons';
 
 
 
-
 type HttpClientRequest = {
     uri: string,
     method: 'POST' | 'GET' | 'PUT' | 'DELETE',
@@ -68,3 +67,5 @@ export class PapiClient {
         return res;
     }
 }
+
+export * from './entities'
