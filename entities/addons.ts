@@ -25,12 +25,12 @@ export interface AddonVersion {
     Hidden?: boolean;
     CreationDateTime?: Date;
     ModificationDateTime?: Date;
-    Version?: string;
+    Version: string;
     Description?: string;
     Available?:boolean;
     Phased?: boolean;
     StartPhasedDateTime?:Date;
-    AddonUUID?: string;
+    AddonUUID: string;
     PhasedFunction?:string;
 }
 

@@ -31,16 +31,94 @@ class InstalledAddonsEnpoint extends Endpoint<InstalledAddon> {
     }
 }
 
+interface AsyncApiQueryParameters  {
+    CallbackUUID?:string,
+    NumberOfTries?:number
+}
+    
+class AddonApiEndpoint {
 
-class AddonExecuteNowEnpoint {
+    private options = {
+        uuid: '',
+        file: '',
+        func: '',
+        version: '',
+        sync: true,
+        queryString: ''
+    }
+    constructor (private service: PapiClient) {
+    }
 
-    constructor(private service: PapiClient) { }
+    uuid(uuid:string) {
+        this.options.uuid = uuid;
+        return this;
+    }
+    version(version:string) {
+        this.options.version = version;
+        return this;
+    }
+    file(fileName:string) {
+        this.options.file = fileName;
+        return this;
+    }
+    func(functionName:string) {
+        this.options.func = functionName;
+        return this;
+    }
+    sync() {
+        this.options.sync = true;
+        return this;
+    }
+    async() {
+        this.options.sync = false;
+        return this;
+    }
+    async get(asyncApiQueryParameters:AsyncApiQueryParameters) {
 
-    async PostSyncWithVersion(AddonUUID:string,Version:string, FileName:string,  FunctionName:string, Debug:string="false", Body: any= undefined): Promise<AddonAPISyncResult> {
-           return await this.service.post(`/addons/api/${AddonUUID}/version/${Version}/${FileName}/${FunctionName}?debug=${Debug}`,Body);
-   }
+        var versionPart='';
+        if(this.options.version){
+            versionPart = `/version/${this.options.version}`;
+        }
+
+        if(this.options.sync){
+            return await this.service.get(`/addons/api/${this.options.uuid}${versionPart}/${this.options.file}/${this.options.func}`);
+        }
+        else{
+
+            var queryString = this.getAsyncQueryString(asyncApiQueryParameters);
+            return await this.service.get(`/addons/api/async/${this.options.uuid}${versionPart}/${this.options.file}/${this.options.func}?${queryString}`);
+        }
+    }
+    async post(asyncApiQueryParameters:AsyncApiQueryParameters, body:any=undefined) {
+
+        var versionPart='';
+        if(this.options.version){
+            versionPart = `/version/${this.options.version}`;
+        }
+
+        if(this.options.sync){
+            return await this.service.post(`/addons/api/${this.options.uuid}${versionPart}/${this.options.file}/${this.options.func}`,body);
+        }
+        else{
+  
+            var queryString = this.getAsyncQueryString(asyncApiQueryParameters);
+            return await this.service.post(`/addons/api/async/${this.options.uuid}${versionPart}/${this.options.file}/${this.options.func}?${queryString}`,body);
+        }
+    }
+
+    private getAsyncQueryString(asyncApiQueryParameters : AsyncApiQueryParameters){
+        var numberOfTries = asyncApiQueryParameters.NumberOfTries? asyncApiQueryParameters.NumberOfTries: 1;
+        var queryString =`retry=${numberOfTries}`;
+            if(asyncApiQueryParameters.CallbackUUID)  {
+                queryString = queryString+`&callback=${asyncApiQueryParameters.CallbackUUID}`;
+            }
+        return queryString;
+    }
 
 }
+
+
+
 class AddonVersionEndpoint extends Endpoint<AddonVersion> {
     constructor(service: PapiClient) { 
     super(service, '/addons/versions');
@@ -53,6 +131,6 @@ export class AddonEndpoint extends Endpoint<Addon> {
  super(service, '/addons');
  }
  installedAddons = new InstalledAddonsEnpoint(this.service)
- addonsVersions = new AddonVersionEndpoint(this.service)
- addonExecuteNow = new AddonExecuteNowEnpoint(this.service)
+ versions = new AddonVersionEndpoint(this.service)
+ api = new AddonApiEndpoint(this.service)
 }

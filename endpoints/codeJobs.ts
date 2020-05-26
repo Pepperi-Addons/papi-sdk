@@ -15,7 +15,7 @@ export class CodeJobsEndpoint extends Endpoint<CodeJob> {
     constructor(service: PapiClient) { 
     super(service, '/code_jobs');
     }
-    codeJobUUID(uuid: string) {
+    uuid(uuid: string) {
         return new CodeJobEndpoint(this.service, uuid);
     }
 }

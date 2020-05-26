@@ -1,6 +1,6 @@
 export interface CodeJob {
     UUID?:string;
-    CodeJobName?:string;
+    CodeJobName:string;
     Type?:string;
     Description?:string;
     Owner?:string;

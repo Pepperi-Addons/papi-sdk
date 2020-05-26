@@ -14,13 +14,14 @@ interface PapiClientOptions {
 export class PapiClient {
     
     metaData = {
-        userDefinedTables: new Endpoint<UserDefinedTableMetaData>(this, '/meta_data/user_defined_tables')
+        userDefinedTables: new Endpoint<UserDefinedTableMetaData>(this, '/meta_data/user_defined_tables'),
+        flags : new DistributorFlagsEndpoint(this)
+
     };
 
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
     addons = new AddonEndpoint(this);
     codeJobs = new CodeJobsEndpoint(this);
-    distributorFlags = new DistributorFlagsEndpoint(this);
   
     
     constructor(
