@@ -48,7 +48,7 @@ export class PapiClient {
         };
         
         if (body) {
-            options.body = body;
+            options.body = JSON.stringify(body);
         }
 
         const t0 = performance.now();
