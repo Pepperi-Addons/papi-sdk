@@ -1,5 +1,5 @@
 import Endpoint from "./endpoint";
-import { AddonEndpoint } from "./endpoints";
+import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint } from "./endpoints";
 import { UserDefinedTableMetaData, UserDefinedTableRow } from "./entities" ;
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch'
@@ -14,11 +14,14 @@ interface PapiClientOptions {
 export class PapiClient {
     
     metaData = {
-        userDefinedTables: new Endpoint<UserDefinedTableMetaData>(this, '/meta_data/user_defined_tables')
+        userDefinedTables: new Endpoint<UserDefinedTableMetaData>(this, '/meta_data/user_defined_tables'),
+        flags : new DistributorFlagsEndpoint(this)
+
     };
 
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
     addons = new AddonEndpoint(this);
+    codeJobs = new CodeJobsEndpoint(this);
   
     
     constructor(
@@ -31,7 +34,7 @@ export class PapiClient {
         return this.apiCall('GET', url);
     }
 
-    async post(url: string, body: any): Promise<any> {
+    async post(url: string, body: any = undefined): Promise<any> {
         return this.apiCall('POST', url, body);
     }
 

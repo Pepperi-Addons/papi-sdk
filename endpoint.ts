@@ -22,7 +22,7 @@ export default class Endpoint<T> {
 
     async find(options: FindOptions = {}) : Promise<T[]> {
         let url = this.endpoint;
-        let query = this.encodeQueryParams(options);
+        let query = Endpoint.encodeQueryParams(options);
         url = query ? url + "?" + query : url;
         return this.service.get(url);
     }
@@ -31,7 +31,7 @@ export default class Endpoint<T> {
         return this.service.post(this.endpoint, object);
     }
 
-    private encodeQueryParams(params: any) {
+    static encodeQueryParams(params: any) {
         const ret: string[] = [];
 
         Object.keys(params).forEach(key => {

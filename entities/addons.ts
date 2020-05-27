@@ -20,3 +20,32 @@ export interface InstalledAddon {
 
 }
 
+export interface AddonVersion {
+    UUID?: string;
+    Hidden?: boolean;
+    CreationDateTime?: Date;
+    ModificationDateTime?: Date;
+    Version: string;
+    Description?: string;
+    Available?:boolean;
+    Phased?: boolean;
+    StartPhasedDateTime?:Date;
+    AddonUUID: string;
+    PhasedFunction?:string;
+}
+
+export interface AddonSyncDeploymentResult {
+    Status?: boolean;
+    ExecutionUUID?:string;
+    URI?:string;
+}
+
+export interface AddonAPIAsyncResult {
+    ExecutionUUID?:string;
+    URI?:string;
+}
+
+export interface AddonAPISyncResult {
+    success?:boolean;
+    errorMessage?:string;
+}
