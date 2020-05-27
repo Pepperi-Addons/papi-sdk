@@ -3,21 +3,21 @@ import { Addon, InstalledAddon, AddonVersion,AddonSyncDeploymentResult,AddonAPIA
 import { PapiClient } from "../papi-client";
 
 class InstalledAddonEnpoint {
- constructor(private service: PapiClient, private uuid: string) { 
+ constructor(private service: PapiClient, private addonUUID: string) { 
  
  }
- async install(version:string): Promise<AddonSyncDeploymentResult> {
+ async install(version:string=''): Promise<AddonSyncDeploymentResult> {
     if(version)
-        return await this.service.post(`/addons/installed_addons/${this.uuid}/install/${version}`);
+        return await this.service.post(`/addons/installed_addons/${this.addonUUID}/install/${version}`);
     else
-        return await this.service.post(`/addons/installed_addons/${this.uuid}/install`); 
+        return await this.service.post(`/addons/installed_addons/${this.addonUUID}/install`); 
 }
 
- async upgrade(version:string): Promise<AddonAPIAsyncResult> {
+ async upgrade(version:string=''): Promise<AddonAPIAsyncResult> {
      if(version)
-        return await this.service.post(`/addons/installed_addons/${this.uuid}/upgrade/${version}`);
+        return await this.service.post(`/addons/installed_addons/${this.addonUUID}/upgrade/${version}`);
     else
-        return await this.service.post(`/addons/installed_addons/${this.uuid}/upgrade`);
+        return await this.service.post(`/addons/installed_addons/${this.addonUUID}/upgrade`);
 
     }
 }
@@ -65,7 +65,7 @@ class AddonApiEndpoint {
         this.options.sync = false;
         return this;
     }
-    
+
     async get(params: any = {}) {
 
         var url=  this.GetAddonApiUrl(params);
@@ -86,7 +86,7 @@ class AddonApiEndpoint {
             asyncPart='/async';
         }
         var url='/addons/api' + asyncPart + `/${this.options.uuid}/${this.options.file}/${this.options.func}`;
-        var queryString = new Endpoint<object>(this.service,"").encodeQueryParams(params);
+        var queryString = Endpoint.encodeQueryParams(params);
         return queryString? url +'?'+ queryString : url;
     }
 
