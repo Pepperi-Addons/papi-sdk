@@ -31,10 +31,6 @@ class InstalledAddonsEnpoint extends Endpoint<InstalledAddon> {
     }
 }
 
-interface AsyncApiQueryParameters  {
-    CallbackUUID?:string,
-    NumberOfTries?:number
-}
     
 class AddonApiEndpoint {
 
@@ -53,10 +49,6 @@ class AddonApiEndpoint {
         this.options.uuid = uuid;
         return this;
     }
-    version(version:string) {
-        this.options.version = version;
-        return this;
-    }
     file(fileName:string) {
         this.options.file = fileName;
         return this;
@@ -73,46 +65,29 @@ class AddonApiEndpoint {
         this.options.sync = false;
         return this;
     }
-    async get(asyncApiQueryParameters:AsyncApiQueryParameters) {
+    
+    async get(params: any = {}) {
 
-        var versionPart='';
-        if(this.options.version){
-            versionPart = `/version/${this.options.version}`;
-        }
+        var url=  this.GetAddonApiUrl(params);
+        return await this.service.get(url);
 
-        if(this.options.sync){
-            return await this.service.get(`/addons/api/${this.options.uuid}${versionPart}/${this.options.file}/${this.options.func}`);
-        }
-        else{
-
-            var queryString = this.getAsyncQueryString(asyncApiQueryParameters);
-            return await this.service.get(`/addons/api/async/${this.options.uuid}${versionPart}/${this.options.file}/${this.options.func}?${queryString}`);
-        }
     }
-    async post(asyncApiQueryParameters:AsyncApiQueryParameters, body:any=undefined) {
+    async post(params: any = {},body: any = undefined) {
 
-        var versionPart='';
-        if(this.options.version){
-            versionPart = `/version/${this.options.version}`;
-        }
+        var url=  this.GetAddonApiUrl(params);
+        return await this.service.post(url,body);
 
-        if(this.options.sync){
-            return await this.service.post(`/addons/api/${this.options.uuid}${versionPart}/${this.options.file}/${this.options.func}`,body);
-        }
-        else{
-  
-            var queryString = this.getAsyncQueryString(asyncApiQueryParameters);
-            return await this.service.post(`/addons/api/async/${this.options.uuid}${versionPart}/${this.options.file}/${this.options.func}?${queryString}`,body);
-        }
     }
 
-    private getAsyncQueryString(asyncApiQueryParameters : AsyncApiQueryParameters){
-        var numberOfTries = asyncApiQueryParameters.NumberOfTries? asyncApiQueryParameters.NumberOfTries: 1;
-        var queryString =`retry=${numberOfTries}`;
-            if(asyncApiQueryParameters.CallbackUUID)  {
-                queryString = queryString+`&callback=${asyncApiQueryParameters.CallbackUUID}`;
-            }
-        return queryString;
+    private GetAddonApiUrl(params: any = {}){
+
+        var asyncPart = '';
+        if(!this.options.sync){
+            asyncPart='/async';
+        }
+        var url='/addons/api' + asyncPart + `/${this.options.uuid}/${this.options.file}/${this.options.func}`;
+        var queryString = new Endpoint<object>(this.service,"").encodeQueryParams(params);
+        return queryString? url +'?'+ queryString : url;
     }
 
 }

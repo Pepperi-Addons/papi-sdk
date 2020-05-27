@@ -31,7 +31,7 @@ export default class Endpoint<T> {
         return this.service.post(this.endpoint, object);
     }
 
-    private encodeQueryParams(params: any) {
+    encodeQueryParams(params: any) {
         const ret: string[] = [];
 
         Object.keys(params).forEach(key => {

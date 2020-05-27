@@ -6,7 +6,7 @@ import { PapiClient } from "../papi-client";
 class CodeJobEndpoint{
     constructor(private service: PapiClient, private uuid: string) { }
 
-    async find(includeDeleted:string='false'): Promise<CodeJob> {
+    async find(includeDeleted:boolean=false): Promise<CodeJob> {
       return await this.service.get(`/code_jobs/${this.uuid}?include_deleted=${includeDeleted}`);
    }
 }

@@ -6,7 +6,7 @@ export class DistributorFlagsEndpoint
 {
     constructor(private service: PapiClient) { }
 
-    async get(flagName:string): Promise<object> {
+    async name(flagName:string): Promise<object> {
         return await this.service.get(`/meta_data/flags/${flagName}`);
 
     }
