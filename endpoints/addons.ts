@@ -1,24 +1,32 @@
 import Endpoint from "../endpoint"
-import { Addon, InstalledAddon, AddonVersion,AddonSyncDeploymentResult,AddonAPIAsyncResult,AddonAPISyncResult } from "../entities"
+import { Addon, InstalledAddon, AddonVersion,AddonAPIAsyncResult,AddonAPISyncResult } from "../entities"
 import { PapiClient } from "../papi-client";
 
 class InstalledAddonEnpoint {
  constructor(private service: PapiClient, private addonUUID: string) { 
  
  }
- async install(version:string=''): Promise<AddonSyncDeploymentResult> {
+    async install(version:string=''): Promise<AddonAPIAsyncResult> {
     if(version)
         return await this.service.post(`/addons/installed_addons/${this.addonUUID}/install/${version}`);
     else
         return await this.service.post(`/addons/installed_addons/${this.addonUUID}/install`); 
-}
+    }
 
- async upgrade(version:string=''): Promise<AddonAPIAsyncResult> {
+    async uninstall(): Promise<AddonAPIAsyncResult> {
+        return await this.service.post(`/addons/installed_addons/${this.addonUUID}/uninstall`); 
+    }
+
+    async upgrade(version:string=''): Promise<AddonAPIAsyncResult> {
      if(version)
         return await this.service.post(`/addons/installed_addons/${this.addonUUID}/upgrade/${version}`);
     else
         return await this.service.post(`/addons/installed_addons/${this.addonUUID}/upgrade`);
 
+    }
+    
+    async downgrade(version:string): Promise<AddonAPIAsyncResult> {
+           return await this.service.post(`/addons/installed_addons/${this.addonUUID}/downgrade/${version}`);
     }
 }
 
