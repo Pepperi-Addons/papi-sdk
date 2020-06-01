@@ -34,11 +34,6 @@ export interface AddonVersion {
     PhasedFunction?:string;
 }
 
-export interface AddonSyncDeploymentResult {
-    Status?: boolean;
-    ExecutionUUID?:string;
-    URI?:string;
-}
 
 export interface AddonAPIAsyncResult {
     ExecutionUUID?:string;
