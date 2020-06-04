@@ -1,26 +1,26 @@
 {
-  "name": "@pepperi-addons/papi-sdk",
-  "version": "1.0.12",
-  "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "tsc",
-    "prepublishOnly": "npm version patch"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "node-fetch": "^2.6.0"
-  },
-  "devDependencies": {
-    "@types/node": "^14.0.4",
-    "@types/node-fetch": "^2.5.7",
-    "typescript": "^3.9.3"
-  },
-  "files": [
-    "dist/**"
-  ]
+    "name": "@pepperi-addons/papi-sdk",
+    "version": "1.0.13",
+    "description": "",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "tsc",
+        "prepublishOnly": "npm version patch"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "node-fetch": "^2.6.0"
+    },
+    "devDependencies": {
+        "@types/node": "^14.0.4",
+        "@types/node-fetch": "^2.5.7",
+        "typescript": "^3.9.3"
+    },
+    "files": [
+        "dist/**"
+    ]
 }
