@@ -1,5 +1,5 @@
 export interface Addon {
-    UUID: string;
+    UUID?: string;
     Name?: string;
     Description?: string;
     SystemData?: any;
