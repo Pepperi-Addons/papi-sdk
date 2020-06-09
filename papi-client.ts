@@ -3,6 +3,7 @@ import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint } from "./endp
 import { UserDefinedTableMetaData, UserDefinedTableRow } from "./entities" ;
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch'
+import { User } from "./entities/user";
 
 type HttpMethod =  'POST' | 'GET' | 'PUT' | 'DELETE';
 
@@ -22,7 +23,7 @@ export class PapiClient {
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
     addons = new AddonEndpoint(this);
     codeJobs = new CodeJobsEndpoint(this);
-  
+    users = new Endpoint<User>(this, '/users');
     
     constructor(
         private options: PapiClientOptions
