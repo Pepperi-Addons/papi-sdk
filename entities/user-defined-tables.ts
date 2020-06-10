@@ -1,7 +1,7 @@
 export interface UserDefinedTableRow {
     InternalID?: number,
     CreationDateTime?: string,
-    Hidden?: false,
+    Hidden?: boolean,
     MainKey: string,
     MapDataExternalID: string,
     ModificationDateTime?: string,
@@ -25,7 +25,7 @@ export interface UserDefinedTableMetaData {
         Dormant: boolean, 
         Volatile: false
     },
-    Hidden?: false,
+    Hidden?: boolean,
     Owner?: { 
         UUID: string
     }

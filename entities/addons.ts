@@ -1,10 +1,10 @@
 export interface Addon {
-        UUID?: string;
-        Name?: string;
-        Description?: string;
-        SystemData: any;
-        Hidden?: boolean;
-        Type?: number;
+    UUID?: string;
+    Name?: string;
+    Description?: string;
+    SystemData?: any;
+    Hidden?: boolean;
+    Type?: number;
 }
 
 export interface InstalledAddon {
@@ -14,10 +14,9 @@ export interface InstalledAddon {
     UUID?: string;
     Name?: string;
     Description?: string;
-    SystemData: any;
+    SystemData?: any;
     Hidden?: boolean;
     Type?: number;
-
 }
 
 export interface AddonVersion {
@@ -27,20 +26,19 @@ export interface AddonVersion {
     ModificationDateTime?: Date;
     Version: string;
     Description?: string;
-    Available?:boolean;
+    Available?: boolean;
     Phased?: boolean;
-    StartPhasedDateTime?:Date;
+    StartPhasedDateTime?: Date;
     AddonUUID: string;
-    PhasedFunction?:string;
+    PhasedFunction?: string;
 }
 
-
 export interface AddonAPIAsyncResult {
-    ExecutionUUID?:string;
-    URI?:string;
+    ExecutionUUID?: string;
+    URI?: string;
 }
 
 export interface AddonAPISyncResult {
-    success?:boolean;
-    errorMessage?:string;
+    success?: boolean;
+    errorMessage?: string;
 }
