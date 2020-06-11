@@ -1,5 +1,5 @@
 import Endpoint from "./endpoint";
-import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint } from "./endpoints";
+import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint,TypeEndpoint } from "./endpoints";
 import { UserDefinedTableMetaData, UserDefinedTableRow } from "./entities" ;
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch'
@@ -16,8 +16,8 @@ export class PapiClient {
     
     metaData = {
         userDefinedTables: new Endpoint<UserDefinedTableMetaData>(this, '/meta_data/user_defined_tables'),
-        flags : new DistributorFlagsEndpoint(this)
-
+        flags : new DistributorFlagsEndpoint(this),
+        type: new TypeEndpoint(this)
     };
 
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
