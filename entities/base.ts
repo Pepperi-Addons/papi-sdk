@@ -1,10 +1,10 @@
-interface NestedObjecData {
+interface NestedObjectData {
     InternalID?: number,
     UUID?: string,
     ExternalID?: string
 }
 
 export interface NestedObject {
-    Data?: NestedObjecData[],
+    Data?: NestedObjectData[],
     URI?: string
 }
