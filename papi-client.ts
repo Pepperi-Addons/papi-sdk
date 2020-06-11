@@ -1,22 +1,23 @@
 import Endpoint from "./endpoint";
-import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint } from "./endpoints";
-import { UserDefinedTableMetaData, UserDefinedTableRow } from "./entities" ;
+import { AddonEndpoint, CodeJobsEndpoint, DistributorFlagsEndpoint } from "./endpoints";
+import { UserDefinedTableMetaData, UserDefinedTableRow } from "./entities";
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch'
 import { User } from "./entities/user";
+import { FileStorage } from "./entities/fileStorage";
 
-type HttpMethod =  'POST' | 'GET' | 'PUT' | 'DELETE';
+type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
 interface PapiClientOptions {
-    token: string, 
+    token: string,
     baseURL: string
 };
 
 export class PapiClient {
-    
+
     metaData = {
         userDefinedTables: new Endpoint<UserDefinedTableMetaData>(this, '/meta_data/user_defined_tables'),
-        flags : new DistributorFlagsEndpoint(this)
+        flags: new DistributorFlagsEndpoint(this)
 
     };
 
@@ -24,11 +25,10 @@ export class PapiClient {
     addons = new AddonEndpoint(this);
     codeJobs = new CodeJobsEndpoint(this);
     users = new Endpoint<User>(this, '/users');
-    
+    fileStorage = new Endpoint<FileStorage>(this, '/file_storage');
+
     constructor(
-        private options: PapiClientOptions
-        ) {
-        
+        private options: PapiClientOptions) {
     }
 
     async get(url: string): Promise<any> {
@@ -40,7 +40,7 @@ export class PapiClient {
     }
 
     private async apiCall(method: HttpMethod, url: string, body: any = undefined) {
-        
+
         const fullURL = this.options.baseURL + url;
         const options: any = {
             method: method,
@@ -48,7 +48,7 @@ export class PapiClient {
                 authorization: 'Bearer ' + this.options.token
             }
         };
-        
+
         if (body) {
             options.body = JSON.stringify(body);
         }

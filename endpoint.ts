@@ -20,7 +20,7 @@ export default class Endpoint<T> {
 
     }
 
-    async find(options: FindOptions = {}) : Promise<T[]> {
+    async find(options: FindOptions = {}): Promise<T[]> {
         let url = this.endpoint;
         let query = Endpoint.encodeQueryParams(options);
         url = query ? url + "?" + query : url;
@@ -29,6 +29,13 @@ export default class Endpoint<T> {
 
     async upsert(object: T): Promise<T> {
         return this.service.post(this.endpoint, object);
+    }
+
+    async findById(id: string, options: FindOptions = {}): Promise<T[]> {
+        let url = this.endpoint;
+        let query = Endpoint.encodeQueryParams(options);
+        url = query ? url + "/" + id + "?" + query : url + "/" + id;
+        return this.service.get(url);
     }
 
     static encodeQueryParams(params: any) {
