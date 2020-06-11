@@ -1,3 +1,5 @@
+import { NestedObject } from "./base";
+
 export interface Account {
     InternalID?: number,
     UUID?:string,
@@ -33,5 +35,7 @@ export interface Account {
     ZipCode?: string,
     Parent?: string,
     PriceList?: string,
-    SpecialPriceList?: string
+    SpecialPriceList?: string,
+    Users?:NestedObject,
+    Catalogs?:NestedObject
 }

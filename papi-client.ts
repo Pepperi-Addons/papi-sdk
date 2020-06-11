@@ -1,7 +1,7 @@
 
 import Endpoint from "./endpoint";
 import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint } from "./endpoints";
-import { UserDefinedTableMetaData, UserDefinedTableRow, Activity, Account } from "./entities" ;
+import { UserDefinedTableMetaData, UserDefinedTableRow, Account, GeneralActivity, Transaction } from "./entities" ;
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch'
 import { User } from "./entities/user";
@@ -24,7 +24,9 @@ export class PapiClient {
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
     addons = new AddonEndpoint(this);
     codeJobs = new CodeJobsEndpoint(this);
-    activities = new Endpoint<Activity>(this, '/all_activities');
+    activities = new Endpoint<GeneralActivity>(this, '/activities');
+    transactions = new Endpoint<Transaction>(this, '/transactions');
+    allActivities = new Endpoint<GeneralActivity | Transaction>(this, '/all_activities');
     accounts = new Endpoint<Account>(this, '/accounts');
     users = new Endpoint<User>(this, '/users');
   

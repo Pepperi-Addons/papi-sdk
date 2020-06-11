@@ -1,4 +1,6 @@
-export interface Activity {
+import { NestedObject } from "./base";
+
+interface Activity {
     InternalID?: number,
     UUID?: string,
     ExternalID?: string,
@@ -8,6 +10,34 @@ export interface Activity {
     AdditionalAccountExternalID?: string,
     AgentExternalID?: string,
     Archive?: boolean,
+    CatalogExternalID?: string,
+    ContactPersonExternalID?: string,
+    CreationDateTime?: string,
+    CreatorExternalID?: string,
+    Hidden?: boolean,
+    ModificationDateTime?: string,
+    Status?: number,
+    StatusName?: string,
+    SubmissionGeoCodeLAT?: number,
+    SubmissionGeoCodeLNG?: number,
+    Type?: string
+    Account?: NestedObject,
+    Agent?:NestedObject,
+    ContactPerson?: NestedObject,
+    Creator: NestedObject,
+    [key: string]: any
+  }
+
+export interface GeneralActivity extends Activity {
+    CreationGeoCodeLAT?: number,
+    CreationGeoCodeLNG?: number,
+    PlannedDuration?: number,
+    PlannedEndTime?: string,
+    PlannedStartTime?: string,
+    Title?:string
+}
+
+export interface Transaction extends Activity {
     BillToCity?: string,
     BillToCountry?: string,
     BillToFax?: string,
@@ -16,22 +46,11 @@ export interface Activity {
     BillToState?: string,
     BillToStreet?: string,
     BillToZipCode?: string,
-    CatalogExternalID?: string,
-    ContactPersonExternalID?: string,
-    CreationDateTime?: string,
-    CreationGeoCodeLAT?: number,
-    CreationGeoCodeLNG?: number,
-    CreatorExternalID?: string,
     CurrencySymbol?: string,
     DeliveryDate?: string,
     DiscountPercentage?: number,
     GrandTotal?: number,
-    Hidden?: boolean,
     ItemsCount?: number,
-    ModificationDateTime?: string,
-    PlannedDuration?: number,
-    PlannedEndTime?: string,
-    PlannedStartTime?: string,
     QuantitiesTotal?: number,
     Remark?: string,
     ShipToCity?: string,
@@ -43,14 +62,13 @@ export interface Activity {
     ShipToState?: string,
     ShipToStreet?: string,
     ShipToZipCode?: string,
-    Status?: number,
-    StatusName?: string,
-    SubmissionGeoCodeLAT?: number,
-    SubmissionGeoCodeLNG?: number,
+    Signature?: {},
     SubTotal?: number,
     SubTotalAfterItemsDiscount?: number,
     TaxPercentage?: number,
-    Title?: string,
-    Type?: string
+    AdditionalAccount?: NestedObject,
+    Catalog?: NestedObject,
+    OriginAccount?: NestedObject,
+    TransactionLines?: NestedObject
 }
 
