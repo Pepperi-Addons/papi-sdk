@@ -5,6 +5,7 @@ import { UserDefinedTableMetaData, UserDefinedTableRow, Account, GeneralActivity
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch'
 import { User } from "./entities/user";
+import { FileStorage } from "./entities/fileStorage";
 
 type HttpMethod =  'POST' | 'GET' | 'PUT' | 'DELETE';
 
@@ -29,7 +30,7 @@ export class PapiClient {
     allActivities = new Endpoint<GeneralActivity | Transaction>(this, '/all_activities');
     accounts = new Endpoint<Account>(this, '/accounts');
     users = new Endpoint<User>(this, '/users');
-  
+    fileStorage = new Endpoint<FileStorage>(this, '/file_storage');
     
     constructor(
         private options: PapiClientOptions
