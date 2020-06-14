@@ -1,4 +1,4 @@
-export interface apifieldobject {
+export interface ApiFieldObject {
 
     FieldID: string;
     Label:string;

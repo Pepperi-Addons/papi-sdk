@@ -1,6 +1,6 @@
 import Endpoint from "../endpoint"
 import { PapiClient } from "../papi-client";
-import { AddonAPIAsyncResult, apifieldobject } from "../entities";
+import { AddonAPIAsyncResult, ApiFieldObject } from "../entities";
 
 
 export class DistributorFlagsEndpoint {
@@ -39,7 +39,7 @@ export class types {
         return this;
     }
 
-    async get(): Promise<apifieldobject> {
+    async get(): Promise<ApiFieldObject> {
         var url = `/meta_data/${this.typeName}/types`
         if (this.options.subtype) {
             url = `${url}/${this.subtype}`;
@@ -56,7 +56,7 @@ export class types {
 
 export class fields {
     constructor(private service: PapiClient, private type: string, private subtypeid?: string) { }
-    async get(apiName?: string): Promise<apifieldobject> {
+    async get(apiName?: string): Promise<ApiFieldObject> {
 
 
         var url = `/meta_data/${this.type}`;
@@ -70,7 +70,7 @@ export class fields {
         }
         return await this.service.get(url);
     }
-    async post(body: any): Promise<apifieldobject> {
+    async post(body: ApiFieldObject): Promise<ApiFieldObject> {
 
         var url = `/meta_data/${this.type}`;
         if (this.subtypeid) {
