@@ -26,6 +26,13 @@ export default class Endpoint<T> {
         url = query ? url + "?" + query : url;
         return this.service.get(url);
     }
+    
+    async findById(id: string, options: FindOptions = {}): Promise<T[]> {
+        let url = this.endpoint;
+        let query = Endpoint.encodeQueryParams(options);
+        url = query ? url + "/" + id + "?" + query : url + "/" + id;
+        return this.service.get(url);
+    }
 
     async upsert(object: T): Promise<T> {
         return this.service.post(this.endpoint, object);
