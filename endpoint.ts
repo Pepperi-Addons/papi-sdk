@@ -27,10 +27,9 @@ export default class Endpoint<T> {
         return this.service.get(url);
     }
     
-    async findById(id: string, options: FindOptions = {}): Promise<T[]> {
+    async get(internalID: number): Promise<T> {
         let url = this.endpoint;
-        let query = Endpoint.encodeQueryParams(options);
-        url = query ? url + "/" + id + "?" + query : url + "/" + id;
+        url += "/" + internalID;
         return this.service.get(url);
     }
 
