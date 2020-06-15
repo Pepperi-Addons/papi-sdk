@@ -1,4 +1,5 @@
 import { PapiClient } from './index';
+import { deprecate } from 'util';
 
 interface FindOptions {
     fields?: string[],
@@ -20,7 +21,12 @@ export default class Endpoint<T> {
 
     }
 
+    /** @depracated function
+     * this function is depracated and will be remove is version 2.X! 
+     * please use iter().toArray() instead
+    */ 
     async find(options: FindOptions = {}) : Promise<T[]> {
+        console.warn('this function is depracated and will be remove is version 2.X! \n please use iter().toArray() instead ');
         let url = this.endpoint;
         let query = Endpoint.encodeQueryParams(options);
         url = query ? url + "?" + query : url;
@@ -45,8 +51,10 @@ export default class Endpoint<T> {
                             if (currentPage == 1) {
                                 newOptions.page = currentPage++;
                                 obj = await self.getFirstPage(newOptions);
+                                newOptions.include_count = false;
                             }
                             else if(currentPage <= obj.numOfPages) {
+
                                 newOptions.page = currentPage++;
                                 obj.items = await self.find(newOptions);    
                             }
@@ -58,11 +66,20 @@ export default class Endpoint<T> {
                         return { value: {}, done: true };
                     }
                 }
+            }, 
+
+            toArray: async () => {
+                let items: T[] = [];
+                for await (let item of this.iter(options)) {
+                    items.push(item);
+                }
+
+                return items;
             }
         }
     }
 
-    async getFirstPage(options:any): Promise<{items:T[], numOfPages:number}> {
+    private async getFirstPage(options:any): Promise<{items:T[], numOfPages:number}> {
         let url = this.endpoint;
         let query = Endpoint.encodeQueryParams(options);
         let items: T[] = [];
