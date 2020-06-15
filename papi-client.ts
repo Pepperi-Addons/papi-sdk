@@ -38,14 +38,14 @@ export class PapiClient {
     }
 
     async get(url: string): Promise<any> {
-        return this.apiCall('GET', url);
+        return this.apiCall('GET', url).then(res => res.json());
     }
 
     async post(url: string, body: any = undefined): Promise<any> {
-        return this.apiCall('POST', url, body);
+        return this.apiCall('POST', url, body).then(res => res.json());
     }
 
-    private async apiCall(method: HttpMethod, url: string, body: any = undefined) {
+    async apiCall(method: HttpMethod, url: string, body: any = undefined) {
         
         const fullURL = this.options.baseURL + url;
         const options: any = {
@@ -65,6 +65,6 @@ export class PapiClient {
 
         console.log(method, fullURL, 'took', (t1 - t0).toFixed(2), 'milliseconds');
 
-        return await res.json();
+        return res;
     }
 }
