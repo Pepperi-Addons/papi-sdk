@@ -1,5 +1,4 @@
 import { PapiClient } from './index';
-import { deprecate } from 'util';
 
 interface FindOptions {
     fields?: string[],
@@ -22,7 +21,7 @@ export default class Endpoint<T> {
     }
 
     /** @depracated function
-     * this function is depracated and will be remove is version 2.X! 
+     * this function is depracated and will be remove in version 2.X! 
      * please use iter().toArray() instead
     */ 
     async find(options: FindOptions = {}) : Promise<T[]> {
