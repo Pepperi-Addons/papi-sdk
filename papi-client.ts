@@ -1,7 +1,7 @@
+
 import Endpoint from "./endpoint";
-import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint,TypeEndpoint } from "./endpoints";
-import { UserDefinedTableMetaData, UserDefinedTableRow } from "./entities" ;
-import { performance } from 'perf_hooks';
+import { UserDefinedTableMetaData, UserDefinedTableRow, Account, GeneralActivity, Transaction } from "./entities" ;
+import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint,TypeEndpoint } from "./endpoints";import { performance } from 'perf_hooks';
 import fetch from 'node-fetch'
 import { User } from "./entities/user";
 
@@ -23,7 +23,12 @@ export class PapiClient {
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
     addons = new AddonEndpoint(this);
     codeJobs = new CodeJobsEndpoint(this);
+    activities = new Endpoint<GeneralActivity>(this, '/activities');
+    transactions = new Endpoint<Transaction>(this, '/transactions');
+    allActivities = new Endpoint<GeneralActivity | Transaction>(this, '/all_activities');
+    accounts = new Endpoint<Account>(this, '/accounts');
     users = new Endpoint<User>(this, '/users');
+    
     
     constructor(
         private options: PapiClientOptions
@@ -32,14 +37,14 @@ export class PapiClient {
     }
 
     async get(url: string): Promise<any> {
-        return this.apiCall('GET', url);
+        return this.apiCall('GET', url).then(res => res.json());
     }
 
     async post(url: string, body: any = undefined): Promise<any> {
-        return this.apiCall('POST', url, body);
+        return this.apiCall('POST', url, body).then(res => res.json());
     }
 
-    private async apiCall(method: HttpMethod, url: string, body: any = undefined) {
+    async apiCall(method: HttpMethod, url: string, body: any = undefined) {
         
         const fullURL = this.options.baseURL + url;
         const options: any = {
@@ -59,6 +64,6 @@ export class PapiClient {
 
         console.log(method, fullURL, 'took', (t1 - t0).toFixed(2), 'milliseconds');
 
-        return await res.json();
+        return res;
     }
 }
