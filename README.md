@@ -1,6 +1,6 @@
 # papi-sdk
 
-A Javascript/Typescript SDK for working with the Pepperi SDK
+A Javascript/Typescript SDK for working with the Pepperi SDK.
 
 ## Installation
 Install by running 
@@ -49,4 +49,67 @@ export async function foo(client: Client, request: Request) {
 };
 ```
 
-## Contribution
+## Endpoints
+Most of Pepperi API endpoints support similar functionality, and therfore most of the endpoints in the *papi-sdk* have the same functions.
+
+Let's take the accounts endpoint for example.
+``` bash
+GET https://papi.pepperi.com/v1.0/accounts #returns a list of accounts
+POST https://papi.pepperi.com/v1.0/accounts #upsert a single account returns the updated account
+```
+
+The same way the papi-sdk:
+``` typescript
+const accounts: Account[] = papiClient.accounts.iter().toArray();
+const updated: Account = papiClient.accounts.upsert(account);
+```
+
+The `iter` function on all enpoints support the same paramters that the `GET` supports.
+
+`fields` - The APIName that the endpoint should return
+
+`where` - an SQL like where clause for filtering
+
+`order_by` - sorting `eg. CreationDate ASC`
+
+etc. See https://developer.pepperi.com/account-resources/apis/get/accounts
+
+We chose that the Interfaces (eg. Account) representing the objects that are returned from the API, 
+should include all the endpoints known properties. Properties that must be sent in `upsert` are marked as non-optional in the interfaces. The rest are all marked as optional. Although the fields that you will get by calling `iter()` depends on the `fields` parameter that you send, we decided that the `iter` willl return and object with the interface type `eg. Account`, for easy code-completion & intelisense.
+
+With endpoints that are more complicated, we encorperated the API route into the function signature. 
+
+For example:
+| API | SDK |
+| --- | --- |
+| /addons/installed_addons/\<uuid\>/install | client.addons.installedAddons.addonUUID('\<uuid\>').install() |
+| /addons/api/\<uuid\>/api/foo | client.addons.api.uuid('\<uuid\>').file('api').func('foo').get() |
+| /meta_data/transactions/types/Sales Order/fields | client.metaData.type('transactions').types.subtype('Sales Order').fields.get() |
+
+## Versioning
+This repo follows sematic versioning. See https://semver.org/.
+
+Given a version number **MAJOR**.**MINOR**.**PATCH**, increment the:
+
+**MAJOR** version when you make incompatible API changes
+
+**MINOR** version when you add functionality in a backwards compatible manner
+
+**PATCH** version when you make backwards compatible bug fixes.
+
+
+## Contributing
+Contributions to this package are encouraged strongly.
+
+To contribute commit your changes to a seperate branch, and then create a PR at https://github.com/pepperi-addons/papi-sdk.
+
+Before submitting your PR make sure:
+- That your branch compiles `npm run compile`
+- That your branch follows this repo's linting guides `npm run lint`
+  You can fix most linting issues by running `npm run fix-lint`. Make sure that these scripts do not return an error or warning.
+- That you increment the version number for your changes to be published, according to the specfications above.
+
+Every PR must be approved by at least one other person before it can be merged in to the master.
+When you create or update a PR, there are GitHub Actions that will verify that your PR complies to the above.
+Once the PR is merged into master, a GitHub Action will publish the new version to the npm registry.
+If you do not increment the version number. This script will fail.
