@@ -20,9 +20,6 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-
     # Install node modules
     - name: Installation
       run: npm install --ignore-scripts
@@ -30,3 +27,5 @@ jobs:
     # Publish package to npm
     - name: Publish
       run: npm publish --access public
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
