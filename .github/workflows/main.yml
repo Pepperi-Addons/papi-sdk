@@ -28,4 +28,4 @@ jobs:
     
     # Make sure everything compiles
     - name: Compilation & testing
-      run: npm prepare
+      run: npm run prepare
