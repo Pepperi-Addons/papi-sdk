@@ -4,7 +4,6 @@ import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint,TypeMetaData }
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch';
 import {User} from './entities/user';
-import { type } from "os";
 
 type HttpMethod =  'POST' | 'GET' | 'PUT' | 'DELETE';
 

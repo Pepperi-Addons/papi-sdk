@@ -70,7 +70,7 @@ export class Fields {
         }
         return await this.service.get(url);
     }
-    async post(body: ApiFieldObject): Promise<ApiFieldObject> {
+    async upsert(body: ApiFieldObject): Promise<ApiFieldObject> {
 
         var url = `/meta_data/${this.type}`;
         if (this.subtypeid) {
