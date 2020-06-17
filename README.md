@@ -48,3 +48,5 @@ export async function foo(client: Client, request: Request) {
     }
 };
 ```
+
+## Contribution
