@@ -6,8 +6,9 @@ name: CI
 # events but only for the master branch
 on:
   pull_request:
-    branches: [ master ]
-  paths-ignore:
+    branches: 
+      - master
+    paths-ignore:
       - 'package.json'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -40,6 +41,6 @@ jobs:
 
     # push the new version
     - name: Push
-      run: git push --force
+      run: git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
