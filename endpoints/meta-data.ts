@@ -1,37 +1,34 @@
-import { PapiClient } from "../papi-client";
-import { AddonAPIAsyncResult, ApiFieldObject } from "../entities";
-
+import { PapiClient } from '../papi-client';
+import { ApiFieldObject } from '../entities';
 
 export class DistributorFlagsEndpoint {
     private options = {
-        name: ''
-    }
-    constructor(private service: PapiClient) { }
+        name: '',
+    };
+    constructor(private service: PapiClient) {}
 
     name(flagName: string) {
         this.options.name = flagName;
         return this;
     }
 
-    async get(): Promise<object> {
+    async get(): Promise<any> {
         return await this.service.get(`/meta_data/flags/${this.options.name}`);
     }
 }
 
 export class TypeMetaData {
-    constructor(private service: PapiClient, private typeObject: string) { }
+    constructor(private service: PapiClient, private typeObject: string) {}
 
     types = new Types(this.service, this.typeObject);
     fields = new Fields(this.service, this.typeObject);
-
 }
 
 export class Types {
-
     private options = {
-        subtype: ''
-    }
-    constructor(private service: PapiClient, private typeName: string) { }
+        subtype: '',
+    };
+    constructor(private service: PapiClient, private typeName: string) {}
 
     subtype(subtypeid: string) {
         this.options.subtype = subtypeid;
@@ -39,7 +36,7 @@ export class Types {
     }
 
     async get(): Promise<ApiFieldObject> {
-        var url = `/meta_data/${this.typeName}/types`
+        let url = `/meta_data/${this.typeName}/types`;
         if (this.options.subtype) {
             url = `${url}/${this.subtype}`;
         }
@@ -47,18 +44,14 @@ export class Types {
     }
 
     fields() {
-        return  new Fields(this.service, this.typeName, this.options.subtype);
-    } 
-    
-
+        return new Fields(this.service, this.typeName, this.options.subtype);
+    }
 }
 
 export class Fields {
-    constructor(private service: PapiClient, private type: string, private subtypeid?: string) { }
+    constructor(private service: PapiClient, private type: string, private subtypeid?: string) {}
     async get(apiName?: string): Promise<ApiFieldObject> {
-
-
-        var url = `/meta_data/${this.type}`;
+        let url = `/meta_data/${this.type}`;
         if (this.subtypeid) {
             url = `${url}/types/${this.subtypeid}`;
         }
@@ -70,8 +63,7 @@ export class Fields {
         return await this.service.get(url);
     }
     async upsert(body: ApiFieldObject): Promise<ApiFieldObject> {
-
-        var url = `/meta_data/${this.type}`;
+        let url = `/meta_data/${this.type}`;
         if (this.subtypeid) {
             url = `${url}/types/${this.subtypeid}`;
         }
@@ -80,6 +72,3 @@ export class Fields {
         return await this.service.post(url, body);
     }
 }
-
-
-

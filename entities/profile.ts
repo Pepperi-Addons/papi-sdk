@@ -1,4 +1,4 @@
 export interface Profile {
-    InternalID?: number,
-    Name?: string
+    InternalID?: number;
+    Name?: string;
 }
