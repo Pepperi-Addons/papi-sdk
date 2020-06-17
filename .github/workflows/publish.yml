@@ -24,6 +24,10 @@ jobs:
     - name: Installation
       run: npm install --ignore-scripts
 
+    # Set up git
+    - name: Setupu GIT
+      run: git config --global user.email "action@github.com" && git config --global user.name "GitHub Action"
+
     # Publish package to npm
     - name: Publish
       run: npm publish --access public
