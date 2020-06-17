@@ -109,6 +109,14 @@ Before submitting your PR make sure:
   You can fix most linting issues by running `npm run fix-lint`. Make sure that these scripts do not return an error or warning.
 - That you increment the version number for your changes to be published, according to the specfications above.
 
+To increment the package version:
+
+Run `npm version patch` to increment a patch.
+
+Run `npm version minor` to increment a minor.
+
+Run `npm version major` to increment a major. You probably shouldn't do this if you are not sure.
+
 Every PR must be approved by at least one other person before it can be merged in to the master.
 When you create or update a PR, there are GitHub Actions that will verify that your PR complies to the above.
 Once the PR is merged into master, a GitHub Action will publish the new version to the npm registry.
