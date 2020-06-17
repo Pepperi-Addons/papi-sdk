@@ -23,10 +23,10 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
-    
+   # Set up git
+    - name: Setup GIT
+      run: git config --global user.email "action@github.com" && git config --global user.name "GitHub Action"
+ 
     # Install node modules
     - name: Installation
       run: npm install --ignore-scripts
