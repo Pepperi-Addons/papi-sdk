@@ -26,6 +26,6 @@ jobs:
     - name: Run a one-line script
       run: echo Hello, world!
     
-    # Release package to NPM
-    - name: Automated releases for npm packages.
-      uses: mikeal/merge-release@v4.0.7
+    # Make sure everything compiles
+    - name: Compilation & testing
+      run: npm prepare
