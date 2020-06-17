@@ -1,3 +1,3 @@
 export * from './addons'
 export * from './codeJobs'
-export * from './metaData'
+export * from './meta-data'

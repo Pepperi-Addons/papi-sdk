@@ -1,4 +1,3 @@
-import Endpoint from "../endpoint"
 import { PapiClient } from "../papi-client";
 import { AddonAPIAsyncResult, ApiFieldObject } from "../entities";
 
