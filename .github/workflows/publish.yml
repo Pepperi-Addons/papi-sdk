@@ -34,7 +34,7 @@ jobs:
 
     # Publish package to npm
     - name: Publish
-      run: npm publish
+      run: yarn publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
