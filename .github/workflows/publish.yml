@@ -38,5 +38,10 @@ jobs:
     - name: Publish
       run: npm publish
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # push the new version
+    - name: Push
+      run: git push
+      env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
