@@ -19,15 +19,15 @@ export class DistributorFlagsEndpoint {
     }
 }
 
-export class TypeEndpoint {
-    constructor(private service: PapiClient) { }
+export class TypeMetaData {
+    constructor(private service: PapiClient, private typeObject: string) { }
 
-    name(type: string) {
-        return new typeMetaData(this.service, type);
-    }
+    types = new Types(this.service, this.typeObject);
+    fields = new Fields(this.service, this.typeObject);
+
 }
 
-export class types {
+export class Types {
 
     private options = {
         subtype: ''
@@ -48,13 +48,13 @@ export class types {
     }
 
     fields() {
-        return  new fields(this.service, this.typeName, this.options.subtype);
+        return  new Fields(this.service, this.typeName, this.options.subtype);
     } 
     
 
 }
 
-export class fields {
+export class Fields {
     constructor(private service: PapiClient, private type: string, private subtypeid?: string) { }
     async get(apiName?: string): Promise<ApiFieldObject> {
 
@@ -82,11 +82,5 @@ export class fields {
     }
 }
 
-export class typeMetaData {
-    constructor(private service: PapiClient, private typeName: string) { }
 
-    types = new types(this.service, this.typeName);
-    fields = new fields(this.service, this.typeName);
-
-}
 

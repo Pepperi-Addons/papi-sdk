@@ -1,9 +1,10 @@
 
 import Endpoint from "./endpoint";
 import { UserDefinedTableMetaData, UserDefinedTableRow, Account, GeneralActivity, Transaction } from "./entities" ;
-import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint,TypeEndpoint } from "./endpoints";import { performance } from 'perf_hooks';
+import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint,TypeMetaData } from "./endpoints";import { performance } from 'perf_hooks';
 import fetch from 'node-fetch'
 import { User } from "./entities/user";
+import { type } from "os";
 
 type HttpMethod =  'POST' | 'GET' | 'PUT' | 'DELETE';
 
@@ -17,7 +18,7 @@ export class PapiClient {
     metaData = {
         userDefinedTables: new Endpoint<UserDefinedTableMetaData>(this, '/meta_data/user_defined_tables'),
         flags : new DistributorFlagsEndpoint(this),
-        type: new TypeEndpoint(this)
+        type: (typeObject: string) => { return new TypeMetaData(this,typeObject)}
     };
 
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
