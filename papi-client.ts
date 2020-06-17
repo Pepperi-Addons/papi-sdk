@@ -1,11 +1,11 @@
 import Endpoint from './endpoint';
-import {AddonEndpoint, CodeJobsEndpoint, DistributorFlagsEndpoint} from './endpoints';
 import {UserDefinedTableMetaData, UserDefinedTableRow, Account, GeneralActivity, Transaction} from './entities';
-import {performance} from 'perf_hooks';
+import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint,TypeMetaData } from "./endpoints";
+import { performance } from 'perf_hooks';
 import fetch from 'node-fetch';
 import {User} from './entities/user';
 
-type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
+type HttpMethod =  'POST' | 'GET' | 'PUT' | 'DELETE';
 
 interface PapiClientOptions {
     token: string;
@@ -15,7 +15,8 @@ interface PapiClientOptions {
 export class PapiClient {
     metaData = {
         userDefinedTables: new Endpoint<UserDefinedTableMetaData>(this, '/meta_data/user_defined_tables'),
-        flags: new DistributorFlagsEndpoint(this),
+        flags : new DistributorFlagsEndpoint(this),
+        type: (typeObject: string) => { return new TypeMetaData(this,typeObject)}
     };
 
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
@@ -28,7 +29,7 @@ export class PapiClient {
     users = new Endpoint<User>(this, '/users');
 
     constructor(private options: PapiClientOptions) {}
-
+    
     async get(url: string): Promise<any> {
         return this.apiCall('GET', url).then((res) => res.json());
     }
@@ -49,7 +50,7 @@ export class PapiClient {
                 authorization: 'Bearer ' + this.options.token,
             },
         };
-
+        
         if (body) {
             options.body = JSON.stringify(body);
         }
