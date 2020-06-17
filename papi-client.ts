@@ -1,7 +1,7 @@
 import Endpoint from './endpoint';
-import {AddonEndpoint, CodeJobsEndpoint, DistributorFlagsEndpoint} from './endpoints';
 import {UserDefinedTableMetaData, UserDefinedTableRow, Account, GeneralActivity, Transaction} from './entities';
-import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint,TypeMetaData } from "./endpoints";import { performance } from 'perf_hooks';
+import { AddonEndpoint, CodeJobsEndpoint,DistributorFlagsEndpoint,TypeMetaData } from "./endpoints";
+import { performance } from 'perf_hooks';
 import fetch from 'node-fetch';
 import {User} from './entities/user';
 import { type } from "os";
