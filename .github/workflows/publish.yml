@@ -28,6 +28,10 @@ jobs:
     - name: Setup GIT
       run: git config --global user.email "action@github.com" && git config --global user.name "GitHub Action"
 
+    # Set up npm
+    - name: Create .npmrc
+      run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
+
     # Publish package to npm
     - name: Publish
       run: npm publish
