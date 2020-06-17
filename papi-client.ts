@@ -17,7 +17,8 @@ export class PapiClient {
     metaData = {
         userDefinedTables: new Endpoint<UserDefinedTableMetaData>(this, '/meta_data/user_defined_tables'),
         flags : new DistributorFlagsEndpoint(this),
-        pepperiObjects: new Endpoint<PepperiObject>(this, '/meta_data/pepperiobjects')
+        pepperiObjects: new Endpoint<PepperiObject>(this, '/meta_data/pepperiobjects'),
+        dataViews: new Endpoint<DataView>(this, '/meta_data/data_views'),
     };
 
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
