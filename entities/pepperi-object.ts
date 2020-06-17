@@ -1,5 +1,5 @@
 export interface PepperiObject {
-    Type: string,
-    SubTypeID: string, 
-    SubTypeName: string
+    Type: string;
+    SubTypeID: string;
+    SubTypeName: string;
 }

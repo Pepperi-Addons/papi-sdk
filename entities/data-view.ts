@@ -1,6 +1,17 @@
-import { Profile } from ".";
+import { Profile } from '.';
 
-export const DataViewTypes = ['Grid', 'Form', 'Card', 'Large', 'Line', 'Map', 'Menu', 'Configuration', 'CardsGrid', 'Details'] as const;
+export const DataViewTypes = [
+    'Grid',
+    'Form',
+    'Card',
+    'Large',
+    'Line',
+    'Map',
+    'Menu',
+    'Configuration',
+    'CardsGrid',
+    'Details',
+] as const;
 export type DataViewType = typeof DataViewTypes[number];
 
 export const DataViewScreenSizes = ['Tablet', 'Phablet', 'Landscape'] as const;
@@ -62,21 +73,32 @@ export const DataViewFieldTypes = {
     ListOfObjects: 52,
     Package: 53,
     RelatedObjectsCards: 54,
-    BooleanText: 55
+    BooleanText: 55,
 };
-export type DataViewFieldType = keyof typeof DataViewFieldTypes
+export type DataViewFieldType = keyof typeof DataViewFieldTypes;
 
-export const ResourceTypes = ['None', 'accounts', 'transactions', 'activities', 'all_activities', 'items', 'users', 'transaction_lines', 'contacts', 'lists'] as const;
-export type ResourceType = typeof ResourceTypes[number]
+export const ResourceTypes = [
+    'None',
+    'accounts',
+    'transactions',
+    'activities',
+    'all_activities',
+    'items',
+    'users',
+    'transaction_lines',
+    'contacts',
+    'lists',
+] as const;
+export type ResourceType = typeof ResourceTypes[number];
 
-export const ResoursePrefixes = [ 'GA', 'OA', 'CP','AT', 'GL'] as const
-export type ResourcePrefix = typeof ResoursePrefixes[number]
+export const ResoursePrefixes = ['GA', 'OA', 'CP', 'AT', 'GL'] as const;
+export type ResourcePrefix = typeof ResoursePrefixes[number];
 
 export const VerticalAlignments = {
     Stretch: 0,
     Top: 1,
     Bottom: 2,
-    Center: 3
+    Center: 3,
 };
 export type VerticalALignment = keyof typeof VerticalAlignments;
 
@@ -84,144 +106,149 @@ export const HorizontalAlignments = {
     Stretch: 0,
     Left: 1,
     Right: 2,
-    Center: 3
+    Center: 3,
 };
 export type HorizontalAlignment = keyof typeof HorizontalAlignments;
 
 export const DataViewRowModes = {
     Fixed: 0,
-    MatchParent: 1
-}
+    MatchParent: 1,
+};
 export type DataViewRowMode = keyof typeof DataViewRowModes;
 
 export interface ObjectReference {
-    UUID?: string,
-    InternalID?: number,
-    Name?: string,
-    Resource: ResourceType
+    UUID?: string;
+    InternalID?: number;
+    Name?: string;
+    Resource: ResourceType;
 }
 
 export interface DataViewContext {
-    Object?: ObjectReference
-    Name: string,
-    Profile: Profile,
-    ScreenSize: DataViewScreenSize
+    Object?: ObjectReference;
+    Name: string;
+    Profile: Profile;
+    ScreenSize: DataViewScreenSize;
 }
 
 export interface DataViewFieldLayout {
-    Origin?: { X: number, Y: number }
-    Size?: { Width: number, Height: number }
+    Origin?: { X: number; Y: number };
+    Size?: { Width: number; Height: number };
 }
 
 export interface DataViewFieldStyle {
     Alignment: {
-        Horizontal: HorizontalAlignment
-        Vertical: VerticalALignment
-    }
+        Horizontal: HorizontalAlignment;
+        Vertical: VerticalALignment;
+    };
 }
 
 export interface DataViewField {
-    FieldID: string,
+    FieldID: string;
 }
 
 export interface DataViewRow {
-    Mode: DataViewRowMode
+    Mode: DataViewRowMode;
 }
 
-export interface DataViewColumn {
-
-}
+export type DataViewColumn = any;
 
 export interface GridDataViewColumn {
-    Width: number
+    Width: number;
 }
 
 export interface BaseDataView {
-
-    InternalID?: number,
-    Type: DataViewType,
-    Title?: string,
-    Hidden?: boolean,
-    CreationDate?: string,
-    ModificationDate?: string,
-    Context: DataViewContext,
-    Fields: DataViewField[],
+    InternalID?: number;
+    Type: DataViewType;
+    Title?: string;
+    Hidden?: boolean;
+    CreationDate?: string;
+    ModificationDate?: string;
+    Context: DataViewContext;
+    Fields: DataViewField[];
     ListData?: {
-        Sort?: { FieldID: string, Ascending: boolean }[],
-        Section?: { FieldID: string, Ascending: boolean }
-    }
+        Sort?: { FieldID: string; Ascending: boolean }[];
+        Section?: { FieldID: string; Ascending: boolean };
+    };
 }
 
 export interface GridDataView extends BaseDataView {
-    Type: 'Grid',
-    FrozenColumnsCount: number,
-    MinimumColumnWidth: number,
-    Fields: GridDataViewField[], 
-    Columns: GridDataViewColumn[]
+    Type: 'Grid';
+    FrozenColumnsCount: number;
+    MinimumColumnWidth: number;
+    Fields: GridDataViewField[];
+    Columns: GridDataViewColumn[];
 }
 
 export interface GridDataViewField extends DataViewField {
-    Type: DataViewFieldType,
-    Title: string,
-    Mandatory: boolean,
-    ReadOnly: boolean,
-    Layout?: DataViewFieldLayout,
-    Style?: DataViewFieldStyle
+    Type: DataViewFieldType;
+    Title: string;
+    Mandatory: boolean;
+    ReadOnly: boolean;
+    Layout?: DataViewFieldLayout;
+    Style?: DataViewFieldStyle;
 }
 
 export interface BaseFormDataView extends BaseDataView {
-    Rows: DataViewRow[]
-    Columns: DataViewColumn[],
-    Fields: BaseFormDataViewField[]
+    Rows: DataViewRow[];
+    Columns: DataViewColumn[];
+    Fields: BaseFormDataViewField[];
 }
 
 export interface BaseFormDataViewField extends DataViewField {
-    Type: DataViewFieldType,
-    Title: string,
-    Mandatory: boolean,
-    ReadOnly: boolean,
-    Layout?: DataViewFieldLayout,
-    Style?: DataViewFieldStyle
+    Type: DataViewFieldType;
+    Title: string;
+    Mandatory: boolean;
+    ReadOnly: boolean;
+    Layout?: DataViewFieldLayout;
+    Style?: DataViewFieldStyle;
 }
 
 export interface MenuDataView extends BaseDataView {
-    Fields: MenuDataViewField[]
+    Fields: MenuDataViewField[];
 }
 
-export interface MenuDataViewField extends DataViewField { 
-    Title: string
+export interface MenuDataViewField extends DataViewField {
+    Title: string;
 }
 
-export interface ConfigurationDataView extends BaseDataView {
-
-}
+export type ConfigurationDataView = BaseDataView;
 
 export interface CardDataView extends BaseFormDataView {
-    Type: 'Card'
+    Type: 'Card';
 }
 
 export interface LineDataView extends BaseFormDataView {
-    Type: 'Line'
+    Type: 'Line';
 }
 
 export interface FormDataView extends BaseFormDataView {
-    Type: 'Form'
+    Type: 'Form';
 }
 
 export interface MapDataView extends BaseFormDataView {
-    Type: 'Map'
+    Type: 'Map';
 }
 
 export interface LargeDataView extends BaseFormDataView {
-    Type: 'Large'
+    Type: 'Large';
 }
 
 export interface CardsGridDataView extends BaseFormDataView {
-    Type: 'CardsGrid'
+    Type: 'CardsGrid';
 }
 
 export interface DetailsDataView extends BaseFormDataView {
-    Type: 'Details'
+    Type: 'Details';
 }
 
-export type DataView = GridDataView | FormDataView | LineDataView | CardDataView | CardsGridDataView | LargeDataView | MapDataView | DetailsDataView | MenuDataView | ConfigurationDataView;
+export type DataView =
+    | GridDataView
+    | FormDataView
+    | LineDataView
+    | CardDataView
+    | CardsGridDataView
+    | LargeDataView
+    | MapDataView
+    | DetailsDataView
+    | MenuDataView
+    | ConfigurationDataView;
