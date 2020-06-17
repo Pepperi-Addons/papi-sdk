@@ -26,6 +26,10 @@ jobs:
     - name: Run a one-line script
       run: echo Hello, world!
     
+    # Install node modules
+    - name: Installation
+      run: npm install
+    
     # Make sure everything compiles
     - name: Compilation & testing
       run: npm run prepare
