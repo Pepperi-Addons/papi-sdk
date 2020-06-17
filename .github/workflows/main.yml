@@ -8,8 +8,6 @@ on:
   pull_request:
     branches: 
       - master
-    paths-ignore:
-      - 'package.json'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -22,11 +20,13 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
 
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
-    
+   # Set up git
+    - name: Setup GIT
+      run: git config --global user.email "action@github.com" && git config --global user.name "GitHub Action"
+ 
     # Install node modules
     - name: Installation
       run: npm install --ignore-scripts
@@ -35,12 +35,12 @@ jobs:
     - name: Compilation & testing
       run: npm run prepare
 
-    # Bump the version number
-    - name: Bump version
-      run: npm version patch
+    # # Bump the version number
+    # - name: Bump version
+    #   run: npm version patch
 
-    # push the new version
-    - name: Push
-      run: git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # # push the new version
+    # - name: Push
+    #   run: git push
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

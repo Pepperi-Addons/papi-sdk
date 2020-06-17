@@ -8,6 +8,7 @@ export * from './ui-control'
 export * from './data-view'
 export * from './profile'
 export * from './pepperi-object'
+export * from './api-field-object'
 
 // need something here that can be transpiled to js
 // all the other entities are interfaces
