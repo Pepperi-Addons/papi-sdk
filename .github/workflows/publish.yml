@@ -42,6 +42,6 @@ jobs:
 
     # push the new version
     - name: Push
-      run: git push
+      run: git push --force
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
