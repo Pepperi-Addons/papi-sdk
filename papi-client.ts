@@ -1,9 +1,18 @@
 import Endpoint from './endpoint';
-import {AddonEndpoint, CodeJobsEndpoint, DistributorFlagsEndpoint} from './endpoints';
-import {UserDefinedTableMetaData, UserDefinedTableRow, Account, GeneralActivity, Transaction} from './entities';
-import {performance} from 'perf_hooks';
+import { AddonEndpoint, CodeJobsEndpoint, DistributorFlagsEndpoint, TypeMetaData } from './endpoints';
+import {
+    UserDefinedTableMetaData,
+    UserDefinedTableRow,
+    Account,
+    GeneralActivity,
+    Transaction,
+    User,
+    UIControl,
+    Profile,
+    DataView,
+} from './entities';
+import { performance } from 'perf_hooks';
 import fetch from 'node-fetch';
-import {User} from './entities/user';
 
 type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
@@ -16,6 +25,10 @@ export class PapiClient {
     metaData = {
         userDefinedTables: new Endpoint<UserDefinedTableMetaData>(this, '/meta_data/user_defined_tables'),
         flags: new DistributorFlagsEndpoint(this),
+        type: (typeObject: string) => {
+            return new TypeMetaData(this, typeObject);
+        },
+        dataViews: new Endpoint<DataView>(this, '/meta_data/data_views'),
     };
 
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
@@ -26,6 +39,8 @@ export class PapiClient {
     allActivities = new Endpoint<GeneralActivity | Transaction>(this, '/all_activities');
     accounts = new Endpoint<Account>(this, '/accounts');
     users = new Endpoint<User>(this, '/users');
+    uiControls = new Endpoint<UIControl>(this, '/uicontrols');
+    profiles = new Endpoint<Profile>(this, '/profiles');
 
     constructor(private options: PapiClientOptions) {}
 
@@ -59,6 +74,16 @@ export class PapiClient {
         const t1 = performance.now();
 
         console.log(method, fullURL, 'took', (t1 - t0).toFixed(2), 'milliseconds');
+
+        if (!res.ok) {
+            // try parsing error as json
+            let error = '';
+            try {
+                error = JSON.stringify(await res.json());
+            } catch {}
+
+            throw new Error(`${fullURL} failed with status: ${res.status} - ${res.statusText} error: ${error}`);
+        }
 
         return res;
     }
