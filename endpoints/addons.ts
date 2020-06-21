@@ -1,10 +1,10 @@
 import Endpoint from '../endpoint';
-import {Addon, InstalledAddon, AddonVersion, AddonAPIAsyncResult, AddonAPISyncResult} from '../entities';
-import {PapiClient} from '../papi-client';
+import { Addon, InstalledAddon, AddonVersion, AddonAPIAsyncResult } from '../entities';
+import { PapiClient } from '../papi-client';
 
 class InstalledAddonEnpoint {
     constructor(private service: PapiClient, private addonUUID: string) {}
-    async install(version: string = ''): Promise<AddonAPIAsyncResult> {
+    async install(version = ''): Promise<AddonAPIAsyncResult> {
         if (version) return await this.service.post(`/addons/installed_addons/${this.addonUUID}/install/${version}`);
         else return await this.service.post(`/addons/installed_addons/${this.addonUUID}/install`);
     }
@@ -13,7 +13,7 @@ class InstalledAddonEnpoint {
         return await this.service.post(`/addons/installed_addons/${this.addonUUID}/uninstall`);
     }
 
-    async upgrade(version: string = ''): Promise<AddonAPIAsyncResult> {
+    async upgrade(version = ''): Promise<AddonAPIAsyncResult> {
         if (version) return await this.service.post(`/addons/installed_addons/${this.addonUUID}/upgrade/${version}`);
         else return await this.service.post(`/addons/installed_addons/${this.addonUUID}/upgrade`);
     }
@@ -69,21 +69,21 @@ class AddonApiEndpoint {
     }
 
     async get(params: any = {}) {
-        var url = this.GetAddonApiUrl(params);
+        const url = this.GetAddonApiUrl(params);
         return await this.service.get(url);
     }
     async post(params: any = {}, body: any = undefined) {
-        var url = this.GetAddonApiUrl(params);
+        const url = this.GetAddonApiUrl(params);
         return await this.service.post(url, body);
     }
 
     private GetAddonApiUrl(params: any = {}) {
-        var asyncPart = '';
+        let asyncPart = '';
         if (!this.options.sync) {
             asyncPart = '/async';
         }
-        var url = '/addons/api' + asyncPart + `/${this.options.uuid}/${this.options.file}/${this.options.func}`;
-        var queryString = Endpoint.encodeQueryParams(params);
+        const url = '/addons/api' + asyncPart + `/${this.options.uuid}/${this.options.file}/${this.options.func}`;
+        const queryString = Endpoint.encodeQueryParams(params);
         return queryString ? url + '?' + queryString : url;
     }
 }
