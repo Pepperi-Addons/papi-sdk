@@ -54,7 +54,7 @@ export default class Endpoint<T> {
                                 obj.items = await self.find(newOptions);
                             }
                         }
-                        const retItem = obj.items.shift();
+                        const retItem = obj.items.length > 0 ? obj.items.shift() : undefined;
                         if (retItem) {
                             return { value: retItem, done: false };
                         }
