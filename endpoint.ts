@@ -14,7 +14,6 @@ interface FindOptions {
 
 export default class Endpoint<T> {
     constructor(protected service: PapiClient, protected endpoint: string) {}
-
     /** @depracated function
      * this function is depracated and will be remove in version 2.X!
      * please use iter().toArray() instead
@@ -30,10 +29,9 @@ export default class Endpoint<T> {
         return this.service.get(url);
     }
 
-    async findById(id: string, options: FindOptions = {}): Promise<T[]> {
+    async get(id: number): Promise<T[]> {
         let url = this.endpoint;
-        const query = Endpoint.encodeQueryParams(options);
-        url = query ? url + '/' + id + '?' + query : url + '/' + id;
+        url += '/' + id;
         return this.service.get(url);
     }
 
