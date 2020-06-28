@@ -13,6 +13,7 @@ import {
 } from './entities';
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch';
+import { FileStorage } from './entities/fileStorage';
 
 type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
@@ -41,6 +42,7 @@ export class PapiClient {
     users = new Endpoint<User>(this, '/users');
     uiControls = new Endpoint<UIControl>(this, '/uicontrols');
     profiles = new Endpoint<Profile>(this, '/profiles');
+    fileStorage = new Endpoint<FileStorage>(this, '/file_storage');
 
     constructor(private options: PapiClientOptions) {}
 
