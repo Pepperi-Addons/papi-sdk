@@ -50,7 +50,10 @@ export class Types {
 
 export class Fields {
     constructor(private service: PapiClient, private type: string, private subtypeid?: string) {}
-    async get(apiName?: string): Promise<ApiFieldObject> {
+
+    async get(): Promise<ApiFieldObject[]>;
+    async get(apiName: string): Promise<ApiFieldObject>;
+    async get(apiName?: string): Promise<ApiFieldObject | ApiFieldObject[]> {
         let url = `/meta_data/${this.type}`;
         if (this.subtypeid) {
             url = `${url}/types/${this.subtypeid}`;
@@ -62,6 +65,7 @@ export class Fields {
         }
         return await this.service.get(url);
     }
+
     async upsert(body: ApiFieldObject): Promise<ApiFieldObject> {
         let url = `/meta_data/${this.type}`;
         if (this.subtypeid) {
