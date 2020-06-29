@@ -8,6 +8,10 @@ class CodeJobEndpoint {
     async find(includeDeleted = false): Promise<CodeJob> {
         return await this.service.get(`/code_jobs/${this.uuid}?include_deleted=${includeDeleted}`);
     }
+
+    async publish(body: { comment: string }) {
+        return this.service.post(`/code_jobs/${this.uuid}/publish`, body);
+    }
 }
 
 export class CodeJobsEndpoint extends Endpoint<CodeJob> {
