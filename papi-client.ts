@@ -10,6 +10,7 @@ import {
     UIControl,
     Profile,
     DataView,
+    FileStorage,
 } from './entities';
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch';
@@ -41,6 +42,7 @@ export class PapiClient {
     users = new Endpoint<User>(this, '/users');
     uiControls = new Endpoint<UIControl>(this, '/uicontrols');
     profiles = new Endpoint<Profile>(this, '/profiles');
+    fileStorage = new Endpoint<FileStorage>(this, '/file_storage');
 
     constructor(private options: PapiClientOptions) {}
 
