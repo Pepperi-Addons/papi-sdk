@@ -10,10 +10,10 @@ import {
     UIControl,
     Profile,
     DataView,
+    FileStorage,
 } from './entities';
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch';
-import { FileStorage } from './entities/fileStorage';
 
 type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
