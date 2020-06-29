@@ -1,5 +1,11 @@
 import Endpoint from './endpoint';
-import { AddonEndpoint, CodeJobsEndpoint, DistributorFlagsEndpoint, TypeMetaData } from './endpoints';
+import {
+    AddonEndpoint,
+    CodeJobsEndpoint,
+    DistributorFlagsEndpoint,
+    TypeMetaData,
+    MaintenanceEndpoint,
+} from './endpoints';
 import {
     UserDefinedTableMetaData,
     UserDefinedTableRow,
@@ -43,6 +49,7 @@ export class PapiClient {
     uiControls = new Endpoint<UIControl>(this, '/uicontrols');
     profiles = new Endpoint<Profile>(this, '/profiles');
     fileStorage = new Endpoint<FileStorage>(this, '/file_storage');
+    maintenance = new MaintenanceEndpoint(this);
 
     constructor(private options: PapiClientOptions) {}
 

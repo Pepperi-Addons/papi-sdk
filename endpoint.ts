@@ -12,7 +12,7 @@ interface FindOptions {
     is_distinct?: boolean;
 }
 
-export default class Endpoint<T> {
+export class IterableEndpoint<T> {
     constructor(protected service: PapiClient, protected endpoint: string) {}
     /** @depracated function
      * this function is depracated and will be remove in version 2.X!
@@ -27,16 +27,6 @@ export default class Endpoint<T> {
         const query = Endpoint.encodeQueryParams(options);
         url = query ? url + '?' + query : url;
         return this.service.get(url);
-    }
-
-    async get(id: number): Promise<T[]> {
-        let url = this.endpoint;
-        url += '/' + id;
-        return this.service.get(url);
-    }
-
-    async upsert(object: T): Promise<T> {
-        return this.service.post(this.endpoint, object);
     }
 
     iter(options: FindOptions = {}) {
@@ -88,6 +78,22 @@ export default class Endpoint<T> {
         const numOfPages = Number(res.headers.get('X-Pepperi-Total-Pages'));
         items = await res.json();
         return { items, numOfPages };
+    }
+}
+
+export default class Endpoint<T> extends IterableEndpoint<T> {
+    constructor(protected service: PapiClient, protected endpoint: string) {
+        super(service, endpoint);
+    }
+
+    async get(id: number): Promise<T[]> {
+        let url = this.endpoint;
+        url += '/' + id;
+        return this.service.get(url);
+    }
+
+    async upsert(object: T): Promise<T> {
+        return this.service.post(this.endpoint, object);
     }
 
     static encodeQueryParams(params: any) {
