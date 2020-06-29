@@ -1,4 +1,4 @@
-import Endpoint, { IterableEndpoint } from '../endpoint';
+import { IterableEndpoint } from '../endpoint';
 import { PapiClient } from '../papi-client';
 import {
     ResourceName,
@@ -32,18 +32,12 @@ export class MaintenanceEndpoint {
     }
 
     async archive(body: ArchiveBody): Promise<MaintenanceJobResult> {
-        const url = this.getMaintenanceApiUrl('', 'archive');
+        const url = `/maintenance/${this.resourceName}/archive`;
         return await this.service.post(url, body);
     }
 
-    async unArchive(params: any = {}, body: UnArchiveBody): Promise<MaintenanceJobResult> {
-        const url = this.getMaintenanceApiUrl(params, 'unarchive');
+    async unArchive(body: UnArchiveBody): Promise<MaintenanceJobResult> {
+        const url = `/maintenance/${this.resourceName}/unarchive`;
         return await this.service.post(url, body);
-    }
-
-    private getMaintenanceApiUrl(params: any, funcName: string) {
-        const url = `/maintenance/${this.resourceName}/${funcName}`;
-        const quesyString = Endpoint.encodeQueryParams(params);
-        return quesyString ? url + '?' + quesyString : url;
     }
 }
