@@ -16,6 +16,7 @@ import {
     UIControl,
     Profile,
     DataView,
+    FileStorage,
 } from './entities';
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch';
@@ -47,16 +48,21 @@ export class PapiClient {
     users = new Endpoint<User>(this, '/users');
     uiControls = new Endpoint<UIControl>(this, '/uicontrols');
     profiles = new Endpoint<Profile>(this, '/profiles');
+    fileStorage = new Endpoint<FileStorage>(this, '/file_storage');
     maintenance = new MaintenanceEndpoint(this);
 
     constructor(private options: PapiClientOptions) {}
 
     async get(url: string): Promise<any> {
-        return this.apiCall('GET', url).then((res) => res.json());
+        return this.apiCall('GET', url)
+            .then((res) => res.text())
+            .then((res) => (res ? JSON.parse(res) : ''));
     }
 
     async post(url: string, body: any = undefined): Promise<any> {
-        return this.apiCall('POST', url, body).then((res) => res.json());
+        return this.apiCall('POST', url, body)
+            .then((res) => res.text())
+            .then((res) => (res ? JSON.parse(res) : ''));
     }
 
     async delete(url: string): Promise<any> {

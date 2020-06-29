@@ -10,6 +10,7 @@ export * from './profile';
 export * from './pepperi-object';
 export * from './api-field-object';
 export * from './maintenance';
+export * from './fileStorage';
 
 // need something here that can be transpiled to js
 // all the other entities are interfaces

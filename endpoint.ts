@@ -14,7 +14,6 @@ interface FindOptions {
 
 export class IterableEndpoint<T> {
     constructor(protected service: PapiClient, protected endpoint: string) {}
-
     /** @depracated function
      * this function is depracated and will be remove in version 2.X!
      * please use iter().toArray() instead
@@ -85,6 +84,12 @@ export class IterableEndpoint<T> {
 export default class Endpoint<T> extends IterableEndpoint<T> {
     constructor(protected service: PapiClient, protected endpoint: string) {
         super(service, endpoint);
+    }
+
+    async get(id: number): Promise<T[]> {
+        let url = this.endpoint;
+        url += '/' + id;
+        return this.service.get(url);
     }
 
     async upsert(object: T): Promise<T> {
