@@ -37,7 +37,7 @@ export class PapiClient {
             return new TypeMetaData(this, typeObject);
         },
         dataViews: new Endpoint<DataView>(this, '/meta_data/data_views'),
-        pepperiObjects: new Endpoint<PepperiObject>(this, 'meta_data/pepperiObjects'),
+        pepperiObjects: new Endpoint<PepperiObject>(this, '/meta_data/pepperiObjects'),
     };
 
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
