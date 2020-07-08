@@ -17,4 +17,6 @@ export interface CodeJob {
     ExecutedCode?: string;
     FunctionName?: string;
     DraftCode?: string;
+    AddonPath?: string;
+    AddonUUID?: string;
 }
