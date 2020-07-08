@@ -27,6 +27,7 @@ type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
 interface PapiClientOptions {
     token: string;
     baseURL: string;
+    addonUUID?: string;
 }
 
 export class PapiClient {
@@ -82,6 +83,10 @@ export class PapiClient {
 
         if (body) {
             options.body = JSON.stringify(body);
+        }
+
+        if (this.options.addonUUID) {
+            options.headers['X-Pepperi-OwnerID'] = this.options.addonUUID;
         }
 
         const t0 = performance.now();
