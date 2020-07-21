@@ -5,6 +5,7 @@ import {
     DistributorFlagsEndpoint,
     TypeMetaData,
     MaintenanceEndpoint,
+    AuditLogsEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -53,6 +54,7 @@ export class PapiClient {
     profiles = new Endpoint<Profile>(this, '/profiles');
     fileStorage = new Endpoint<FileStorage>(this, '/file_storage');
     maintenance = new MaintenanceEndpoint(this);
+    auditLogs = new AuditLogsEndpoint(this);
 
     constructor(private options: PapiClientOptions) {}
 
