@@ -8,7 +8,7 @@ class AuditLogEndpoint {
     async get() {
         return await this.service.get(`/audit_logs/${this.uuid}${this.linesPart}`);
     }
-    async post(body: any) {
+    async post(body: AuditLog) {
         return await this.service.post(`/audit_logs/${this.uuid}${this.linesPart}`, body);
     }
     lines() {
