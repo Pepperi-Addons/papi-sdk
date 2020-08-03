@@ -1,27 +1,32 @@
-type AuditTypes = 'data' | 'action';
 type AuditStatus = 'Success' | 'Failure' | 'InProgress' | 'InRetry';
 
 export interface AuditLog {
-    UUID: string;
-    CreationDateTime: string;
-    ModificationDateTime: string;
-    AuditType: AuditTypes;
-    Event: {
-        Type: string;
-        User: {
-            InternalID: number;
-            Name: string;
-            Email: string;
+    UUID?: string;
+    CreationDateTime?: string;
+    ModificationDateTime?: string;
+    AuditType?: string;
+    Event?: {
+        Type?: string;
+        User?: {
+            InternalID?: number;
+            Name?: string;
+            Email?: string;
         };
     };
-    SourceAuditLog: {
-        UUID: string;
-        AuditType: AuditTypes;
-        EventType: string;
+    SourceAuditLog?: {
+        UUID?: string;
+        AuditType?: string;
+        EventType?: string;
     };
-    Status: {
-        ID: number;
-        Name: AuditStatus;
+    Status?: {
+        ID?: number;
+        Name?: AuditStatus;
     };
-    AuditInfo: any;
+    AuditInfo?: any;
+}
+
+export interface AuditLogLines {
+    Message?: string;
+    Level?: string;
+    [key: string]: any;
 }

@@ -1,20 +1,15 @@
-import { AuditLog } from '../entities';
+import { AuditLog, AuditLogLines } from '../entities';
 import Endpoint from '../endpoint';
 import { PapiClient } from '../papi-client';
 
 class AuditLogEndpoint {
-    constructor(private service: PapiClient, private uuid: string, private linesPart: string = '') {}
+    constructor(private service: PapiClient, private uuid: string) {}
 
     async get() {
-        return await this.service.get(`/audit_logs/${this.uuid}${this.linesPart}`);
+        return await this.service.get(`/audit_logs/${this.uuid}`);
     }
-    async post(body: AuditLog) {
-        return await this.service.post(`/audit_logs/${this.uuid}${this.linesPart}`, body);
-    }
-    lines() {
-        this.linesPart = '/lines';
-        return this;
-    }
+
+    lines = new Endpoint<AuditLogLines>(this.service, `/audit_logs/${this.uuid}/lines`);
 }
 
 export class AuditLogsEndpoint extends Endpoint<AuditLog> {
