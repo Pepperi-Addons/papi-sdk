@@ -6,6 +6,7 @@ import {
     TypeMetaData,
     MaintenanceEndpoint,
     AuditLogsEndpoint,
+    Workflow,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -40,6 +41,7 @@ export class PapiClient {
         },
         dataViews: new Endpoint<DataView>(this, '/meta_data/data_views'),
         pepperiObjects: new Endpoint<PepperiObject>(this, '/meta_data/pepperiObjects'),
+        workflow: new Workflow(this),
     };
 
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
