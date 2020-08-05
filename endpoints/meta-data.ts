@@ -81,42 +81,16 @@ export class Fields {
     }
 }
 
-export class Workflow {
-    private options = {
-        subtypeid: '',
-    };
-
-    constructor(private service: PapiClient) {}
-
-    subtype(subtype: string) {
-        this.options.subtypeid = subtype;
-        return this;
-    }
-
-    async get(): Promise<Workflow> {
-        if (this.options.subtypeid === '') {
-            throw new Error('must enter subtype');
-        }
-
-        return await this.service.get(`/meta_data/workflow/${this.options.subtypeid}`);
-    }
-
-    async upsert(body: Workflow): Promise<Workflow> {
-        const url = `/meta_data/workflow/${this.options.subtypeid}`;
-        return await this.service.post(url, body);
-    }
-}
-
 export class Settings {
     constructor(private service: PapiClient, private type: string, private subtypeid: string) {}
 
     async get(): Promise<ATDSettings> {
-        const url = `/meta_data/${this.type}/${this.subtypeid}/settings`;
+        const url = `/meta_data/${this.type}/types/${this.subtypeid}/settings`;
         return await this.service.get(url);
     }
 
     async upsert(body: ATDSettings): Promise<ATDSettings> {
-        const url = `/meta_data/${this.type}/${this.subtypeid}/settings`;
+        const url = `/meta_data/${this.type}/types/${this.subtypeid}/settings`;
         return await this.service.post(url, body);
     }
 }

@@ -13,7 +13,6 @@ export * from './maintenance';
 export * from './fileStorage';
 export * from './audit-logs';
 export * from './atd-settings';
-export * from './workflow';
 // need something here that can be transpiled to js
 // all the other entities are interfaces
 export class Entities {}
