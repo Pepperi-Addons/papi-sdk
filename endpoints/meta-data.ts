@@ -25,7 +25,6 @@ export class TypeMetaData {
 }
 
 export class Types {
-
     constructor(private service: PapiClient, private typeName: string) {}
 
     subtype(subtypeid: string): SubTypes {
@@ -33,12 +32,11 @@ export class Types {
     }
 
     async get(): Promise<ApiFieldObject> {
-        let url = `/meta_data/${this.typeName}/types`;
+        const url = `/meta_data/${this.typeName}/types`;
         return await this.service.get(url);
     }
 
-    fields =  new Fields(this.service, this.typeName);
-    
+    fields = new Fields(this.service, this.typeName);
 }
 
 export class SubTypes {
@@ -50,10 +48,8 @@ export class SubTypes {
     }
 
     fields = new Fields(this.service, this.typeName, this.subtype);
-    
 
     settings = new Settings(this.service, this.typeName, this.subtype);
-    
 }
 
 export class Fields {
