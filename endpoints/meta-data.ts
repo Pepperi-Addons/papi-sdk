@@ -89,7 +89,7 @@ export class Settings {
         return await this.service.get(url);
     }
 
-    async upsert(body: ATDSettings): Promise<ATDSettings> {
+    async update(body: ATDSettings): Promise<ATDSettings> {
         const url = `/meta_data/${this.type}/types/${this.subtypeid}/settings`;
         return await this.service.post(url, body);
     }
