@@ -5,7 +5,7 @@ import {
     DistributorFlagsEndpoint,
     TypeMetaData,
     MaintenanceEndpoint,
-    AuditLogsEndpoint
+    AuditLogsEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
