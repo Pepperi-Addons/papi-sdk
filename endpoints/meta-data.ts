@@ -25,31 +25,35 @@ export class TypeMetaData {
 }
 
 export class Types {
-    private options = {
-        subtype: '',
-    };
+
     constructor(private service: PapiClient, private typeName: string) {}
 
-    subtype(subtypeid: string): Types {
-        this.options.subtype = subtypeid;
-        return this;
+    subtype(subtypeid: string): SubTypes {
+        return new SubTypes(this.service, this.typeName, subtypeid);
     }
 
     async get(): Promise<ApiFieldObject> {
         let url = `/meta_data/${this.typeName}/types`;
-        if (this.options.subtype) {
-            url = `${url}/${this.subtype}`;
-        }
         return await this.service.get(url);
     }
 
-    fields() {
-        return new Fields(this.service, this.typeName, this.options.subtype);
+    fields =  new Fields(this.service, this.typeName);
+    
+}
+
+export class SubTypes {
+    constructor(private service: PapiClient, private typeName: string, private subtype: string) {}
+
+    async get(): Promise<ApiFieldObject> {
+        const url = `/meta_data/${this.typeName}/types/${this.subtype}`;
+        return await this.service.get(url);
     }
 
-    settings() {
-        return new Settings(this.service, this.typeName, this.options.subtype);
-    }
+    fields = new Fields(this.service, this.typeName, this.subtype);
+    
+
+    settings = new Settings(this.service, this.typeName, this.subtype);
+    
 }
 
 export class Fields {

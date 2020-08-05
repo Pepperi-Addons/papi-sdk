@@ -24,19 +24,22 @@ export interface ATDSettings {
         Name: string;
     };
     EPayment: any;
-    OriginAccountsData: AccountTypeDefinition;
-    DestinationAccountsData: AccountTypeDefinition;
+    OriginAccountsData: {
+        IDs: string[];
+        Label: string;
+        AllTypes: boolean;
+        UserAccount: boolean;
+    };
+    DestinationAccountsData: {
+        IDs: string[];
+        Label: string;
+        AllTypes: boolean;
+        UserAccount: boolean;
+    };
     TransactionItemsScopeFilterID: string;
     TransactionLinesFilter: {
         AdvancedFormula: boolean;
         formula: string;
         participatingAPINames: string[];
     };
-}
-
-export interface AccountTypeDefinition {
-    IDs: string[];
-    Label: string;
-    AllTypes: boolean;
-    UserAccount: boolean;
 }
