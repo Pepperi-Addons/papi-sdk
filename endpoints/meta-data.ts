@@ -1,5 +1,5 @@
 import { PapiClient } from '../papi-client';
-import { ApiFieldObject } from '../entities';
+import { ApiFieldObject, ATDSettings } from '../entities';
 
 export class DistributorFlagsEndpoint {
     private options = {
@@ -25,27 +25,31 @@ export class TypeMetaData {
 }
 
 export class Types {
-    private options = {
-        subtype: '',
-    };
     constructor(private service: PapiClient, private typeName: string) {}
 
-    subtype(subtypeid: string) {
-        this.options.subtype = subtypeid;
-        return this;
+    subtype(subtypeid: string): SubTypes {
+        return new SubTypes(this.service, this.typeName, subtypeid);
     }
 
     async get(): Promise<ApiFieldObject> {
-        let url = `/meta_data/${this.typeName}/types`;
-        if (this.options.subtype) {
-            url = `${url}/${this.subtype}`;
-        }
+        const url = `/meta_data/${this.typeName}/types`;
         return await this.service.get(url);
     }
 
-    fields() {
-        return new Fields(this.service, this.typeName, this.options.subtype);
+    fields = new Fields(this.service, this.typeName);
+}
+
+export class SubTypes {
+    constructor(private service: PapiClient, private typeName: string, private subtype: string) {}
+
+    async get(): Promise<ApiFieldObject> {
+        const url = `/meta_data/${this.typeName}/types/${this.subtype}`;
+        return await this.service.get(url);
     }
+
+    fields = new Fields(this.service, this.typeName, this.subtype);
+
+    settings = new Settings(this.service, this.typeName, this.subtype);
 }
 
 export class Fields {
@@ -73,6 +77,20 @@ export class Fields {
         }
         url = `${url}/fields`;
 
+        return await this.service.post(url, body);
+    }
+}
+
+export class Settings {
+    constructor(private service: PapiClient, private type: string, private subtypeid: string) {}
+
+    async get(): Promise<ATDSettings> {
+        const url = `/meta_data/${this.type}/types/${this.subtypeid}/settings`;
+        return await this.service.get(url);
+    }
+
+    async update(body: ATDSettings): Promise<ATDSettings> {
+        const url = `/meta_data/${this.type}/types/${this.subtypeid}/settings`;
         return await this.service.post(url, body);
     }
 }
