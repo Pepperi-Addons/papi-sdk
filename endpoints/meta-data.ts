@@ -1,5 +1,5 @@
 import { PapiClient } from '../papi-client';
-import { ApiFieldObject, ATDSettings, ATDMetaData} from '../entities';
+import { ApiFieldObject, ATDSettings, ATDMetaData } from '../entities';
 
 export class DistributorFlagsEndpoint {
     private options = {
