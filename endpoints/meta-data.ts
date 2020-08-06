@@ -1,5 +1,5 @@
 import { PapiClient } from '../papi-client';
-import { ApiFieldObject, ATDSettings } from '../entities';
+import { ApiFieldObject, ATDSettings, ATDMetaData } from '../entities';
 
 export class DistributorFlagsEndpoint {
     private options = {
@@ -42,7 +42,7 @@ export class Types {
 export class SubTypes {
     constructor(private service: PapiClient, private typeName: string, private subtype: string) {}
 
-    async get(): Promise<ApiFieldObject> {
+    async get(): Promise<ATDMetaData> {
         const url = `/meta_data/${this.typeName}/types/${this.subtype}`;
         return await this.service.get(url);
     }
