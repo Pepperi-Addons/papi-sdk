@@ -28,16 +28,16 @@ export class MaintenanceEndpoint {
 
     type(resourceName: ResourceName) {
         this.resourceName = resourceName;
-        return this;
+        return {
+            unArchive: async (body: ArchiveBody): Promise<MaintenanceJobResult> => {
+                const url = `/maintenance/${resourceName}/unarchive`;
+                return await this.service.post(url, body);
+            },
+        };
     }
 
     async archive(body: ArchiveBody): Promise<MaintenanceJobResult> {
-        const url = `/maintenance/${this.resourceName}/archive`;
-        return await this.service.post(url, body);
-    }
-
-    async unArchive(body: UnArchiveBody): Promise<MaintenanceJobResult> {
-        const url = `/maintenance/${this.resourceName}/unarchive`;
+        const url = `/maintenance/archive`;
         return await this.service.post(url, body);
     }
 }

@@ -29,6 +29,7 @@ interface PapiClientOptions {
     token: string;
     baseURL: string;
     addonUUID?: string;
+    suppressLogging?: boolean;
 }
 
 export class PapiClient {
@@ -95,7 +96,12 @@ export class PapiClient {
         const res = await fetch(fullURL, options);
         const t1 = performance.now();
 
-        console.log(method, fullURL, 'took', (t1 - t0).toFixed(2), 'milliseconds');
+        if (
+            typeof this.options.suppressLogging == 'undefined' ||
+            (typeof this.options.suppressLogging != 'undefined' && this.options.suppressLogging == false)
+        ) {
+            console.log(method, fullURL, 'took', (t1 - t0).toFixed(2), 'milliseconds');
+        }
 
         if (!res.ok) {
             // try parsing error as json

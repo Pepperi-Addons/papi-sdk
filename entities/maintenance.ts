@@ -1,3 +1,4 @@
+type MaintenanceJobInfoType = 'Succeeded' | 'Failed' | 'InProgress';
 export interface MaintenanceJobResult {
     UUID: string;
     URI: string;
@@ -5,7 +6,7 @@ export interface MaintenanceJobResult {
 
 export interface MaintenanceJobInfo {
     UUID: string;
-    Success: boolean;
+    Success: MaintenanceJobInfoType;
     RecordsAffected: number;
     ErrorMessage: string;
 }
@@ -17,7 +18,8 @@ export interface UnArchiveBody {
 }
 
 export interface ArchiveBody {
-    where: string;
+    transactions?: number[];
+    activities?: number[];
 }
 
 export interface ArchivedObject {
