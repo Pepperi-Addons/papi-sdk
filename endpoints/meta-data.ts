@@ -31,7 +31,7 @@ export class Types {
         return new SubTypes(this.service, this.typeName, subtypeid);
     }
 
-    async get(): Promise<ApiFieldObject> {
+    async get(): Promise<ATDMetaData[]> {
         const url = `/meta_data/${this.typeName}/types`;
         return await this.service.get(url);
     }
