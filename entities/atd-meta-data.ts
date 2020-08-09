@@ -1,5 +1,5 @@
 export interface ATDMetaData {
-    InternaID: string;
+    TypeID: string;
     ExternalID: string;
     Description: string;
     CreationDate: string;
