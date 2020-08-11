@@ -23,6 +23,7 @@ export interface ATDSettings {
         ID: string;
         Name: string;
     };
+    CatalogIDs: number[];
     EPayment: any;
     OriginAccountsData: {
         IDs: string[];
