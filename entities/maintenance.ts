@@ -11,11 +11,7 @@ export interface MaintenanceJobInfo {
     ErrorMessage: string;
 }
 
-export interface UnArchiveBody {
-    object: {
-        UUID: string;
-    }[];
-}
+export type UnArchiveBody = { UUID: string }[];
 
 export interface ArchiveBody {
     transactions?: number[];
