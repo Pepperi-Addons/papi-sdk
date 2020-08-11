@@ -96,10 +96,7 @@ export class PapiClient {
         const res = await fetch(fullURL, options);
         const t1 = performance.now();
 
-        if (
-            typeof this.options.suppressLogging == 'undefined' ||
-            (typeof this.options.suppressLogging != 'undefined' && this.options.suppressLogging == false)
-        ) {
+        if (!this.options.suppressLogging) {
             console.log(method, fullURL, 'took', (t1 - t0).toFixed(2), 'milliseconds');
         }
 
