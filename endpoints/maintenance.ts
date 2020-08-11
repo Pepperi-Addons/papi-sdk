@@ -29,7 +29,7 @@ export class MaintenanceEndpoint {
     type(resourceName: ResourceName) {
         this.resourceName = resourceName;
         return {
-            unArchive: async (body: ArchiveBody): Promise<MaintenanceJobResult> => {
+            unArchive: async (body: UnArchiveBody): Promise<MaintenanceJobResult> => {
                 const url = `/maintenance/${resourceName}/unarchive`;
                 return await this.service.post(url, body);
             },
