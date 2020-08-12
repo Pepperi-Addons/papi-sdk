@@ -161,8 +161,8 @@ export interface BaseDataView {
     Type: DataViewType;
     Title?: string;
     Hidden?: boolean;
-    CreationDate?: string;
-    ModificationDate?: string;
+    CreationDateTime?: string;
+    ModificationDateTime?: string;
     Context: DataViewContext;
     Fields: DataViewField[];
     ListData?: {
