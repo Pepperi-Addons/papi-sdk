@@ -1,10 +1,10 @@
-import { IterableEndpoint } from '../endpoint';
+import Endpoint from '../endpoint';
 import { FileStorage, TempUrlResponse } from '../entities';
 import { PapiClient } from '../papi-client';
 
-export class FileStorageEndpoint extends IterableEndpoint<FileStorage> {
+export class FileStorageEndpoint extends Endpoint<FileStorage> {
     constructor(service: PapiClient) {
-        super(service, '/code_jobs');
+        super(service, '/file_storage');
     }
 
     async name(fileName: string): Promise<FileStorage> {

@@ -3,4 +3,4 @@ export * from './codeJobs';
 export * from './meta-data';
 export * from './maintenance';
 export * from './audit-logs';
-export * from './fileStorage';
+export * from './file-storage';
