@@ -1,4 +1,4 @@
-import Endpoint from './endpoint';
+import Endpoint, { IterableEndpoint } from './endpoint';
 import {
     AddonEndpoint,
     CodeJobsEndpoint,
@@ -19,6 +19,7 @@ import {
     DataView,
     FileStorage,
     PepperiObject,
+    Type,
 } from './entities';
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch';
@@ -56,6 +57,7 @@ export class PapiClient {
     fileStorage = new Endpoint<FileStorage>(this, '/file_storage');
     maintenance = new MaintenanceEndpoint(this);
     auditLogs = new AuditLogsEndpoint(this);
+    types = new IterableEndpoint<Type>(this, '/types');
 
     constructor(private options: PapiClientOptions) {}
 
