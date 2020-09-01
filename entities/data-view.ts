@@ -25,7 +25,7 @@ export const DataViewFieldTypes = {
     TextHeader: 4,
     Date: 5,
     DateAndTime: 6,
-    NumberInetger: 7,
+    NumberInteger: 7,
     NumberReal: 8,
     Currency: 9,
     Boolean: 10,
@@ -163,8 +163,8 @@ export interface BaseDataView {
     Hidden?: boolean;
     CreationDateTime?: string;
     ModificationDateTime?: string;
-    Context: DataViewContext;
-    Fields: DataViewField[];
+    Context?: DataViewContext;
+    Fields?: DataViewField[];
     ListData?: {
         Sort?: { FieldID: string; Ascending: boolean }[];
         Section?: { FieldID: string; Ascending: boolean };
@@ -173,10 +173,10 @@ export interface BaseDataView {
 
 export interface GridDataView extends BaseDataView {
     Type: 'Grid';
-    FrozenColumnsCount: number;
-    MinimumColumnWidth: number;
-    Fields: GridDataViewField[];
-    Columns: GridDataViewColumn[];
+    FrozenColumnsCount?: number;
+    MinimumColumnWidth?: number;
+    Fields?: GridDataViewField[];
+    Columns?: GridDataViewColumn[];
 }
 
 export interface GridDataViewField extends DataViewField {
@@ -189,9 +189,9 @@ export interface GridDataViewField extends DataViewField {
 }
 
 export interface BaseFormDataView extends BaseDataView {
-    Rows: DataViewRow[];
-    Columns: DataViewColumn[];
-    Fields: BaseFormDataViewField[];
+    Rows?: DataViewRow[];
+    Columns?: DataViewColumn[];
+    Fields?: BaseFormDataViewField[];
 }
 
 export interface BaseFormDataViewField extends DataViewField {
@@ -204,14 +204,17 @@ export interface BaseFormDataViewField extends DataViewField {
 }
 
 export interface MenuDataView extends BaseDataView {
-    Fields: MenuDataViewField[];
+    Type: 'Menu';
+    Fields?: MenuDataViewField[];
 }
 
 export interface MenuDataViewField extends DataViewField {
     Title: string;
 }
 
-export type ConfigurationDataView = BaseDataView;
+export interface ConfigurationDataView extends BaseDataView {
+    Type: 'Configuration';
+}
 
 export interface CardDataView extends BaseFormDataView {
     Type: 'Card';
