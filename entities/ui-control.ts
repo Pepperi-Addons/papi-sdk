@@ -57,6 +57,8 @@ export const UIControlViewTypes = {
     Line: 4,
     CardsGrid: 5,
     Map: 6,
+    Menu: 7,
+    Configuration: 8,
 };
 export type UIControlViewType = keyof typeof UIControlViewTypes;
 
