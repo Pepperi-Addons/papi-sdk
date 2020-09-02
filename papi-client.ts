@@ -74,7 +74,9 @@ export class PapiClient {
     }
 
     async delete(url: string): Promise<any> {
-        return this.apiCall('DELETE', url);
+        return this.apiCall('DELETE', url)
+            .then((res) => res.text())
+            .then((res) => (res ? JSON.parse(res) : ''));
     }
 
     async apiCall(method: HttpMethod, url: string, body: any = undefined) {

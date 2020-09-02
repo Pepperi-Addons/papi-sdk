@@ -79,6 +79,16 @@ export class Fields {
 
         return await this.service.post(url, body);
     }
+
+    async delete(FieldID: string): Promise<ApiFieldObject> {
+        let url = `/meta_data/${this.type}`;
+        if (this.subtypeid) {
+            url = `${url}/types/${this.subtypeid}`;
+        }
+        url = `${url}/fields/${FieldID}`;
+
+        return await this.service.delete(url);
+    }
 }
 
 export class Settings {

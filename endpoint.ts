@@ -101,6 +101,12 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
         return this.service.post('/batch' + this.endpoint, objects);
     }
 
+    async delete(id: number): Promise<T[]> {
+        let url = this.endpoint;
+        url += '/' + id;
+        return this.service.delete(url);
+    }
+
     static encodeQueryParams(params: any) {
         const ret: string[] = [];
 
