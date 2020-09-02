@@ -104,7 +104,10 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
     async delete(id: number): Promise<T[]> {
         let url = this.endpoint;
         url += '/' + id;
-        return this.service.delete(url);
+        return this.service
+            .delete(url)
+            .then((res) => res.text())
+            .then((res) => (res ? JSON.parse(res) : ''));
     }
 
     static encodeQueryParams(params: any) {
