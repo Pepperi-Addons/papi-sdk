@@ -58,11 +58,7 @@ export class Fields {
     async get(): Promise<ApiFieldObject[]>;
     async get(apiName: string): Promise<ApiFieldObject>;
     async get(apiName?: string): Promise<ApiFieldObject | ApiFieldObject[]> {
-        let url = `/meta_data/${this.type}`;
-        if (this.subtypeid) {
-            url = `${url}/types/${this.subtypeid}`;
-        }
-        url = `${url}/fields`;
+        let url = this.createUrl();
 
         if (apiName) {
             url = `${url}/${apiName}`;
@@ -71,13 +67,28 @@ export class Fields {
     }
 
     async upsert(body: ApiFieldObject): Promise<ApiFieldObject> {
+        const url = this.createUrl();
+
+        return await this.service.post(url, body);
+    }
+
+    async delete(FieldID: string): Promise<boolean> {
+        let url = this.createUrl();
+
+        url = `${url}/${FieldID}`;
+
+        return await this.service
+            .delete(url)
+            .then((res) => res.text())
+            .then((res) => (res ? JSON.parse(res) : ''));
+    }
+
+    private createUrl() {
         let url = `/meta_data/${this.type}`;
         if (this.subtypeid) {
             url = `${url}/types/${this.subtypeid}`;
         }
-        url = `${url}/fields`;
-
-        return await this.service.post(url, body);
+        return (url = `${url}/fields`);
     }
 }
 
