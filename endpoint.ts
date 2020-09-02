@@ -101,7 +101,7 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
         return this.service.post('/batch' + this.endpoint, objects);
     }
 
-    async delete(id: number): Promise<Boolean> {
+    async delete(id: number): Promise<boolean> {
         let url = this.endpoint;
         url += '/' + id;
         return this.service

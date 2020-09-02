@@ -72,7 +72,7 @@ export class Fields {
         return await this.service.post(url, body);
     }
 
-    async delete(FieldID: string): Promise<Boolean> {
+    async delete(FieldID: string): Promise<boolean> {
         let url = this.createUrl();
 
         url = `${url}/${FieldID}`;
