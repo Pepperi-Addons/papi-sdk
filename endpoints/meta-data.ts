@@ -55,14 +55,17 @@ export class SubTypes {
 export class Fields {
     constructor(private service: PapiClient, private type: string, private subtypeid?: string) {}
 
-    async get(): Promise<ApiFieldObject[]>;
-    async get(apiName: string): Promise<ApiFieldObject>;
-    async get(apiName?: string): Promise<ApiFieldObject | ApiFieldObject[]> {
+    async get(include_owned?: boolean): Promise<ApiFieldObject[]> {
         let url = this.createUrl();
 
-        if (apiName) {
-            url = `${url}/${apiName}`;
+        if (include_owned) {
+            url = `${url}?include_owned=${include_owned}`;
         }
+
+        return await this.service.get(url);
+    }
+    async getSingle(apiName: string): Promise<ApiFieldObject> {
+        const url = `${this.createUrl()}/${apiName}`;
         return await this.service.get(url);
     }
 
