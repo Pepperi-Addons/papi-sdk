@@ -55,17 +55,22 @@ export class SubTypes {
 export class Fields {
     constructor(private service: PapiClient, private type: string, private subtypeid?: string) {}
 
-    async get(include_owned?: boolean): Promise<ApiFieldObject[]> {
+    async get(apiName: string): Promise<ApiFieldObject>;
+    async get(params?: { include_owned: boolean }): Promise<ApiFieldObject[]>;
+    async get(p?: string | { include_owned: boolean }): Promise<ApiFieldObject | ApiFieldObject[] | undefined> {
         let url = this.createUrl();
 
-        if (include_owned) {
-            url = `${url}?include_owned=${include_owned}`;
+        if (typeof p === 'string') {
+            if (p) {
+                url = `${url}/${p}`;
+            }
+        } else if (typeof p === 'object') {
+            if (p) {
+                url = `${url}?include_owned=${p.include_owned}`;
+            } else {
+                url = `${url}?include_owned=true`;
+            }
         }
-
-        return await this.service.get(url);
-    }
-    async getSingle(apiName: string): Promise<ApiFieldObject> {
-        const url = `${this.createUrl()}/${apiName}`;
         return await this.service.get(url);
     }
 
