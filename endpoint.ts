@@ -1,5 +1,6 @@
 import { PapiClient } from './index';
 import { BatchApiResponse } from './entities/batch-api-response';
+import { ExportApiResponse, ExportBody } from './entities';
 
 interface FindOptions {
     fields?: string[];
@@ -99,6 +100,10 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
 
     async batch(objects: T[]): Promise<BatchApiResponse[]> {
         return this.service.post('/batch' + this.endpoint, objects);
+    }
+
+    async export(options: ExportBody): Promise<ExportApiResponse> {
+        return this.service.post('/export' + this.endpoint, options);
     }
 
     async delete(id: number): Promise<boolean> {
