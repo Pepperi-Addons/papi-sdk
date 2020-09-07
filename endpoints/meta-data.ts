@@ -50,6 +50,8 @@ export class SubTypes {
     fields = new Fields(this.service, this.typeName, this.subtype);
 
     settings = new Settings(this.service, this.typeName, this.subtype);
+
+    addons = new Addons(this.service, this.typeName, this.subtype);
 }
 
 export class Fields {
@@ -111,5 +113,14 @@ export class Settings {
     async update(body: ATDSettings): Promise<ATDSettings> {
         const url = `/meta_data/${this.type}/types/${this.subtypeid}/settings`;
         return await this.service.post(url, body);
+    }
+}
+
+export class Addons {
+    constructor(private service: PapiClient, private type: string, private subtypeid: string) {}
+
+    async get(): Promise<any> {
+        const url = `/meta_data/${this.type}/types/${this.subtypeid}/addons`;
+        return await this.service.get(url);
     }
 }
