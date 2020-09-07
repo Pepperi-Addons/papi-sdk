@@ -3,9 +3,12 @@ export interface ApiFieldObject {
     Label: string;
     Description?: string;
     IsUserDefinedField?: boolean;
-    UIType: any;
-    Type?: number;
-    Format?: number;
+    UIType?: {
+        ID?: number;
+        Name?: string;
+    };
+    Type?: string;
+    Format?: string;
     CreationDate?: Date;
     ModificationDate?: Date;
     Hidden?: boolean;

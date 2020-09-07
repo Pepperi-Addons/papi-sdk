@@ -1,4 +1,5 @@
 import { PapiClient } from './index';
+import { BatchApiResponse } from './entities/batch-api-response';
 
 interface FindOptions {
     fields?: string[];
@@ -94,6 +95,19 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
 
     async upsert(object: T): Promise<T> {
         return this.service.post(this.endpoint, object);
+    }
+
+    async batch(objects: T[]): Promise<BatchApiResponse[]> {
+        return this.service.post('/batch' + this.endpoint, objects);
+    }
+
+    async delete(id: number): Promise<boolean> {
+        let url = this.endpoint;
+        url += '/' + id;
+        return this.service
+            .delete(url)
+            .then((res) => res.text())
+            .then((res) => (res ? JSON.parse(res) : ''));
     }
 
     static encodeQueryParams(params: any) {

@@ -14,6 +14,8 @@ export * from './file-storage';
 export * from './audit-logs';
 export * from './atd-settings';
 export * from './atd-meta-data';
+export * from './types';
+export * from './batch-api-response';
 // need something here that can be transpiled to js
 // all the other entities are interfaces
 export class Entities {}
