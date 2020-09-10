@@ -1,4 +1,5 @@
 export interface ApiFieldObject {
+    InternalID: number;
     FieldID: string;
     Label: string;
     Description?: string;
