@@ -1,4 +1,4 @@
 export interface ExportApiResponse {
-    UUID: string;
+    JobID: string;
     URI: string;
 }
