@@ -15,6 +15,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@pepperi-addons/scripts": "^1.0.18",
         "node-fetch": "^2.6.0"
     },
     "devDependencies": {
