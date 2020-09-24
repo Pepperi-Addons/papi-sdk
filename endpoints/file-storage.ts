@@ -11,7 +11,7 @@ export class FileStorageEndpoint extends Endpoint<FileStorage> {
         return await this.service.get(`/file_storage/name/${fileName}`);
     }
 
-    async temporaryUploadUrl(): Promise<TempUrlResponse> {
-        return await this.service.post('/file_storage/temporary_upload_url');
+    async tmp(): Promise<TempUrlResponse> {
+        return await this.service.post('/file_storage/tmp');
     }
 }
