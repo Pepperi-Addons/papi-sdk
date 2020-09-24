@@ -16,3 +16,8 @@ export interface FileStorage {
     Title: string;
     URL?: string;
 }
+
+export interface TempUrlResponse {
+    UploadURL: string;
+    DownloadURL: string;
+}
