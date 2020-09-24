@@ -58,7 +58,7 @@ export class Fields {
     constructor(private service: PapiClient, private type: string, private subtypeid?: string) {}
 
     async get(apiName: string): Promise<ApiFieldObject>;
-    async get(params: { include_owned: boolean }): Promise<ApiFieldObject[]>;
+    async get(params?: { include_owned: boolean }): Promise<ApiFieldObject[]>;
     async get(
         p: string | { include_owned: boolean } = { include_owned: true },
     ): Promise<ApiFieldObject | ApiFieldObject[]> {
