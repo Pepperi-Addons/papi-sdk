@@ -6,6 +6,7 @@ import {
     TypeMetaData,
     MaintenanceEndpoint,
     AuditLogsEndpoint,
+    FileStorageEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -17,7 +18,6 @@ import {
     UIControl,
     Profile,
     DataView,
-    FileStorage,
     PepperiObject,
     Type,
 } from './entities';
@@ -54,7 +54,7 @@ export class PapiClient {
     users = new Endpoint<User>(this, '/users');
     uiControls = new Endpoint<UIControl>(this, '/uicontrols');
     profiles = new Endpoint<Profile>(this, '/profiles');
-    fileStorage = new Endpoint<FileStorage>(this, '/file_storage');
+    fileStorage = new FileStorageEndpoint(this);
     maintenance = new MaintenanceEndpoint(this);
     auditLogs = new AuditLogsEndpoint(this);
     types = new IterableEndpoint<Type>(this, '/types');

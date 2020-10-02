@@ -1,5 +1,5 @@
 import { PapiClient } from '../papi-client';
-import { MaintenanceJobResult, ArchiveBody } from '../entities';
+import { ExportApiResponse, ArchiveBody } from '../entities';
 
 export class MaintenanceEndpoint {
     private service: PapiClient;
@@ -8,7 +8,7 @@ export class MaintenanceEndpoint {
         this.service = service;
     }
 
-    async archive(body: ArchiveBody): Promise<MaintenanceJobResult> {
+    async archive(body: ArchiveBody): Promise<ExportApiResponse> {
         const url = '/maintenance/archive';
         return await this.service.post(url, body);
     }
