@@ -4,8 +4,8 @@ export interface ApiFieldObject {
     Label: string;
     Description?: string;
     IsUserDefinedField?: boolean;
-    UIType?: {
-        ID?: number;
+    UIType: {
+        ID: number;
         Name?: string;
     };
     Type?: string;
