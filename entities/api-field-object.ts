@@ -1,10 +1,11 @@
 export interface ApiFieldObject {
+    InternalID?: number;
     FieldID: string;
     Label: string;
     Description?: string;
     IsUserDefinedField?: boolean;
-    UIType?: {
-        ID?: number;
+    UIType: {
+        ID: number;
         Name?: string;
     };
     Type?: string;
