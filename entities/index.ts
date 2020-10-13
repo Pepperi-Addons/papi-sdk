@@ -10,7 +10,7 @@ export * from './profile';
 export * from './pepperi-object';
 export * from './api-field-object';
 export * from './maintenance';
-export * from './fileStorage';
+export * from './file-storage';
 export * from './audit-logs';
 export * from './atd-settings';
 export * from './atd-meta-data';

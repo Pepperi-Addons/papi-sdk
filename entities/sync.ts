@@ -1,5 +1,12 @@
 export interface SyncBody {
-    LocalDataUpdates: any | null;
+    LocalDataUpdates?: {
+        jsonBody: {
+            [key: number]: {
+                Headers: string[];
+                Lines: any[][];
+            };
+        };
+    };
     LastSyncDateTime?: number;
     DeviceExternalID?: string;
     CPIVersion?: string;
