@@ -50,18 +50,33 @@ export class SubTypes {
     fields = new Fields(this.service, this.typeName, this.subtype);
 
     settings = new Settings(this.service, this.typeName, this.subtype);
+
+    async addons(): Promise<ATDMetaData> {
+        const url = `/meta_data/${this.typeName}/types/${this.subtype}/addons`;
+        return await this.service.get(url);
+    }
 }
 
 export class Fields {
     constructor(private service: PapiClient, private type: string, private subtypeid?: string) {}
 
-    async get(): Promise<ApiFieldObject[]>;
     async get(apiName: string): Promise<ApiFieldObject>;
-    async get(apiName?: string): Promise<ApiFieldObject | ApiFieldObject[]> {
+    async get(params?: { include_owned: boolean }): Promise<ApiFieldObject[]>;
+    async get(
+        p: string | { include_owned: boolean } = { include_owned: true },
+    ): Promise<ApiFieldObject | ApiFieldObject[]> {
         let url = this.createUrl();
 
-        if (apiName) {
-            url = `${url}/${apiName}`;
+        if (typeof p === 'string') {
+            if (p) {
+                url = `${url}/${p}`;
+            }
+        } else if (typeof p === 'object') {
+            if (p) {
+                url = `${url}?include_owned=${p.include_owned}`;
+            } else {
+                url = `${url}?include_owned=true`;
+            }
         }
         return await this.service.get(url);
     }
