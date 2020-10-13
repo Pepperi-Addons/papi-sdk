@@ -6,6 +6,7 @@ import {
     TypeMetaData,
     MaintenanceEndpoint,
     AuditLogsEndpoint,
+    SyncEndpoint,
     FileStorageEndpoint,
 } from './endpoints';
 import {
@@ -20,6 +21,7 @@ import {
     DataView,
     PepperiObject,
     Type,
+    Catalog,
 } from './entities';
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch';
@@ -58,6 +60,10 @@ export class PapiClient {
     maintenance = new MaintenanceEndpoint(this);
     auditLogs = new AuditLogsEndpoint(this);
     types = new IterableEndpoint<Type>(this, '/types');
+    catalogs = new Endpoint<Catalog>(this, '/catalogs');
+    application = {
+        sync: new SyncEndpoint(this),
+    };
 
     constructor(private options: PapiClientOptions) {}
 
