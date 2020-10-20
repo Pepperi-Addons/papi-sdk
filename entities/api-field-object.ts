@@ -10,8 +10,8 @@ export interface ApiFieldObject {
     };
     Type?: string;
     Format?: string;
-    CreationDate?: Date;
-    ModificationDate?: Date;
+    CreationDateTime?: Date;
+    ModificationDateTime?: Date;
     Hidden?: boolean;
     CSVMappedColumnName?: string;
     UserDefinedTableSource?: any;
