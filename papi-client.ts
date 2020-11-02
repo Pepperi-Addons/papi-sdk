@@ -1,10 +1,13 @@
-import Endpoint from './endpoint';
+import Endpoint, { IterableEndpoint } from './endpoint';
 import {
     AddonEndpoint,
     CodeJobsEndpoint,
     DistributorFlagsEndpoint,
     TypeMetaData,
     MaintenanceEndpoint,
+    AuditLogsEndpoint,
+    SyncEndpoint,
+    FileStorageEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -16,7 +19,9 @@ import {
     UIControl,
     Profile,
     DataView,
-    FileStorage,
+    PepperiObject,
+    Type,
+    Catalog,
 } from './entities';
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch';
@@ -26,6 +31,8 @@ type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
 interface PapiClientOptions {
     token: string;
     baseURL: string;
+    addonUUID?: string;
+    suppressLogging?: boolean;
 }
 
 export class PapiClient {
@@ -36,6 +43,7 @@ export class PapiClient {
             return new TypeMetaData(this, typeObject);
         },
         dataViews: new Endpoint<DataView>(this, '/meta_data/data_views'),
+        pepperiObjects: new Endpoint<PepperiObject>(this, '/meta_data/pepperiObjects'),
     };
 
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
@@ -48,8 +56,14 @@ export class PapiClient {
     users = new Endpoint<User>(this, '/users');
     uiControls = new Endpoint<UIControl>(this, '/uicontrols');
     profiles = new Endpoint<Profile>(this, '/profiles');
-    fileStorage = new Endpoint<FileStorage>(this, '/file_storage');
+    fileStorage = new FileStorageEndpoint(this);
     maintenance = new MaintenanceEndpoint(this);
+    auditLogs = new AuditLogsEndpoint(this);
+    types = new IterableEndpoint<Type>(this, '/types');
+    catalogs = new Endpoint<Catalog>(this, '/catalogs');
+    application = {
+        sync: new SyncEndpoint(this),
+    };
 
     constructor(private options: PapiClientOptions) {}
 
@@ -82,11 +96,17 @@ export class PapiClient {
             options.body = JSON.stringify(body);
         }
 
+        if (this.options.addonUUID) {
+            options.headers['X-Pepperi-OwnerID'] = this.options.addonUUID;
+        }
+
         const t0 = performance.now();
         const res = await fetch(fullURL, options);
         const t1 = performance.now();
 
-        console.log(method, fullURL, 'took', (t1 - t0).toFixed(2), 'milliseconds');
+        if (!this.options.suppressLogging) {
+            console.log(method, fullURL, 'took', (t1 - t0).toFixed(2), 'milliseconds');
+        }
 
         if (!res.ok) {
             // try parsing error as json

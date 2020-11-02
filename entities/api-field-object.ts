@@ -1,13 +1,17 @@
 export interface ApiFieldObject {
+    InternalID?: number;
     FieldID: string;
     Label: string;
     Description?: string;
     IsUserDefinedField?: boolean;
-    UIType: any;
-    Type?: number;
-    Format?: number;
-    CreationDate?: Date;
-    ModificationDate?: Date;
+    UIType: {
+        ID: number;
+        Name?: string;
+    };
+    Type?: string;
+    Format?: string;
+    CreationDateTime?: Date;
+    ModificationDateTime?: Date;
     Hidden?: boolean;
     CSVMappedColumnName?: string;
     UserDefinedTableSource?: any;

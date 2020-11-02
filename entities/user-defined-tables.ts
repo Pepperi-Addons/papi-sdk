@@ -10,6 +10,7 @@ export interface UserDefinedTableRow {
 }
 
 export interface UserDefinedTableMetaData {
+    InternalID?: number;
     TableID: string;
     MainKeyType: {
         ID: number;

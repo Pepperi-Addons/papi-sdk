@@ -1,5 +1,5 @@
 import { PapiClient } from '../papi-client';
-import { ApiFieldObject } from '../entities';
+import { ApiFieldObject, ATDSettings, ATDMetaData } from '../entities';
 
 export class DistributorFlagsEndpoint {
     private options = {
@@ -25,54 +25,98 @@ export class TypeMetaData {
 }
 
 export class Types {
-    private options = {
-        subtype: '',
-    };
     constructor(private service: PapiClient, private typeName: string) {}
 
-    subtype(subtypeid: string) {
-        this.options.subtype = subtypeid;
-        return this;
+    subtype(subtypeid: string): SubTypes {
+        return new SubTypes(this.service, this.typeName, subtypeid);
     }
 
-    async get(): Promise<ApiFieldObject> {
-        let url = `/meta_data/${this.typeName}/types`;
-        if (this.options.subtype) {
-            url = `${url}/${this.subtype}`;
-        }
+    async get(): Promise<ATDMetaData[]> {
+        const url = `/meta_data/${this.typeName}/types`;
         return await this.service.get(url);
     }
 
-    fields() {
-        return new Fields(this.service, this.typeName, this.options.subtype);
+    fields = new Fields(this.service, this.typeName);
+}
+
+export class SubTypes {
+    constructor(private service: PapiClient, private typeName: string, private subtype: string) {}
+
+    async get(): Promise<ATDMetaData> {
+        const url = `/meta_data/${this.typeName}/types/${this.subtype}`;
+        return await this.service.get(url);
+    }
+
+    fields = new Fields(this.service, this.typeName, this.subtype);
+
+    settings = new Settings(this.service, this.typeName, this.subtype);
+
+    async addons(): Promise<ATDMetaData> {
+        const url = `/meta_data/${this.typeName}/types/${this.subtype}/addons`;
+        return await this.service.get(url);
     }
 }
 
 export class Fields {
     constructor(private service: PapiClient, private type: string, private subtypeid?: string) {}
 
-    async get(): Promise<ApiFieldObject[]>;
     async get(apiName: string): Promise<ApiFieldObject>;
-    async get(apiName?: string): Promise<ApiFieldObject | ApiFieldObject[]> {
-        let url = `/meta_data/${this.type}`;
-        if (this.subtypeid) {
-            url = `${url}/types/${this.subtypeid}`;
-        }
-        url = `${url}/fields`;
+    async get(params?: { include_owned: boolean }): Promise<ApiFieldObject[]>;
+    async get(
+        p: string | { include_owned: boolean } = { include_owned: true },
+    ): Promise<ApiFieldObject | ApiFieldObject[]> {
+        let url = this.createUrl();
 
-        if (apiName) {
-            url = `${url}/${apiName}`;
+        if (typeof p === 'string') {
+            if (p) {
+                url = `${url}/${p}`;
+            }
+        } else if (typeof p === 'object') {
+            if (p) {
+                url = `${url}?include_owned=${p.include_owned}`;
+            } else {
+                url = `${url}?include_owned=true`;
+            }
         }
         return await this.service.get(url);
     }
 
     async upsert(body: ApiFieldObject): Promise<ApiFieldObject> {
+        const url = this.createUrl();
+
+        return await this.service.post(url, body);
+    }
+
+    async delete(FieldID: string): Promise<boolean> {
+        let url = this.createUrl();
+
+        url = `${url}/${FieldID}`;
+
+        return await this.service
+            .delete(url)
+            .then((res) => res.text())
+            .then((res) => (res ? JSON.parse(res) : ''));
+    }
+
+    private createUrl() {
         let url = `/meta_data/${this.type}`;
         if (this.subtypeid) {
             url = `${url}/types/${this.subtypeid}`;
         }
-        url = `${url}/fields`;
+        return (url = `${url}/fields`);
+    }
+}
 
+export class Settings {
+    constructor(private service: PapiClient, private type: string, private subtypeid: string) {}
+
+    async get(): Promise<ATDSettings> {
+        const url = `/meta_data/${this.type}/types/${this.subtypeid}/settings`;
+        return await this.service.get(url);
+    }
+
+    async update(body: ATDSettings): Promise<ATDSettings> {
+        const url = `/meta_data/${this.type}/types/${this.subtypeid}/settings`;
         return await this.service.post(url, body);
     }
 }
