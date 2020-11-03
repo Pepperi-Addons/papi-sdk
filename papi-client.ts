@@ -15,6 +15,7 @@ import {
     Account,
     GeneralActivity,
     Transaction,
+    Transaction_Lines,
     User,
     UIControl,
     Profile,
