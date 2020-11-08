@@ -101,7 +101,7 @@ export class PapiClient {
         }
 
         if (headers) {
-            options.headers = Object.assign(options.headers, headers);
+            options.headers = { ...options.headers, ...headers };
         }
         const t0 = performance.now();
         const res = await fetch(fullURL, options);
