@@ -25,6 +25,7 @@ import {
 } from './entities';
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch';
+import { Agent } from 'https';
 
 type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
@@ -85,11 +86,17 @@ export class PapiClient {
 
     async apiCall(method: HttpMethod, url: string, body: any = undefined) {
         const fullURL = this.options.baseURL + url;
+
+        const httpsAgent = new Agent({
+            rejectUnauthorized: false,
+        });
+
         const options: any = {
             method: method,
             headers: {
                 authorization: 'Bearer ' + this.options.token,
             },
+            agent: httpsAgent,
         };
 
         if (body) {
