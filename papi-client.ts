@@ -89,6 +89,7 @@ export class PapiClient {
             method: method,
             headers: {
                 authorization: 'Bearer ' + this.options.token,
+                ...headers,
             },
         };
 
@@ -98,10 +99,6 @@ export class PapiClient {
 
         if (this.options.addonUUID) {
             options.headers['X-Pepperi-OwnerID'] = this.options.addonUUID;
-        }
-
-        if (headers) {
-            options.headers = { ...options.headers, ...headers };
         }
         const t0 = performance.now();
         const res = await fetch(fullURL, options);
