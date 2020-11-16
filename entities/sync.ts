@@ -61,3 +61,16 @@ export interface SyncJobInfo {
         SystemName: string;
     };
 }
+
+export interface SyncData {
+    SyncUUID: string;
+    LocalDataUpdates?: {
+        jsonBody: {
+            [key: number]: {
+                Headers: string[];
+                Lines: any[][];
+            };
+        };
+    };
+    LocalDataUpdatesURL?: string;
+}
