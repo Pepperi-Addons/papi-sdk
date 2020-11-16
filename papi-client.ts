@@ -25,7 +25,6 @@ import {
 } from './entities';
 import { performance } from 'perf_hooks';
 import fetch from 'node-fetch';
-import { Agent } from 'https';
 
 type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
