@@ -73,8 +73,8 @@ export class PapiClient {
             .then((res) => (res ? JSON.parse(res) : ''));
     }
 
-    async post(url: string, body: any = undefined): Promise<any> {
-        return this.apiCall('POST', url, body)
+    async post(url: string, body: any = undefined, headers: any = undefined): Promise<any> {
+        return this.apiCall('POST', url, body, headers)
             .then((res) => res.text())
             .then((res) => (res ? JSON.parse(res) : ''));
     }
@@ -83,13 +83,14 @@ export class PapiClient {
         return this.apiCall('DELETE', url);
     }
 
-    async apiCall(method: HttpMethod, url: string, body: any = undefined) {
+    async apiCall(method: HttpMethod, url: string, body: any = undefined, headers: any = undefined) {
         const fullURL = this.options.baseURL + url;
 
         const options: any = {
             method: method,
             headers: {
                 authorization: 'Bearer ' + this.options.token,
+                ...headers,
             },
         };
 
@@ -100,7 +101,6 @@ export class PapiClient {
         if (this.options.addonUUID) {
             options.headers['X-Pepperi-OwnerID'] = this.options.addonUUID;
         }
-
         const t0 = performance.now();
         const res = await fetch(fullURL, options);
         const t1 = performance.now();
