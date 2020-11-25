@@ -1,12 +1,11 @@
 export interface ATDMetaData {
-    UUID: string;
-    TypeID: number;
+    UUID?: string;
+    TypeID?: number;
+    InternalID?: number;
+    Icon?: string;
     ExternalID: string;
     Description: string;
-    CreationDate: string;
-    ModificationDate: string;
-    Hidden: boolean;
-    Owner: {
-        UUID: string;
-    };
+    CreationDateTime?: string;
+    ModificationDateTime?: string;
+    Hidden?: boolean;
 }
