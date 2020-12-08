@@ -23,8 +23,8 @@ import {
     Type,
     Catalog,
 } from './entities';
-import { performance } from 'perf_hooks';
-import fetch from 'node-fetch';
+
+import { papi_performance, papi_fetch } from './papi-module';
 
 type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
@@ -85,7 +85,6 @@ export class PapiClient {
 
     async apiCall(method: HttpMethod, url: string, body: any = undefined, headers: any = undefined) {
         const fullURL = this.options.baseURL + url;
-
         const options: any = {
             method: method,
             headers: {
@@ -101,9 +100,10 @@ export class PapiClient {
         if (this.options.addonUUID) {
             options.headers['X-Pepperi-OwnerID'] = this.options.addonUUID;
         }
-        const t0 = performance.now();
-        const res = await fetch(fullURL, options);
-        const t1 = performance.now();
+
+        const t0 = papi_performance.now();
+        const res = await papi_fetch(fullURL, options);
+        const t1 = papi_performance.now();
 
         if (!this.options.suppressLogging) {
             console.log(method, fullURL, 'took', (t1 - t0).toFixed(2), 'milliseconds');
