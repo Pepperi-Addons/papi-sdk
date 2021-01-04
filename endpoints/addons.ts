@@ -1,5 +1,5 @@
 import Endpoint from '../endpoint';
-import { Addon, InstalledAddon, AddonVersion, AddonAPIAsyncResult } from '../entities';
+import { Addon, InstalledAddon, AddonVersion, AddonAPIAsyncResult, AddonData, AddonDataScheme } from '../entities';
 import { PapiClient } from '../papi-client';
 
 class InstalledAddonEnpoint {
@@ -94,6 +94,51 @@ class AddonVersionEndpoint extends Endpoint<AddonVersion> {
     }
 }
 
+class AddonDataEndpoint extends Endpoint<AddonData> {
+    private options = {
+        uuid: '',
+        table: '',
+        key: '',
+    };
+    constructor(service: PapiClient) {
+        super(service, '/addons/data');
+    }
+
+    uuid(addonUUID: string) {
+        this.options.uuid = addonUUID;
+        return this;
+    }
+
+    table(tableName: string) {
+        this.options.table = tableName;
+        return this;
+    }
+
+    key(keyName: string) {
+        this.options.key = keyName;
+        return this;
+    }
+
+    async schemes(body: AddonDataScheme) {
+        return await this.service.post('/addons/data/schemes', body);
+    }
+
+    async get(params: any = {}) {
+        const url = this.GetAddonDataUrl(params);
+        return await this.service.get(url);
+    }
+    async post(body: any = undefined) {
+        const url = this.GetAddonDataUrl();
+        return await this.service.post(url, body);
+    }
+
+    private GetAddonDataUrl(params: any = {}) {
+        const url = `/addons/data/${this.options.uuid}/${this.options.table}/${this.options.key}`;
+        const queryString = Endpoint.encodeQueryParams(params);
+        return queryString ? url + '?' + queryString : url;
+    }
+}
+
 export class AddonEndpoint extends Endpoint<Addon> {
     constructor(service: PapiClient) {
         super(service, '/addons');
@@ -101,4 +146,5 @@ export class AddonEndpoint extends Endpoint<Addon> {
     installedAddons = new InstalledAddonsEnpoint(this.service);
     versions = new AddonVersionEndpoint(this.service);
     api = new AddonApiEndpoint(this.service);
+    data = new AddonDataEndpoint(this.service);
 }

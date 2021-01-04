@@ -42,3 +42,24 @@ export interface AddonAPISyncResult {
     success?: boolean;
     errorMessage?: string;
 }
+
+export interface AddonData {
+    Hidden?: boolean;
+    CreationDateTime?: string;
+    ModificationDateTime?: string;
+    [key: string]: any;
+}
+
+export interface AddonDataScheme {
+    Hidden?: boolean;
+    CreationDateTime?: string;
+    ModificationDateTime?: string;
+    Name: string;
+    Type?: 'data' | 'meta_data' | 'elastic';
+    Fields?: {
+        [key: string]: {
+            Type: 'String' | 'Bool' | 'Integer' | 'MultipleStringValues';
+        };
+    };
+    Validator?: string;
+}
