@@ -14,6 +14,7 @@ export * from './file-storage';
 export * from './audit-logs';
 export * from './atd-settings';
 export * from './atd-meta-data';
+export * from './transaction_lines';
 export * from './types';
 export * from './batch-api-response';
 export * from './export';

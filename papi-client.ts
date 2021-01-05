@@ -15,6 +15,7 @@ import {
     Account,
     GeneralActivity,
     Transaction,
+    TransactionLines,
     User,
     UIControl,
     Profile,
@@ -51,6 +52,7 @@ export class PapiClient {
     codeJobs = new CodeJobsEndpoint(this);
     activities = new Endpoint<GeneralActivity>(this, '/activities');
     transactions = new Endpoint<Transaction>(this, '/transactions');
+    transactionLines = new Endpoint<TransactionLines>(this, '/transaction_lines');
     allActivities = new Endpoint<GeneralActivity | Transaction>(this, '/all_activities');
     accounts = new Endpoint<Account>(this, '/accounts');
     users = new Endpoint<User>(this, '/users');
