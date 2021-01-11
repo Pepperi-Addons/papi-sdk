@@ -123,7 +123,7 @@ class AddonDataEndpoint extends Endpoint<AddonData> {
         return await this.service.post('/addons/data/schemes', body);
     }
 
-    async get(params: any = {}) {
+    async get(params: any = {}): Promise<Array<AddonData>> {
         const url = this.GetAddonDataUrl(params);
         return await this.service.get(url);
     }
