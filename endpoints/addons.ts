@@ -119,21 +119,28 @@ class AddonDataEndpoint extends Endpoint<AddonData> {
         return this;
     }
 
-    async schemes(body: AddonDataScheme) {
-        return await this.service.post('/addons/data/schemes', body);
-    }
+    schemes = {
+        post: async (body: AddonDataScheme): Promise<AddonDataScheme> => {
+            return await this.service.post('/addons/data/schemes', body);
+        },
+    };
 
     async get(params: any = {}): Promise<Array<AddonData>> {
         const url = this.GetAddonDataUrl(params);
         return await this.service.get(url);
     }
-    async post(body: any = undefined) {
+
+    async post(body: AddonData = {}) {
         const url = this.GetAddonDataUrl();
         return await this.service.post(url, body);
     }
 
     private GetAddonDataUrl(params: any = {}) {
-        const url = `/addons/data/${this.options.uuid}/${this.options.table}/${this.options.key}`;
+        let keyPart = '';
+        if (this.options.key != '') {
+            keyPart = '/' + this.options.key;
+        }
+        const url = `/addons/data/${this.options.uuid}/${this.options.table}${keyPart}`;
         const queryString = Endpoint.encodeQueryParams(params);
         return queryString ? url + '?' + queryString : url;
     }
