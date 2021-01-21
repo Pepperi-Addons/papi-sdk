@@ -1,4 +1,4 @@
-import Endpoint from '../endpoint';
+import Endpoint, { FindOptions } from '../endpoint';
 import { Addon, InstalledAddon, AddonVersion, AddonAPIAsyncResult, AddonData, AddonDataScheme } from '../entities';
 import { PapiClient } from '../papi-client';
 
@@ -116,7 +116,14 @@ class AddonDataEndpoint extends Endpoint<AddonData> {
 
     key(keyName: string) {
         this.options.key = keyName;
-        return this;
+        return {
+            get: async (params: FindOptions): Promise<AddonData> => {
+                let url = this.getEndpointURL();
+                const query = Endpoint.encodeQueryParams(params);
+                url = query ? url + '?' + query : url;
+                return await this.service.get(url);
+            },
+        };
     }
 
     schemes = {

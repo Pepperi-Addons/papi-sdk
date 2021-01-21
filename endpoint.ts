@@ -1,6 +1,5 @@
 import { PapiClient } from './index';
-import { BatchApiResponse } from './entities/batch-api-response';
-import { ExportApiResponse } from './entities';
+import { BatchApiResponse, ExportApiResponse } from './entities';
 
 export interface FindOptions {
     fields?: string[];
@@ -18,13 +17,13 @@ export class IterableEndpoint<T> {
     constructor(protected service: PapiClient, protected endpoint: string) {}
 
     async find(options: FindOptions = {}): Promise<T[]> {
-        let url = this.getEndpointUrl();
+        let url = this.getEndpointURL();
         const query = Endpoint.encodeQueryParams(options);
         url = query ? url + '?' + query : url;
         return this.service.get(url);
     }
 
-    getEndpointUrl() {
+    getEndpointURL() {
         return this.endpoint;
     }
 
@@ -69,7 +68,7 @@ export class IterableEndpoint<T> {
     }
 
     private async getFirstPage(options: any): Promise<{ items: T[]; numOfPages: number }> {
-        let url = this.getEndpointUrl();
+        let url = this.getEndpointURL();
         const query = Endpoint.encodeQueryParams(options);
         let items: T[] = [];
         url = query ? url + '?' + query : url;
@@ -86,17 +85,17 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
     }
 
     async get(id: number): Promise<T[]> {
-        let url = this.getEndpointUrl();
+        let url = this.getEndpointURL();
         url += '/' + id;
         return this.service.get(url);
     }
 
     async upsert(object: T): Promise<T> {
-        return this.service.post(this.getEndpointUrl(), object);
+        return this.service.post(this.getEndpointURL(), object);
     }
 
     async batch(objects: T[]): Promise<BatchApiResponse[]> {
-        return this.service.post('/batch' + this.getEndpointUrl(), objects);
+        return this.service.post('/batch' + this.getEndpointURL(), objects);
     }
 
     async export(options: FindOptions): Promise<ExportApiResponse> {
@@ -111,11 +110,11 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
             include_deleted: options.include_deleted,
             is_distinct: options.is_distinct,
         };
-        return this.service.post('/export' + this.getEndpointUrl(), body);
+        return this.service.post('/export' + this.getEndpointURL(), body);
     }
 
     async delete(id: number): Promise<boolean> {
-        let url = this.getEndpointUrl();
+        let url = this.getEndpointURL();
         url += '/' + id;
         return this.service
             .delete(url)
