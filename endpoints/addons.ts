@@ -1,4 +1,4 @@
-import Endpoint, { FindOptions } from '../endpoint';
+import Endpoint from '../endpoint';
 import { Addon, InstalledAddon, AddonVersion, AddonAPIAsyncResult, AddonData, AddonDataScheme } from '../entities';
 import { PapiClient } from '../papi-client';
 
@@ -94,51 +94,22 @@ class AddonVersionEndpoint extends Endpoint<AddonVersion> {
     }
 }
 
-class AddonDataEndpoint extends Endpoint<AddonData> {
-    private options = {
-        uuid: '',
-        table: '',
-        key: '',
-    };
-    constructor(service: PapiClient) {
-        super(service, '/addons/data');
-    }
+class TableEndpoint extends Endpoint<AddonData> {
+    private addonUUID: string;
+    private tableName: string;
 
-    uuid(addonUUID: string) {
-        this.options.uuid = addonUUID;
-        return this;
-    }
-
-    table(tableName: string) {
-        this.options.table = tableName;
-        return this;
+    constructor(service: PapiClient, addonUUID: string, tableName: string) {
+        super(service, `/addons/data/${addonUUID}/${tableName}`);
+        this.addonUUID = addonUUID;
+        this.tableName = tableName;
     }
 
     key(keyName: string) {
-        this.options.key = keyName;
         return {
-            get: async (params: FindOptions): Promise<AddonData> => {
-                let url = this.getEndpointURL();
-                const query = Endpoint.encodeQueryParams(params);
-                url = query ? url + '?' + query : url;
-                return await this.service.get(url);
+            get: async (): Promise<AddonData> => {
+                return await this.service.get(`/addons/data/${this.addonUUID}/${this.tableName}/${keyName}`);
             },
         };
-    }
-
-    schemes = {
-        post: async (body: AddonDataScheme): Promise<AddonDataScheme> => {
-            return await this.service.post('/addons/data/schemes', body);
-        },
-    };
-
-    getEndpointURL() {
-        let keyPart = '';
-        if (this.options.key != '') {
-            keyPart = '/' + this.options.key;
-        }
-        const url = `/addons/data/${this.options.uuid}/${this.options.table}${keyPart}`;
-        return url;
     }
 }
 
@@ -149,5 +120,19 @@ export class AddonEndpoint extends Endpoint<Addon> {
     installedAddons = new InstalledAddonsEnpoint(this.service);
     versions = new AddonVersionEndpoint(this.service);
     api = new AddonApiEndpoint(this.service);
-    data = new AddonDataEndpoint(this.service);
+    // data = new AddonDataEndpoint(this.service);
+    data = {
+        schemes: {
+            post: async (body: AddonDataScheme): Promise<AddonDataScheme> => {
+                return await this.service.post('/addons/data/schemes', body);
+            },
+        },
+        uuid: (addonUUID: string) => {
+            return {
+                table: (tableName: string) => {
+                    return new TableEndpoint(this.service, addonUUID, tableName);
+                },
+            };
+        },
+    };
 }

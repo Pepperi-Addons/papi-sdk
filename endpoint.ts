@@ -1,7 +1,7 @@
 import { PapiClient } from './index';
 import { BatchApiResponse, ExportApiResponse } from './entities';
 
-export interface FindOptions {
+interface FindOptions {
     fields?: string[];
     where?: string;
     orderBy?: string;
