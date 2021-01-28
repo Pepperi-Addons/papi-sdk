@@ -214,6 +214,14 @@ export interface MenuDataViewField extends DataViewField {
 
 export interface ConfigurationDataView extends BaseDataView {
     Type: 'Configuration';
+    Fields?: ConfigurationDataViewField[];
+}
+
+export interface ConfigurationDataViewField extends DataViewField {
+    Title?: string;
+    Type?: DataViewFieldType;
+    Mandatory?: boolean;
+    ReadOnly?: boolean;
 }
 
 export interface CardDataView extends BaseFormDataView {
