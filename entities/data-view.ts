@@ -88,10 +88,11 @@ export const ResourceTypes = [
     'transaction_lines',
     'contacts',
     'lists',
+    'catalogs',
 ] as const;
 export type ResourceType = typeof ResourceTypes[number];
 
-export const ResoursePrefixes = ['GA', 'OA', 'CP', 'AT', 'GL'] as const;
+export const ResoursePrefixes = ['GA', 'OA', 'CP', 'AT', 'GL', 'CA'] as const;
 export type ResourcePrefix = typeof ResoursePrefixes[number];
 
 export const VerticalAlignments = {
