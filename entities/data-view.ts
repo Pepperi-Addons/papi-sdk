@@ -74,6 +74,7 @@ export const DataViewFieldTypes = {
     Package: 53,
     RelatedObjectsCards: 54,
     BooleanText: 55,
+    RichTextHTML: 56,
 };
 export type DataViewFieldType = keyof typeof DataViewFieldTypes;
 
