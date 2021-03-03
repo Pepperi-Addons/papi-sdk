@@ -1,5 +1,5 @@
 import Endpoint from '../endpoint';
-import { Addon, InstalledAddon, AddonVersion, AddonAPIAsyncResult } from '../entities';
+import { Addon, InstalledAddon, AddonVersion, AddonAPIAsyncResult, AddonData, AddonDataScheme } from '../entities';
 import { PapiClient } from '../papi-client';
 
 class InstalledAddonEnpoint {
@@ -94,6 +94,25 @@ class AddonVersionEndpoint extends Endpoint<AddonVersion> {
     }
 }
 
+class TableEndpoint extends Endpoint<AddonData> {
+    private addonUUID: string;
+    private tableName: string;
+
+    constructor(service: PapiClient, addonUUID: string, tableName: string) {
+        super(service, `/addons/data/${addonUUID}/${tableName}`);
+        this.addonUUID = addonUUID;
+        this.tableName = tableName;
+    }
+
+    key(keyName: string) {
+        return {
+            get: async (): Promise<AddonData> => {
+                return await this.service.get(`/addons/data/${this.addonUUID}/${this.tableName}/${keyName}`);
+            },
+        };
+    }
+}
+
 export class AddonEndpoint extends Endpoint<Addon> {
     constructor(service: PapiClient) {
         super(service, '/addons');
@@ -101,4 +120,19 @@ export class AddonEndpoint extends Endpoint<Addon> {
     installedAddons = new InstalledAddonsEnpoint(this.service);
     versions = new AddonVersionEndpoint(this.service);
     api = new AddonApiEndpoint(this.service);
+    // data = new AddonDataEndpoint(this.service);
+    data = {
+        schemes: {
+            post: async (body: AddonDataScheme): Promise<AddonDataScheme> => {
+                return await this.service.post('/addons/data/schemes', body);
+            },
+        },
+        uuid: (addonUUID: string) => {
+            return {
+                table: (tableName: string) => {
+                    return new TableEndpoint(this.service, addonUUID, tableName);
+                },
+            };
+        },
+    };
 }

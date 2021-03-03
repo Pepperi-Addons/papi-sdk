@@ -1,6 +1,5 @@
 import { PapiClient } from './index';
-import { BatchApiResponse } from './entities/batch-api-response';
-import { ExportApiResponse } from './entities';
+import { BatchApiResponse, ExportApiResponse } from './entities';
 
 interface FindOptions {
     fields?: string[];
@@ -16,19 +15,16 @@ interface FindOptions {
 
 export class IterableEndpoint<T> {
     constructor(protected service: PapiClient, protected endpoint: string) {}
-    /** @depracated function
-     * this function is depracated and will be remove in version 2.X!
-     * please use iter().toArray() instead
-     */
 
     async find(options: FindOptions = {}): Promise<T[]> {
-        console.warn(
-            'this function is depracated and will be remove is version 2.X! \n please use iter().toArray() instead ',
-        );
-        let url = this.endpoint;
+        let url = this.getEndpointURL();
         const query = Endpoint.encodeQueryParams(options);
         url = query ? url + '?' + query : url;
         return this.service.get(url);
+    }
+
+    getEndpointURL() {
+        return this.endpoint;
     }
 
     iter(options: FindOptions = {}) {
@@ -72,7 +68,7 @@ export class IterableEndpoint<T> {
     }
 
     private async getFirstPage(options: any): Promise<{ items: T[]; numOfPages: number }> {
-        let url = this.endpoint;
+        let url = this.getEndpointURL();
         const query = Endpoint.encodeQueryParams(options);
         let items: T[] = [];
         url = query ? url + '?' + query : url;
@@ -89,17 +85,17 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
     }
 
     async get(id: number): Promise<T[]> {
-        let url = this.endpoint;
+        let url = this.getEndpointURL();
         url += '/' + id;
         return this.service.get(url);
     }
 
     async upsert(object: T): Promise<T> {
-        return this.service.post(this.endpoint, object);
+        return this.service.post(this.getEndpointURL(), object);
     }
 
     async batch(objects: T[]): Promise<BatchApiResponse[]> {
-        return this.service.post('/batch' + this.endpoint, objects);
+        return this.service.post('/batch' + this.getEndpointURL(), objects);
     }
 
     async export(options: FindOptions): Promise<ExportApiResponse> {
@@ -114,11 +110,11 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
             include_deleted: options.include_deleted,
             is_distinct: options.is_distinct,
         };
-        return this.service.post('/export' + this.endpoint, body);
+        return this.service.post('/export' + this.getEndpointURL(), body);
     }
 
     async delete(id: number): Promise<boolean> {
-        let url = this.endpoint;
+        let url = this.getEndpointURL();
         url += '/' + id;
         return this.service
             .delete(url)
