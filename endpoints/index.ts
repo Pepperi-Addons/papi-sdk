@@ -5,3 +5,4 @@ export * from './maintenance';
 export * from './audit-logs';
 export * from './sync';
 export * from './file-storage';
+export * from './data-views';
