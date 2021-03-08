@@ -16,8 +16,4 @@ export class AuditLogsEndpoint extends Endpoint<AuditLog> {
     constructor(service: PapiClient) {
         super(service, '/audit_logs');
     }
-
-    uuid(uuid: string) {
-        return new AuditLogEndpoint(this.service, uuid);
-    }
 }
