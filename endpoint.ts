@@ -122,7 +122,7 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
             .then((res) => (res ? JSON.parse(res) : ''));
     }
 
-    uuid(uuid: string) : any {
+    uuid(uuid: string): any {
         const service = this.service;
         let url = this.getEndpointURL();
         url += '/uuid/' + uuid;
