@@ -25,6 +25,10 @@ export class CodeJobsEndpoint extends Endpoint<CodeJob> {
         super(service, '/code_jobs');
     }
 
+    uuid(uuid: string) {
+        return new CodeJobEndpoint(this.service, uuid, this.isAsync);
+    }
+
     async() {
         this.isAsync = true;
         return this;
