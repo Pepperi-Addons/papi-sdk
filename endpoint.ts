@@ -122,6 +122,17 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
             .then((res) => (res ? JSON.parse(res) : ''));
     }
 
+    uuid(uuid: string): { get: () => Promise<T> } {
+        const service = this.service;
+        let url = this.getEndpointURL();
+        url += '/uuid/' + uuid;
+        return {
+            get(): Promise<T> {
+                return service.get(url);
+            },
+        };
+    }
+
     static encodeQueryParams(params: any) {
         const ret: string[] = [];
 

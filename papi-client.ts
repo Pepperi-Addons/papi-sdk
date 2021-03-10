@@ -8,6 +8,7 @@ import {
     AuditLogsEndpoint,
     SyncEndpoint,
     FileStorageEndpoint,
+    DataViewsEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -44,7 +45,7 @@ export class PapiClient {
         type: (typeObject: string) => {
             return new TypeMetaData(this, typeObject);
         },
-        dataViews: new Endpoint<DataView>(this, '/meta_data/data_views'),
+        dataViews: new DataViewsEndpoint(this),
         pepperiObjects: new Endpoint<PepperiObject>(this, '/meta_data/pepperiObjects'),
     };
 
