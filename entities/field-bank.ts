@@ -13,14 +13,14 @@ export interface FieldBank {
     FieldParams?: any;
 }
 
-export interface AddonOptions {  
-   Type:'Navigation'|'Component'|'BackgroundJob';
-   SubType:string;
-   AddonUUID:string;
-   RelativeURL:string;
-   ComponentName?:string;
-   ModuleName?:string;
-   VisibleEndpoint?: string;
-   MultiSelection?:boolean;
-   Confirmation?:boolean;
+export interface AddonOptions {
+    Type: 'Navigation' | 'Component' | 'BackgroundJob';
+    SubType: string;
+    AddonUUID: string;
+    RelativeURL: string;
+    ComponentName?: string;
+    ModuleName?: string;
+    VisibleEndpoint?: string;
+    MultiSelection?: boolean;
+    Confirmation?: boolean;
 }
