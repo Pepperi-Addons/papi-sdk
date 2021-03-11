@@ -12,3 +12,15 @@ export interface FieldBank {
     FieldPrefix: string;
     FieldParams?: any;
 }
+
+export interface AddonOptions {  
+   Type:'Navigation'|'Component'|'BackgroundJob';
+   SubType:string;
+   AddonUUID:string;
+   RelativeURL:string;
+   ComponentName?:string;
+   ModuleName?:string;
+   VisibleEndpoint?: string;
+   MultiSelection?:boolean;
+   Confirmation?:boolean;
+}
