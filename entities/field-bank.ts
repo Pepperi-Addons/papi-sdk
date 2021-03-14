@@ -33,31 +33,14 @@ export interface AddonField {
 export interface ComponentAddonField extends AddonField {
     Type: 'Component';
     SubType: ComponentAddonSubType;
-    AddonUUID: string;
-    RelativeURL: string;
-    ComponentName?: string;
-    ModuleName?: string;
-    VisibleEndpoint?: string;
-    Confirmation?: boolean;
-    MultiSelection?: boolean;
 }
 
 export interface NavigationAddonField extends AddonField {
     Type: 'Navigation';
     SubType: NavigationAddonSubType;
-    AddonUUID: string;
-    RelativeURL: string;
-    VisibleEndpoint?: string;
-    MultiSelection?: boolean;
-    Confirmation?: boolean;
 }
 
 export interface BackgroundJobAddonField extends AddonField {
     Type: 'BackgroundJob';
     SubType: BackgroundJobAddonSubType;
-    AddonUUID: string;
-    RelativeURL: string;
-    VisibleEndpoint?: string;
-    MultiSelection?: boolean;
-    Confirmation?: boolean;
 }
