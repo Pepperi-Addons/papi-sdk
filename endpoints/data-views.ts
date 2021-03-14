@@ -6,16 +6,28 @@ export class DataViewsEndpoint extends Endpoint<DataView> {
     constructor(service: PapiClient) {
         super(service, '/meta_data/data_views');
     }
-
     fieldBank = (fieldBankUUID: string) => {
         const service = this.service;
         return {
-            get customFields() {
-                return new Endpoint<FieldBankCustomField>(
-                    service,
-                    `/meta_data/data_views/field_bank/${fieldBankUUID}/custom_fields`,
-                );
-            },
+            customFields: new CustomFields(service, fieldBankUUID),
         };
     };
+}
+
+class CustomFields {
+    constructor(private service: PapiClient, private fieldBankUUID: string) {}
+    url = `/meta_data/data_views/field_bank/${this.fieldBankUUID}/custom_fields`;
+    key(keyName: string) {
+        return {
+            get: async (): Promise<FieldBankCustomField> => {
+                return await this.service.get(`${this.url}/${keyName}`);
+            },
+        };
+    }
+    async get(): Promise<FieldBankCustomField[]> {
+        return await this.service.get(this.url);
+    }
+    async post(body: FieldBankCustomField): Promise<FieldBankCustomField> {
+        return await this.service.post(this.url, body);
+    }
 }
