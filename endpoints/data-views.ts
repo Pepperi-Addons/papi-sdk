@@ -1,4 +1,4 @@
-import { FieldBank } from '..';
+import { FieldBank, DataView } from '../entities';
 import Endpoint from '../endpoint';
 import { PapiClient } from '../papi-client';
 

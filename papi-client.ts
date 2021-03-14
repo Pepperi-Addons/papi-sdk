@@ -19,12 +19,13 @@ import {
     User,
     UIControl,
     Profile,
+    DataView,
     PepperiObject,
     Type,
     Catalog,
 } from './entities';
 
-import { papi_fetch, papi_performance } from './papi-module';
+import { papi_performance, papi_fetch } from './papi-module';
 
 type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
