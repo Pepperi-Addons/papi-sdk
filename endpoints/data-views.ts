@@ -1,5 +1,5 @@
-import { FieldBank } from '..';
 import Endpoint from '../endpoint';
+import { FieldBankCustomField } from '../entities';
 import { PapiClient } from '../papi-client';
 
 export class DataViewsEndpoint extends Endpoint<DataView> {
@@ -11,7 +11,7 @@ export class DataViewsEndpoint extends Endpoint<DataView> {
         const service = this.service;
         return {
             get customFields() {
-                return new Endpoint<FieldBank>(
+                return new Endpoint<FieldBankCustomField>(
                     service,
                     `/meta_data/data_views/field_bank/${fieldBankUUID}/custom_fields`,
                 );

@@ -1,10 +1,7 @@
+import { AddonData } from '.';
 import { DataViewFieldType } from './data-view';
 
-export interface FieldBank {
-    UUID?: string;
-    Hidden?: boolean;
-    CreationDateTime?: string;
-    ModificationDateTime?: string;
+export interface FieldBankCustomField extends AddonData {
     Title: string;
     FieldType?: DataViewFieldType;
     Group: string;
