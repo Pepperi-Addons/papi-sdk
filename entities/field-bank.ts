@@ -13,18 +13,14 @@ export interface FieldBank {
     FieldParams?: any;
 }
 
-export type Component  = 'NG11' | 'Default';
-export type Navigation = 'Settings' | 'Default';
-export type BackgroundJob = 'None' | 'DownloadURL' ;
-
-export type OpenType = 
-    {'Component': Component} | 
-    {'Navigation': Navigation } |
-    {'BackgroundJob': BackgroundJob};
-
-export type AddonField<T extends OpenType> = {
-    readonly Type?: keyof T;
-    SubType: T[keyof T];
+type AddonFieldType = 'Component' | 'Navigation' | 'BackgroundJob';
+type ComponentAddonSubType = 'ng11';
+type NavigationAddonSubType = 'settings';
+type BackgroundJobAddonSubType = 'None' | 'DownloadURL';
+type AddonFieldSubType = ComponentAddonSubType | NavigationAddonSubType | BackgroundJobAddonSubType;
+export interface AddonField {
+    Type: AddonFieldType;
+    SubType: AddonFieldSubType;
     AddonUUID: string;
     RelativeURL: string;
     ComponentName?: string;
@@ -32,4 +28,19 @@ export type AddonField<T extends OpenType> = {
     VisibleEndpoint?: string;
     MultiSelection?: boolean;
     Confirmation?: boolean;
+}
+
+export interface ComponentAddonField extends AddonField {
+    Type: 'Component';
+    SubType: ComponentAddonSubType;
+}
+
+export interface NavigationAddonField extends AddonField {
+    Type: 'Navigation';
+    SubType: NavigationAddonSubType;
+}
+
+export interface BackgroundJobAddonField extends AddonField {
+    Type: 'BackgroundJob';
+    SubType: BackgroundJobAddonSubType;
 }
