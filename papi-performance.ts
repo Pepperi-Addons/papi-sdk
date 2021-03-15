@@ -38,11 +38,11 @@ export function getGlobalObject<T>(): T {
 
 const INITIAL_TIME = Date.now();
 
-export const crossPlatformPerformance: Performance  = (() => {
+export const crossPlatformPerformance: Performance = (() => {
     if (isNodeEnv()) {
         try {
             const perfHooks = dynamicRequire(module, 'perf_hooks') as {
-                performance:Performance;
+                performance: Performance;
             };
             return perfHooks.performance;
         } catch (e) {
