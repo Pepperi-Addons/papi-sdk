@@ -19,7 +19,7 @@ export * from './batch-api-response';
 export * from './export';
 export * from './catalog';
 export * from './sync';
-export * from './field-bank';
+export * from './field-bank-custom-field';
 // need something here that can be transpiled to js
 // all the other entities are interfaces
 export class Entities {}

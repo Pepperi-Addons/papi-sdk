@@ -1,10 +1,7 @@
+import { AddonData } from '.';
 import { DataViewFieldType } from './data-view';
 
-export interface FieldBank {
-    UUID?: string;
-    Hidden?: boolean;
-    CreationDateTime?: string;
-    ModificationDateTime?: string;
+export interface FieldBankCustomField extends AddonData {
     Title: string;
     FieldType?: DataViewFieldType;
     Group: string;
@@ -27,7 +24,6 @@ interface AddonFieldBase {
     MultiSelection?: boolean;
     Confirmation?: boolean;
 }
-
 export interface ComponentAddonField extends AddonFieldBase {
     Type: 'Component';
     SubType: ComponentAddonSubType;
