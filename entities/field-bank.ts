@@ -23,12 +23,9 @@ interface AddonFieldBase {
     SubType: AddonFieldSubType;
     AddonUUID: string;
     RelativeURL: string;
-    ComponentName?: string;
-    ModuleName?: string;
     VisibleEndpoint?: string;
     MultiSelection?: boolean;
     Confirmation?: boolean;
-    Title?: string;
 }
 
 export interface ComponentAddonField extends AddonFieldBase {
