@@ -37,41 +37,19 @@ export function getGlobalObject<T>(): T {
 // tslint:enable:strict-type-predicates
 
 const INITIAL_TIME = Date.now();
-let prevNow = 0;
 
-/**
- * Cross platform compatible partial performance implementation
- */
-interface CrossPlatformPerformance {
-    /**
-     * Returns the current timestamp in ms
-     */
-    now(): number;
-    timeOrigin: number;
-}
-
-const performanceFallback: CrossPlatformPerformance = {
-    now(): number {
-        let now = Date.now() - INITIAL_TIME;
-        if (now < prevNow) {
-            now = prevNow;
-        }
-        prevNow = now;
-        return now;
-    },
-    timeOrigin: INITIAL_TIME,
-};
-
-export const crossPlatformPerformance: CrossPlatformPerformance = (() => {
+export const crossPlatformPerformance: Performance  = (() => {
     if (isNodeEnv()) {
         try {
-            const perfHooks = dynamicRequire(module, 'perf_hooks') as { performance: CrossPlatformPerformance };
+            const perfHooks = dynamicRequire(module, 'perf_hooks') as {
+                performance:Performance;
+            };
             return perfHooks.performance;
-        } catch (_) {
-            return performanceFallback;
+        } catch (e) {
+            // return performanceFallback;
+            console.log(e);
         }
     }
-
     if (getGlobalObject<Window>().performance) {
         // Polyfill for performance.timeOrigin.
         //
@@ -81,11 +59,11 @@ export const crossPlatformPerformance: CrossPlatformPerformance = (() => {
         if (performance.timeOrigin === undefined) {
             // As of writing, performance.timing is not available in Web Workers in mainstream browsers, so it is not always a
             // valid fallback. In the absence of a initial time provided by the browser, fallback to INITIAL_TIME.
+            // eslint-disable-next-line
             // @ts-ignore
             // tslint:disable-next-line:deprecation
             performance.timeOrigin = (performance.timing && performance.timing.navigationStart) || INITIAL_TIME;
         }
     }
-
-    return getGlobalObject<Window>().performance || performanceFallback;
+    return getGlobalObject<Window>().performance;
 })();
