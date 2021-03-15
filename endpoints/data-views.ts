@@ -27,7 +27,7 @@ class CustomFields {
     async get(): Promise<FieldBankCustomField[]> {
         return await this.service.get(this.url);
     }
-    async post(body: FieldBankCustomField): Promise<FieldBankCustomField> {
+    async upsert(body: FieldBankCustomField): Promise<FieldBankCustomField> {
         return await this.service.post(this.url, body);
     }
 }
