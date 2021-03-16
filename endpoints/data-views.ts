@@ -1,5 +1,5 @@
 import Endpoint from '../endpoint';
-import { FieldBankCustomField } from '../entities';
+import { DataView, FieldBankCustomField } from '../entities';
 import { PapiClient } from '../papi-client';
 
 export class DataViewsEndpoint extends Endpoint<DataView> {
