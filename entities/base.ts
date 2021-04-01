@@ -5,6 +5,6 @@ interface NestedObjectData {
 }
 
 export interface NestedObject {
-    Data?: NestedObjectData[];
+    Data?: NestedObjectData[] | NestedObjectData;
     URI?: string;
 }
