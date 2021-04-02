@@ -19,10 +19,10 @@ import {
     User,
     UIControl,
     Profile,
-    DataView,
     PepperiObject,
     Type,
     Catalog,
+    Item,
 } from './entities';
 
 import { papi_performance, papi_fetch } from './papi-module';
@@ -67,6 +67,7 @@ export class PapiClient {
     application = {
         sync: new SyncEndpoint(this),
     };
+    items = new Endpoint<Item>(this, '/items');
 
     constructor(private options: PapiClientOptions) {}
 
