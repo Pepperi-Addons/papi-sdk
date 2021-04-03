@@ -5,7 +5,7 @@ export interface TransactionLines {
     UUID?: string;
     Archive?: boolean;
     CreationDateTime?: string;
-    DeliveryDate?: null;
+    DeliveryDate?: string;
     Hidden?: boolean;
     LineNumber: number;
     ModificationDateTime?: string;
@@ -17,4 +17,5 @@ export interface TransactionLines {
     UnitsQuantity: number;
     Item: NestedObject;
     Transaction: NestedObject;
+    [key: string]: any;
 }
