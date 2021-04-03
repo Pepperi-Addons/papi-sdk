@@ -1,7 +1,7 @@
 import { NestedObject, ImageObject } from './base';
 
 export interface Item {
-    ExternalID: number;
+    ExternalID: string;
     MainCategoryID: string;
     InternalID?: number;
     UUID?: string;
