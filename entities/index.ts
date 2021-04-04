@@ -20,6 +20,8 @@ export * from './export';
 export * from './catalog';
 export * from './sync';
 export * from './field-bank-custom-field';
+export * from './item';
+export * from './transaction-lines';
 // need something here that can be transpiled to js
 // all the other entities are interfaces
 export class Entities {}

@@ -1,10 +1,10 @@
 import { PapiClient } from './index';
 import { BatchApiResponse, ExportApiResponse } from './entities';
 
-interface FindOptions {
+export interface FindOptions {
     fields?: string[];
     where?: string;
-    orderBy?: string;
+    order_by?: string;
     page?: number;
     page_size?: number;
     include_nested?: boolean;
@@ -102,7 +102,7 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
         const body = {
             fields: options.fields ? options.fields.join(',') : undefined,
             where: options.where,
-            orderBy: options.orderBy,
+            order_by: options.order_by,
             page: options.page,
             page_size: options.page_size,
             include_nested: options.include_nested,

@@ -5,6 +5,11 @@ interface NestedObjectData {
 }
 
 export interface NestedObject {
-    Data?: NestedObjectData[];
+    Data?: NestedObjectData;
     URI?: string;
+}
+
+export interface ImageObject {
+    URL?: string;
+    Content?: string;
 }
