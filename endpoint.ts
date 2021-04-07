@@ -84,6 +84,16 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
         super(service, endpoint);
     }
 
+    async count(options: FindOptions = {}): Promise<number> {
+        let url = '/Totals';
+        url += this.getEndpointURL();
+        url += '?select=count(InternalID) as count';
+        const query = Endpoint.encodeQueryParams(options);
+        url = query ? url + '&' + query : url;
+        const countObject = await this.service.get(url);
+        return countObject[0].count;
+    }
+
     async get(id: number): Promise<T[]> {
         let url = this.getEndpointURL();
         url += '/' + id;
