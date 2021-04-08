@@ -19,7 +19,7 @@ export class DistributorFlagsEndpoint {
 
 export class TypeMetaData {
     constructor(private service: PapiClient, private typeObject: string) {}
-
+ 
     types = new Types(this.service, this.typeObject);
     fields = new Fields(this.service, this.typeObject);
 }
@@ -61,7 +61,7 @@ export class Fields {
     constructor(private service: PapiClient, private type: string, private subtypeid?: string) {}
 
     async get(apiName: string): Promise<ApiFieldObject>;
-    async get(params?: { include_owned: boolean }): Promise<ApiFieldObject[]>;
+    async get(params?: { include_owned: boolean; include_internal: boolean }): Promise<ApiFieldObject[]>;
     async get(
         p: string | { include_owned: boolean } = { include_owned: true },
     ): Promise<ApiFieldObject | ApiFieldObject[]> {

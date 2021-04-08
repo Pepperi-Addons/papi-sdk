@@ -19,10 +19,11 @@ import {
     User,
     UIControl,
     Profile,
-    DataView,
     PepperiObject,
     Type,
     Catalog,
+    Item,
+    TransactionLines,
 } from './entities';
 
 import { papi_performance, papi_fetch } from './papi-module';
@@ -67,6 +68,8 @@ export class PapiClient {
     application = {
         sync: new SyncEndpoint(this),
     };
+    items = new Endpoint<Item>(this, '/items');
+    transactionLines = new Endpoint<TransactionLines>(this, '/transaction_lines');
 
     constructor(private options: PapiClientOptions) {}
 
@@ -111,9 +114,9 @@ export class PapiClient {
         if (this.options.actionUUID) {
             options.headers['X-Pepperi-ActionID'] = this.options.actionUUID;
         }
-        const t0 = papi_performance.now();
+        const t0 = papi_performance?.now();
         const res = await papi_fetch(fullURL, options);
-        const t1 = papi_performance.now();
+        const t1 = papi_performance?.now();
 
         if (!this.options.suppressLogging) {
             console.log(method, fullURL, 'took', (t1 - t0).toFixed(2), 'milliseconds');
