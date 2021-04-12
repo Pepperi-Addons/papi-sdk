@@ -1,3 +1,5 @@
+type PNSMessageType = 'insert' | 'update' | 'remove';
+
 export interface Subscription {
     FunctionName: string;
     AddonPath: string;
@@ -12,7 +14,7 @@ export interface UnSubscription extends Subscription {
 }
 
 export interface PNSMessage {
-    Type: string;
+    Type: PNSMessageType;
     ActionType: string;
     Resource: string;
     MessageAttributes: { UpdatedFields: string[] };
