@@ -15,7 +15,7 @@ export interface TransactionLines {
     UnitPrice?: number;
     UnitPriceAfterDiscount?: number;
     UnitsQuantity: number;
-    Item: NestedObject;
-    Transaction: NestedObject;
+    Item?: NestedObject;
+    Transaction?: NestedObject;
     [key: string]: any;
 }
