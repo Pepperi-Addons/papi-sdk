@@ -93,7 +93,7 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
         });
         url = query ? url + '?' + query : url;
         const countObject = await this.service.get(url);
-        return countObject[0].count;
+        return countObject && countObject.length == 1 ? countObject[0].count : 0;
     }
 
     async get(id: number): Promise<T[]> {
