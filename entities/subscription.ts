@@ -1,22 +1,18 @@
-type PNSMessageType = 'insert' | 'update' | 'remove';
+type PNSMessageType = 'action' | 'data' | 'event';
 
 export interface Subscription {
-    FunctionName: string;
-    AddonPath: string;
+    Name: string;
     CreationDateTime?: string;
     ModificationDateTime?: string;
+    AddonRelativeURL: string;
+    Type: PNSMessageType;
     Hidden?: boolean;
-    SubscriptionARN?: string;
+    AddonUUID: string;
     FilterPolicy?: any;
-}
-export interface UnSubscription extends Subscription {
-    ExpirationDateTime?: string;
 }
 
 export interface PNSMessage {
     Type: PNSMessageType;
-    ActionType: string;
-    Resource: string;
-    MessageAttributes: { UpdatedFields: string[] };
-    Message: string;
+    Message: any;
+    FilterAttributes: { [key: string]: number | string | string[] };
 }

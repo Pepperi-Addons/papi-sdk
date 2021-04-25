@@ -9,7 +9,7 @@ import {
     SyncEndpoint,
     FileStorageEndpoint,
     DataViewsEndpoint,
-    NotificationsEndpoint,
+    NotificationEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -71,9 +71,9 @@ export class PapiClient {
     };
     items = new Endpoint<Item>(this, '/items');
     transactionLines = new Endpoint<TransactionLines>(this, '/transaction_lines');
-    notifications = new NotificationsEndpoint(this);
+    notifications = new NotificationEndpoint(this);
 
-    constructor(private options: PapiClientOptions) {}
+    constructor(private options: PapiClientOptions) { }
 
     async get(url: string): Promise<any> {
         return this.apiCall('GET', url)
@@ -129,7 +129,7 @@ export class PapiClient {
             let error = '';
             try {
                 error = JSON.stringify(await res.json());
-            } catch {}
+            } catch { }
 
             throw new Error(`${fullURL} failed with status: ${res.status} - ${res.statusText} error: ${error}`);
         }
