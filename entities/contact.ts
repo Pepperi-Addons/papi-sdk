@@ -1,4 +1,7 @@
+import { NestedObject } from './base';
+
 export interface Contact {
+    InternalID?: number;
     CreationDateTime?: string;
     Email?: string;
     Email2?: string;
@@ -14,4 +17,7 @@ export interface Contact {
     Status?: number;
     TypeDefinitionID?: number;
     UUID?: string;
+    Account?: NestedObject;
+    Profile?: NestedObject;
+    [key: string]: any;
 }
