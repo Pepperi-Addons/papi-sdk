@@ -23,6 +23,7 @@ export * from './field-bank-custom-field';
 export * from './item';
 export * from './transaction-lines';
 export * from './contact';
+export * from './image';
 
 // need something here that can be transpiled to js
 // all the other entities are interfaces
