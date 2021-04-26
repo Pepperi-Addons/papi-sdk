@@ -14,4 +14,5 @@ export interface Contact {
     Status?: number;
     TypeDefinitionID?: number;
     UUID?: string;
+    InternalID?: number;
 }
