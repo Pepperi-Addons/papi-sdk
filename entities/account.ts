@@ -38,4 +38,5 @@ export interface Account {
     SpecialPriceList?: string;
     Users?: NestedObject;
     Catalogs?: NestedObject;
+    [key: string]: any;
 }
