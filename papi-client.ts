@@ -25,6 +25,7 @@ import {
     Catalog,
     Item,
     TransactionLines,
+    Contact,
 } from './entities';
 
 import { papi_performance, papi_fetch } from './papi-module';
@@ -71,6 +72,7 @@ export class PapiClient {
     };
     items = new Endpoint<Item>(this, '/items');
     transactionLines = new Endpoint<TransactionLines>(this, '/transaction_lines');
+    contacts = new Endpoint<Contact>(this, '/contacts');
     notifications = new NotificationEndpoint(this);
 
     constructor(private options: PapiClientOptions) { }

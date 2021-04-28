@@ -9,10 +9,14 @@ export interface Subscription {
     Hidden?: boolean;
     AddonUUID: string;
     FilterPolicy?: any;
+    ExpirationDateTime?: string;
 }
 
 export interface PNSMessage {
     Type: PNSMessageType;
     Message: any;
     FilterAttributes: { [key: string]: number | string | string[] };
+}
+export interface PublishMessageResult {
+    success?: boolean;
 }

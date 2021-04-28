@@ -96,7 +96,7 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
         return countObject && countObject.length == 1 ? countObject[0].count : 0;
     }
 
-    async get(id: number): Promise<T[]> {
+    async get(id: number): Promise<T> {
         let url = this.getEndpointURL();
         url += '/' + id;
         return this.service.get(url);
