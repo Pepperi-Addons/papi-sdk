@@ -1,4 +1,4 @@
-export interface UserDefinedTableRow {
+export interface UserDefinedTableRowBase{
     InternalID?: number;
     CreationDateTime?: string;
     Hidden?: boolean;
@@ -6,7 +6,13 @@ export interface UserDefinedTableRow {
     MapDataExternalID: string;
     ModificationDateTime?: string;
     SecondaryKey: string;
+}
+export interface UserDefinedTableRow extends UserDefinedTableRowBase {    
     Values: string[];
+}
+
+export interface UserDefinedTableStringValueRow extends UserDefinedTableRowBase {
+    StringValue: string;
 }
 
 export interface UserDefinedTableMetaData {
