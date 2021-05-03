@@ -3,10 +3,12 @@ import { BatchApiResponse, ExportApiResponse } from './entities';
 
 export interface FindOptions {
     fields?: string[];
+    select?: string[];
     where?: string;
     order_by?: string;
     page?: number;
     page_size?: number;
+    group_by?: number;
     include_nested?: boolean;
     full_mode?: boolean;
     include_deleted?: boolean;
