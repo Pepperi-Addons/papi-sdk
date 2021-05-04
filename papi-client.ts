@@ -26,6 +26,7 @@ import {
     Item,
     TransactionLines,
     Contact,
+    Image,
 } from './entities';
 
 import { papi_performance, papi_fetch } from './papi-module';
@@ -73,9 +74,10 @@ export class PapiClient {
     items = new Endpoint<Item>(this, '/items');
     transactionLines = new Endpoint<TransactionLines>(this, '/transaction_lines');
     contacts = new Endpoint<Contact>(this, '/contacts');
+    images = new Endpoint<Image>(this, '/images');
     notifications = new NotificationEndpoint(this);
 
-    constructor(private options: PapiClientOptions) { }
+    constructor(private options: PapiClientOptions) {}
 
     async get(url: string): Promise<any> {
         return this.apiCall('GET', url)
@@ -131,7 +133,7 @@ export class PapiClient {
             let error = '';
             try {
                 error = JSON.stringify(await res.json());
-            } catch { }
+            } catch {}
 
             throw new Error(`${fullURL} failed with status: ${res.status} - ${res.statusText} error: ${error}`);
         }
