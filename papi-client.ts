@@ -54,7 +54,10 @@ export class PapiClient {
     };
 
     userDefinedTables = new Endpoint<UserDefinedTableRow>(this, '/user_defined_tables');
-    userDefinedTablesStringValue = new Endpoint<UserDefinedTableStringValueRow>(this, '/user_defined_tables_string_value');
+    userDefinedTablesStringValue = new Endpoint<UserDefinedTableStringValueRow>(
+        this,
+        '/user_defined_tables_string_value',
+    );
     addons = new AddonEndpoint(this);
     codeJobs = new CodeJobsEndpoint(this);
     activities = new Endpoint<GeneralActivity>(this, '/activities');

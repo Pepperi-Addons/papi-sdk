@@ -1,4 +1,4 @@
-export interface UserDefinedTableRowBase{
+export interface UserDefinedTableRowBase {
     InternalID?: number;
     CreationDateTime?: string;
     Hidden?: boolean;
@@ -7,7 +7,7 @@ export interface UserDefinedTableRowBase{
     ModificationDateTime?: string;
     SecondaryKey: string;
 }
-export interface UserDefinedTableRow extends UserDefinedTableRowBase {    
+export interface UserDefinedTableRow extends UserDefinedTableRowBase {
     Values: string[];
 }
 
