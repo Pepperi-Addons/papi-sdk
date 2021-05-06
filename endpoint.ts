@@ -84,7 +84,11 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
         super(service, endpoint);
     }
 
-    async count(options: { where?: string; include_deleted?: boolean } = {}): Promise<number> {
+    async count(): Promise<number>;
+    async count(options: { where?: string; include_deleted?: boolean }): Promise<number>;
+    async count(options: { where?: string; include_deleted?: boolean; group_by: string }): Promise<{ [key in string | number]: number}>;
+
+    async count(options: { where?: string; include_deleted?: boolean; group_by?: string } = {}): Promise<number | { [key in string | number]: number}> {
         let url = '/totals';
         url += this.getEndpointURL();
         const query = Endpoint.encodeQueryParams({
@@ -93,7 +97,19 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
         });
         url = query ? url + '?' + query : url;
         const countObject = await this.service.get(url);
-        return countObject && countObject.length == 1 ? countObject[0].count : 0;
+
+        if (options.group_by) {
+            // Return an object of 'group_by' values and 'count' values.
+            let groupedCountObjects: {[key in string | number]: number} = {};
+            (countObject as Array<{ [key in string | number]: number}>).forEach(item => {
+                groupedCountObjects[item[options.group_by || '']] = item['count'];
+            });
+
+            return groupedCountObjects;
+        } else {
+            // Returns just a number.
+            return countObject && countObject.length == 1 ? countObject[0].count : 0;
+        }
     }
 
     async get(id: number): Promise<T> {
