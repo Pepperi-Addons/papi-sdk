@@ -41,9 +41,8 @@ const INITIAL_TIME = Date.now();
 export const crossPlatformPerformance: Performance = (() => {
     if (isNodeEnv()) {
         try {
-            const perfHooks = dynamicRequire(module, 'perf_hooks') as {
-                performance: Performance;
-            };
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
+            const perfHooks = require('perf_hooks');
             return perfHooks.performance;
         } catch (e) {
             // return performanceFallback;
