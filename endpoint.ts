@@ -107,7 +107,7 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
         if (options.group_by) {
             // Return an object of 'group_by' values and 'count' values.
             const groupedCountObjects: { [key in string | number]: number } = {};
-            (countObject as Array<{ [key in string | number]: number }>).forEach((item) => {
+            (countObject as Array<{ [key in string]: any }>).forEach((item) => {
                 groupedCountObjects[item[options.group_by || '']] = item['count'];
             });
 
