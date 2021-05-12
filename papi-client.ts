@@ -124,7 +124,8 @@ export class PapiClient {
         const t1 = performance?.now();
 
         if (!this.options.suppressLogging) {
-            console.log(method, fullURL, 'took', (t1 - t0).toFixed(2), 'milliseconds');
+            const diff = t0 && t1 ? (t1 - t0).toFixed(2) : 0;
+            console.log(method, fullURL, 'took', diff, 'milliseconds');
         }
 
         if (!res.ok) {
