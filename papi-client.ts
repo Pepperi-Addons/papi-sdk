@@ -118,7 +118,7 @@ export class PapiClient {
         if (this.options.actionUUID) {
             options.headers['X-Pepperi-ActionID'] = this.options.actionUUID;
         }
-        const performance = await getPerformance();
+        const performance = getPerformance();
         const t0 = performance?.now();
         const res = await papi_fetch(fullURL, options);
         const t1 = performance?.now();

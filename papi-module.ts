@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-export async function getPerformance() {
+export function getPerformance() {
     try {
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         if (global != undefined) {
