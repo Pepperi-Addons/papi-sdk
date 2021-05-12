@@ -14,4 +14,4 @@ export function getPerformance() {
     } catch {}
 }
 
-export const papi_fetch = typeof window !== 'undefined' ? window.fetch.bind(window) : fetch;
+export const papi_fetch: typeof fetch = typeof window !== 'undefined' ? (window.fetch.bind(window) as any) : fetch;
