@@ -29,7 +29,7 @@ import {
     Image,
 } from './entities';
 
-import { papi_performance, papi_fetch } from './papi-module';
+import { papi_fetch, getPerformance } from './papi-module';
 
 type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
@@ -120,12 +120,14 @@ export class PapiClient {
         if (this.options.actionUUID) {
             options.headers['X-Pepperi-ActionID'] = this.options.actionUUID;
         }
-        const t0 = papi_performance?.now();
+        const performance = getPerformance();
+        const t0 = performance?.now();
         const res = await papi_fetch(fullURL, options);
-        const t1 = papi_performance?.now();
+        const t1 = performance?.now();
 
         if (!this.options.suppressLogging) {
-            console.log(method, fullURL, 'took', (t1 - t0).toFixed(2), 'milliseconds');
+            const diff = t0 && t1 ? (t1 - t0).toFixed(2) : 0;
+            console.log(method, fullURL, 'took', diff, 'milliseconds');
         }
 
         if (!res.ok) {
