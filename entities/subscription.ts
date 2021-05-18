@@ -1,4 +1,4 @@
-type PNSMessageType = 'action' | 'data' | 'event';
+type PNSMessageType = 'data' | 'event';
 
 export interface Subscription {
     Name: string;

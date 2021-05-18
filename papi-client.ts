@@ -75,7 +75,7 @@ export class PapiClient {
     transactionLines = new Endpoint<TransactionLines>(this, '/transaction_lines');
     contacts = new Endpoint<Contact>(this, '/contacts');
     images = new Endpoint<Image>(this, '/images');
-    notifications = new NotificationEndpoint(this);
+    notification = new NotificationEndpoint(this);
 
     constructor(private options: PapiClientOptions) {}
 

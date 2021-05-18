@@ -1,20 +1,13 @@
 import { PapiClient } from '../papi-client';
 import { PNSMessage, PublishMessageResult, Subscription } from '../entities/subscription';
-
+import Endpoint from '../endpoint';
 export class NotificationEndpoint {
-    private service: PapiClient;
+    constructor(private service: PapiClient) {}
 
-    constructor(service: PapiClient) {
-        this.service = service;
-    }
-
-    async subscriptions(body: Subscription): Promise<Subscription> {
-        const url = '/notifications/subscriptions';
-        return await this.service.post(url, body);
-    }
+    subscriptions = new Endpoint<Subscription>(this.service, '/notification/subscriptions');
 
     async publish(body: PNSMessage): Promise<PublishMessageResult> {
-        const url = '/notifications/publish';
+        const url = '/notification/publish';
         return await this.service.post(url, body);
     }
 }
