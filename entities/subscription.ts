@@ -1,15 +1,13 @@
+import { AddonData } from './addons';
+
 type PNSMessageType = 'data' | 'event';
 
-export interface Subscription {
+export interface Subscription extends AddonData {
     Name: string;
-    CreationDateTime?: string;
-    ModificationDateTime?: string;
     AddonRelativeURL: string;
     Type: PNSMessageType;
-    Hidden?: boolean;
     AddonUUID: string;
     FilterPolicy?: { [key: string]: string[] };
-    ExpirationDateTime?: string;
 }
 
 export interface PNSMessage {
