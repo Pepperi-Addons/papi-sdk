@@ -9,6 +9,7 @@ import {
     SyncEndpoint,
     FileStorageEndpoint,
     DataViewsEndpoint,
+    NotificationEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -74,6 +75,7 @@ export class PapiClient {
     transactionLines = new Endpoint<TransactionLines>(this, '/transaction_lines');
     contacts = new Endpoint<Contact>(this, '/contacts');
     images = new Endpoint<Image>(this, '/images');
+    notification = new NotificationEndpoint(this);
 
     constructor(private options: PapiClientOptions) {}
 
