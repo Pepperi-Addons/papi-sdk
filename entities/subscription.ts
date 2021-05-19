@@ -8,7 +8,7 @@ export interface Subscription {
     Type: PNSMessageType;
     Hidden?: boolean;
     AddonUUID: string;
-    FilterPolicy?: any;
+    FilterPolicy?: { [key: string]: string[] };
     ExpirationDateTime?: string;
 }
 
@@ -18,5 +18,5 @@ export interface PNSMessage {
     FilterAttributes: { [key: string]: number | string | string[] };
 }
 export interface PublishMessageResult {
-    success?: boolean;
+    success: boolean;
 }
