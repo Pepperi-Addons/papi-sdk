@@ -34,6 +34,7 @@ export class IterableEndpoint<T> {
                 const newOptions: FindOptions & { include_count?: boolean } = options;
                 newOptions.include_count = true;
                 let currentPage = 1;
+                const pageSize = options.page_size || 100;
                 let obj: { items: T[]; numOfPages: number } = { items: [], numOfPages: 1 };
                 return {
                     next: async () => {
@@ -41,13 +42,30 @@ export class IterableEndpoint<T> {
                             if (currentPage == 1) {
                                 newOptions.page = currentPage++;
                                 obj = await self.getFirstPage(newOptions);
+                                obj.items = obj.items.reverse();
                                 newOptions.include_count = false;
-                            } else if (currentPage <= obj.numOfPages) {
+
+                                // this means there is no 'X-Pepperi-Total-Pages' header (eg. ADAL)
+                                if (obj.numOfPages === 0) {
+                                    // the items on first page are less than the page size
+                                    // this means that there are no more pages
+                                    if (obj.items.length < pageSize) {
+                                        obj.numOfPages = 1;
+                                    }
+                                }
+                            } else if (obj.numOfPages === 0 || currentPage <= obj.numOfPages) {
                                 newOptions.page = currentPage++;
-                                obj.items = await self.find(newOptions);
+                                obj.items = (await self.find(newOptions)).reverse();
+
+                                if (obj.numOfPages === 0) {
+                                    // we might have reached the end and don't want to call one extra time
+                                    if (obj.items.length < pageSize) {
+                                        obj.numOfPages = currentPage - 1;
+                                    }
+                                }
                             }
                         }
-                        const retItem = obj.items.length > 0 ? obj.items.shift() : undefined;
+                        const retItem = obj.items.length > 0 ? obj.items.pop() : undefined;
                         if (retItem) {
                             return { value: retItem, done: false };
                         }
