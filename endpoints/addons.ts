@@ -109,6 +109,14 @@ class TableEndpoint extends Endpoint<AddonData> {
             get: async (): Promise<AddonData> => {
                 return await this.service.get(`/addons/data/${this.addonUUID}/${this.tableName}/${keyName}`);
             },
+            hardDelete: async (force = false): Promise<AddonData> => {
+                return await this.service.post(
+                    `/addons/data/${this.addonUUID}/${this.tableName}/${keyName}/hard_delete`,
+                    {
+                        Force: force,
+                    },
+                );
+            },
         };
     }
 }
