@@ -56,7 +56,7 @@ export interface AddonDataScheme {
     CreationDateTime?: string;
     ModificationDateTime?: string;
     Name: string;
-    Type?: 'data' | 'meta_data';
+    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data';
     Fields?: {
         [key: string]: {
             Type: 'String' | 'Bool' | 'Integer' | 'MultipleStringValues';

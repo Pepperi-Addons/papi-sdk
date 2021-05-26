@@ -11,7 +11,7 @@ export interface User {
     Mobile?: string;
     ModificationDateTime?: string;
     Phone?: string;
-    Profile: {
+    Profile?: {
         Data: {
             InternalID: number;
             Name?: string;

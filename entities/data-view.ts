@@ -74,6 +74,7 @@ export const DataViewFieldTypes = {
     Package: 53,
     RelatedObjectsCards: 54,
     BooleanText: 55,
+    RichTextHTML: 56,
 };
 export type DataViewFieldType = keyof typeof DataViewFieldTypes;
 
@@ -88,10 +89,11 @@ export const ResourceTypes = [
     'transaction_lines',
     'contacts',
     'lists',
+    'catalogs',
 ] as const;
 export type ResourceType = typeof ResourceTypes[number];
 
-export const ResoursePrefixes = ['GA', 'OA', 'CP', 'AT', 'GL'] as const;
+export const ResoursePrefixes = ['GA', 'OA', 'CP', 'AT', 'GL', 'CA'] as const;
 export type ResourcePrefix = typeof ResoursePrefixes[number];
 
 export const VerticalAlignments = {
@@ -214,6 +216,14 @@ export interface MenuDataViewField extends DataViewField {
 
 export interface ConfigurationDataView extends BaseDataView {
     Type: 'Configuration';
+    Fields?: ConfigurationDataViewField[];
+}
+
+export interface ConfigurationDataViewField extends DataViewField {
+    Title?: string;
+    Type?: DataViewFieldType;
+    Mandatory?: boolean;
+    ReadOnly?: boolean;
 }
 
 export interface CardDataView extends BaseFormDataView {

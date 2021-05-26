@@ -1,10 +1,10 @@
 import { PapiClient } from './index';
 import { BatchApiResponse, ExportApiResponse } from './entities';
 
-interface FindOptions {
+export interface FindOptions {
     fields?: string[];
     where?: string;
-    orderBy?: string;
+    order_by?: string;
     page?: number;
     page_size?: number;
     include_nested?: boolean;
@@ -34,6 +34,7 @@ export class IterableEndpoint<T> {
                 const newOptions: FindOptions & { include_count?: boolean } = options;
                 newOptions.include_count = true;
                 let currentPage = 1;
+                const pageSize = options.page_size || 100;
                 let obj: { items: T[]; numOfPages: number } = { items: [], numOfPages: 1 };
                 return {
                     next: async () => {
@@ -41,13 +42,30 @@ export class IterableEndpoint<T> {
                             if (currentPage == 1) {
                                 newOptions.page = currentPage++;
                                 obj = await self.getFirstPage(newOptions);
+                                obj.items = obj.items.reverse();
                                 newOptions.include_count = false;
-                            } else if (currentPage <= obj.numOfPages) {
+
+                                // this means there is no 'X-Pepperi-Total-Pages' header (eg. ADAL)
+                                if (obj.numOfPages === 0) {
+                                    // the items on first page are less than the page size
+                                    // this means that there are no more pages
+                                    if (obj.items.length < pageSize) {
+                                        obj.numOfPages = 1;
+                                    }
+                                }
+                            } else if (obj.numOfPages === 0 || currentPage <= obj.numOfPages) {
                                 newOptions.page = currentPage++;
-                                obj.items = await self.find(newOptions);
+                                obj.items = (await self.find(newOptions)).reverse();
+
+                                if (obj.numOfPages === 0) {
+                                    // we might have reached the end and don't want to call one extra time
+                                    if (obj.items.length < pageSize) {
+                                        obj.numOfPages = currentPage - 1;
+                                    }
+                                }
                             }
                         }
-                        const retItem = obj.items.length > 0 ? obj.items.shift() : undefined;
+                        const retItem = obj.items.length > 0 ? obj.items.pop() : undefined;
                         if (retItem) {
                             return { value: retItem, done: false };
                         }
@@ -84,7 +102,41 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
         super(service, endpoint);
     }
 
-    async get(id: number): Promise<T[]> {
+    async count(): Promise<number>;
+    async count(options: { where?: string; include_deleted?: boolean }): Promise<number>;
+    async count(options: {
+        where?: string;
+        include_deleted?: boolean;
+        group_by: string;
+    }): Promise<{ [key in string | number]: number }>;
+
+    async count(
+        options: { where?: string; include_deleted?: boolean; group_by?: string } = {},
+    ): Promise<number | { [key in string | number]: number }> {
+        let url = '/totals';
+        url += this.getEndpointURL();
+        const query = Endpoint.encodeQueryParams({
+            select: 'count(InternalID) as count',
+            ...options,
+        });
+        url = query ? url + '?' + query : url;
+        const countObject = await this.service.get(url);
+
+        if (options.group_by) {
+            // Return an object of 'group_by' values and 'count' values.
+            const groupedCountObjects: { [key in string | number]: number } = {};
+            (countObject as Array<{ [key in string]: any }>).forEach((item) => {
+                groupedCountObjects[item[options.group_by || '']] = item['count'];
+            });
+
+            return groupedCountObjects;
+        } else {
+            // Returns just a number.
+            return countObject && countObject.length == 1 ? countObject[0].count : 0;
+        }
+    }
+
+    async get(id: number): Promise<T> {
         let url = this.getEndpointURL();
         url += '/' + id;
         return this.service.get(url);
@@ -102,7 +154,7 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
         const body = {
             fields: options.fields ? options.fields.join(',') : undefined,
             where: options.where,
-            orderBy: options.orderBy,
+            order_by: options.order_by,
             page: options.page,
             page_size: options.page_size,
             include_nested: options.include_nested,
@@ -120,6 +172,17 @@ export default class Endpoint<T> extends IterableEndpoint<T> {
             .delete(url)
             .then((res) => res.text())
             .then((res) => (res ? JSON.parse(res) : ''));
+    }
+
+    uuid(uuid: string): { get: () => Promise<T> } {
+        const service = this.service;
+        let url = this.getEndpointURL();
+        url += '/uuid/' + uuid;
+        return {
+            get(): Promise<T> {
+                return service.get(url);
+            },
+        };
     }
 
     static encodeQueryParams(params: any) {
