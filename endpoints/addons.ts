@@ -134,6 +134,9 @@ export class AddonEndpoint extends Endpoint<Addon> {
             post: async (body: AddonDataScheme): Promise<AddonDataScheme> => {
                 return await this.service.post('/addons/data/schemes', body);
             },
+            purge: async (tableName: string) => {
+                return await this.service.post(`/addons/data/schemes/${tableName}/purge`);
+            },
         },
         uuid: (addonUUID: string) => {
             return {
