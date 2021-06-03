@@ -1,7 +1,7 @@
 import { AddonData } from './addons';
 
 type PNSMessageType = 'data' | 'event';
-type PNSActionTypeType = 'insert' | 'updage';
+type PNSActionTypeType = 'insert' | 'update';
 
 export interface Subscription extends AddonData {
     ModificationDateTime?: string;
