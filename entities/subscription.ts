@@ -8,11 +8,11 @@ export interface Subscription extends AddonData {
     Type?: PNSMessageType;
     AddonUUID: string;
     FilterPolicy: {
-        Resource: string[];
-        Action: PNSActionTypeType[];
-        ModifiedFields: string[];
-        AddonUUID: string[];
-        [key: string]: string[];
+        Resource?: string[];
+        Action?: PNSActionTypeType[];
+        ModifiedFields?: string[];
+        AddonUUID?: string[];
+        [key: string]: any;
     };
     Name: string;
 }
