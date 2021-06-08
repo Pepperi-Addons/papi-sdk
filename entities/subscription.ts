@@ -12,7 +12,7 @@ export interface Subscription extends AddonData {
         Action?: PNSActionTypeType[];
         ModifiedFields?: string[];
         AddonUUID?: string[];
-        [key: string]: any;
+        [key: string]: string[] | undefined | string;
     };
     Name: string;
 }
