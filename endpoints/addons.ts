@@ -1,5 +1,13 @@
-import Endpoint from '../endpoint';
-import { Addon, InstalledAddon, AddonVersion, AddonAPIAsyncResult, AddonData, AddonDataScheme } from '../entities';
+import Endpoint, { FindOptions } from '../endpoint';
+import {
+    Addon,
+    InstalledAddon,
+    AddonVersion,
+    AddonAPIAsyncResult,
+    AddonData,
+    AddonDataScheme,
+    Relations,
+} from '../entities';
 import { PapiClient } from '../papi-client';
 
 class InstalledAddonEnpoint {
@@ -129,6 +137,15 @@ export class AddonEndpoint extends Endpoint<Addon> {
     versions = new AddonVersionEndpoint(this.service);
     api = new AddonApiEndpoint(this.service);
     // data = new AddonDataEndpoint(this.service);
+
+    sencodeQueryParams(params: any) {
+        const ret: string[] = [];
+        Object.keys(params).forEach((key) => {
+            ret.push(key + '=' + encodeURIComponent(params[key]));
+        });
+        return ret.join('&');
+    }
+
     data = {
         schemes: {
             post: async (body: AddonDataScheme): Promise<AddonDataScheme> => {
@@ -141,6 +158,17 @@ export class AddonEndpoint extends Endpoint<Addon> {
                     return new TableEndpoint(this.service, addonUUID, tableName);
                 },
             };
+        },
+        relations: {
+            post: async (body: Relations, headers: any = undefined): Promise<Relations> => {
+                return (await this.service.apiCall('POST', '/addons/data/relations', body, headers)) as any;
+            },
+            get: async (options: FindOptions = {}, headers: any = undefined): Promise<Relations> => {
+                let url = '/addons/data/relations';
+                const query = Endpoint.encodeQueryParams(options);
+                url = query ? url + '?' + query : url;
+                return (await this.service.apiCall('GET', url, headers)) as any;
+            },
         },
     };
 }
