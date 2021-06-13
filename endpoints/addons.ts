@@ -160,14 +160,20 @@ export class AddonEndpoint extends Endpoint<Addon> {
             };
         },
         relations: {
-            post: async (body: Relations, headers: any = undefined): Promise<Relations> => {
-                return (await this.service.apiCall('POST', '/addons/data/relations', body, headers)) as any;
+            post: async (body: Relations, headers: any = undefined): Promise<any> => {
+                return await this.service
+                    .apiCall('POST', '/addons/data/relations', body, headers)
+                    .then((res) => res.text())
+                    .then((res) => (res ? JSON.parse(res) : ''));
             },
-            get: async (options: FindOptions = {}, headers: any = undefined): Promise<Relations> => {
+            get: async (options: FindOptions = {}, headers: any = undefined): Promise<Relations[]> => {
                 let url = '/addons/data/relations';
                 const query = Endpoint.encodeQueryParams(options);
                 url = query ? url + '?' + query : url;
-                return (await this.service.apiCall('GET', url, headers)) as any;
+                return await this.service
+                    .apiCall('GET', url, headers)
+                    .then((res) => res.text())
+                    .then((res) => (res ? JSON.parse(res) : ''));
             },
         },
     };
