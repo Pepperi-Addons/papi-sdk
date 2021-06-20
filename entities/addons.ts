@@ -47,7 +47,7 @@ export interface AddonData {
     Hidden?: boolean;
     CreationDateTime?: string;
     ModificationDateTime?: string;
-    Key: string;
+    Key?: string;
     [key: string]: any;
 }
 
