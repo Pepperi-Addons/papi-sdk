@@ -64,3 +64,18 @@ export interface AddonDataScheme {
     };
     Validator?: string;
 }
+
+export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigation';
+
+export interface Relation extends AddonData {
+    AddonUUID: string;
+    Name: string;
+    RelationName: string;
+    Type: RelationType;
+    Description?: string;
+    AddonRelativeURL?: string;
+    SubType?: string;
+    ComponentName?: string;
+    ModuleName?: string;
+    [key: string]: any;
+}

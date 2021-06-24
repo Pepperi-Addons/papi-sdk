@@ -1,5 +1,13 @@
 import Endpoint from '../endpoint';
-import { Addon, InstalledAddon, AddonVersion, AddonAPIAsyncResult, AddonData, AddonDataScheme } from '../entities';
+import {
+    Addon,
+    InstalledAddon,
+    AddonVersion,
+    AddonAPIAsyncResult,
+    AddonData,
+    AddonDataScheme,
+    Relation,
+} from '../entities';
 import { PapiClient } from '../papi-client';
 
 class InstalledAddonEnpoint {
@@ -129,6 +137,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
     versions = new AddonVersionEndpoint(this.service);
     api = new AddonApiEndpoint(this.service);
     // data = new AddonDataEndpoint(this.service);
+
     data = {
         schemes: {
             post: async (body: AddonDataScheme): Promise<AddonDataScheme> => {
@@ -142,5 +151,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 },
             };
         },
+
+        relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
     };
 }
