@@ -138,14 +138,6 @@ export class AddonEndpoint extends Endpoint<Addon> {
     api = new AddonApiEndpoint(this.service);
     // data = new AddonDataEndpoint(this.service);
 
-    sencodeQueryParams(params: any) {
-        const ret: string[] = [];
-        Object.keys(params).forEach((key) => {
-            ret.push(key + '=' + encodeURIComponent(params[key]));
-        });
-        return ret.join('&');
-    }
-
     data = {
         schemes: {
             post: async (body: AddonDataScheme): Promise<AddonDataScheme> => {
