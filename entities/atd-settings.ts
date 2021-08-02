@@ -26,13 +26,13 @@ export interface ATDSettings {
     CatalogIDs: number[];
     EPayment: any;
     OriginAccountsData: {
-        IDs: string[];
+        IDs: number[];
         Label: string;
         AllTypes: boolean;
         UserAccount: boolean;
     };
     DestinationAccountsData: {
-        IDs: string[];
+        IDs: number[];
         Label: string;
         AllTypes: boolean;
         UserAccount: boolean;
