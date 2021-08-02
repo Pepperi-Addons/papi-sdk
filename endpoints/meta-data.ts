@@ -6,7 +6,7 @@ export class DistributorFlagsEndpoint {
     private options = {
         name: '',
     };
-    constructor(private service: PapiClient) { }
+    constructor(private service: PapiClient) {}
 
     name(flagName: string) {
         this.options.name = flagName;
@@ -19,14 +19,14 @@ export class DistributorFlagsEndpoint {
 }
 
 export class TypeMetaData {
-    constructor(private service: PapiClient, private typeObject: string) { }
+    constructor(private service: PapiClient, private typeObject: string) {}
 
     types = new Types(this.service, this.typeObject);
     fields = new Fields(this.service, this.typeObject);
 }
 
 export class Types {
-    constructor(private service: PapiClient, private typeName: string) { }
+    constructor(private service: PapiClient, private typeName: string) {}
 
     subtype(subtypeid: string): SubTypes {
         return new SubTypes(this.service, this.typeName, subtypeid);
@@ -41,7 +41,7 @@ export class Types {
 }
 
 export class SubTypes {
-    constructor(private service: PapiClient, private typeName: string, private subtype: string) { }
+    constructor(private service: PapiClient, private typeName: string, private subtype: string) {}
 
     async get(): Promise<ATDMetaData> {
         const url = `/meta_data/${this.typeName}/types/${this.subtype}`;
@@ -59,7 +59,7 @@ export class SubTypes {
 }
 
 export class Fields {
-    constructor(private service: PapiClient, private type: string, private subtypeid?: string) { }
+    constructor(private service: PapiClient, private type: string, private subtypeid?: string) {}
 
     async get(apiName: string): Promise<ApiFieldObject>;
     async get(params?: { include_owned?: boolean; include_internal?: boolean }): Promise<ApiFieldObject[]>;
@@ -109,7 +109,7 @@ export class Fields {
 }
 
 export class Settings {
-    constructor(private service: PapiClient, private type: string, private subtypeid: string) { }
+    constructor(private service: PapiClient, private type: string, private subtypeid: string) {}
 
     async get(): Promise<ATDSettings> {
         const url = `/meta_data/${this.type}/types/${this.subtypeid}/settings`;
