@@ -25,6 +25,7 @@ export * from './transaction-lines';
 export * from './contact';
 export * from './image';
 export * from './subscription';
+export * from './page';
 // need something here that can be transpiled to js
 // all the other entities are interfaces
 export class Entities {}
