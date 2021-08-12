@@ -60,6 +60,7 @@ export interface AddonDataScheme {
     Fields?: {
         [key: string]: {
             Type: 'String' | 'Bool' | 'Integer' | 'MultipleStringValues';
+            Indexed?: boolean;
         };
     };
     Validator?: string;
