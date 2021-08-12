@@ -8,7 +8,6 @@ import {
     AuditLogsEndpoint,
     SyncEndpoint,
     FileStorageEndpoint,
-    DataViewsEndpoint,
     NotificationEndpoint,
 } from './endpoints';
 import {
@@ -49,7 +48,7 @@ export class PapiClient {
         type: (typeObject: string) => {
             return new TypeMetaData(this, typeObject);
         },
-        dataViews: new DataViewsEndpoint(this),
+        dataViews: new Endpoint<DataView>(this, '/meta_data/data_views'),
         pepperiObjects: new Endpoint<PepperiObject>(this, '/meta_data/pepperiObjects'),
     };
 

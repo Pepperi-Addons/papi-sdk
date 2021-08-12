@@ -19,7 +19,6 @@ export * from './batch-api-response';
 export * from './export';
 export * from './catalog';
 export * from './sync';
-export * from './field-bank-custom-field';
 export * from './item';
 export * from './transaction-lines';
 export * from './contact';
