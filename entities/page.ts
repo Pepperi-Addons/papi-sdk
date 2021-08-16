@@ -1,13 +1,11 @@
-import { NgComponentRelation } from "./addons";
+import { AddonData, NgComponentRelation } from "./addons";
+import { ResourceType } from "./data-view";
 
-export interface Page {
-    Hidden?: boolean;
-    CreationDateTime?: string;
-    ModificationDateTime?: string;
+export interface Page extends AddonData {
     Name: string;
     Description?: string;
     Type?: 'Home' | 'AccountHome' | 'None';
-    Blocks: Array<PageBlock>;
+    Blocks: PageBlock[];
     Layout: PageLayout;
 }
 
@@ -34,36 +32,45 @@ export interface PageConsume {
 }
 
 export interface PageProduce {
-    Filters: Array<PageFilter>;
+    Filters: PageFilter[];
     Context: PageContext;
 }
 
 export interface PageFilter {
-    Resource: PageResourceType;
-    Fields: Array<string>;
+    Resource: ResourceType;
+    Fields: string[];
 }
 
 export interface PageContext {
-    Resource?: PageResourceType;
+    Resource?: ResourceType;
 }
 
-// TODO: Add all resource types.
-export type PageResourceType = 'transaction' | 'transaction_lines' | '';
+export type PageSizeType = 'SM' | 'MD' | 'LG';
 
 export interface PageLayout {
-    Sections: Array<PageSection>;
-    SectionGap?: string;
-    CoulmnsGap?: string;
-    MaxWidth?: string;
+    Sections: PageSection[];
+    SectionGap?: PageSizeType;
+    CoulmnsGap?: PageSizeType;
+    MaxWidth?: number;
 }
 
+export type SplitType = '1/4 3/4' | '1/3 2/3' | '1/2 1/2' | '2/3 1/3' | '3/4 1/4' |
+                        '1/3 1/3 1/3' | '1/2 1/4 1/4' | '1/4 1/2 1/4' | '1/4 1/4 1/2' |
+                        '1/4 1/4 1/4 1/4';
+
+           
+export type DeviceType = 'Desktop' | 'Tablet' | 'Mobile';
+
 export interface PageSection {
-    IsHeightFixed?: boolean;
-    Height?: string;
-    Columns: Array<PageSectionColumn>;
+    Name: string;
+    // IsHeightFixed?: boolean;
+    Height?: number;
+    Columns: PageSectionColumn[];
+    Split?: SplitType;
+    Hide: DeviceType[];
 }
 
 export interface PageSectionColumn {
     BlockKey?: string;
-    Width: string;
+    Hide: DeviceType[];
 }

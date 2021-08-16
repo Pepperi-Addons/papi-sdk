@@ -76,6 +76,7 @@ export class PapiClient {
     contacts = new Endpoint<Contact>(this, '/contacts');
     images = new Endpoint<Image>(this, '/images');
     notification = new NotificationEndpoint(this);
+    pages = new Endpoint<Profile>(this, '/pages');
 
     constructor(private options: PapiClientOptions) {}
 
