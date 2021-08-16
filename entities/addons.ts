@@ -74,8 +74,11 @@ export interface Relation extends AddonData {
     Type: RelationType;
     Description?: string;
     AddonRelativeURL?: string;
+    [key: string]: any;
+}
+
+export interface NgComponentRelation extends Relation {
     SubType?: string;
     ComponentName?: string;
     ModuleName?: string;
-    [key: string]: any;
 }
