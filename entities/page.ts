@@ -49,7 +49,7 @@ export type PageSizeType = 'SM' | 'MD' | 'LG';
 
 export interface PageLayout {
     Sections: PageSection[];
-    SectionGap?: PageSizeType;
+    SectionsGap?: PageSizeType;
     CoulmnsGap?: PageSizeType;
     MaxWidth?: number;
 }
