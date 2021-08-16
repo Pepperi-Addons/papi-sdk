@@ -27,6 +27,7 @@ import {
     TransactionLines,
     Contact,
     Image,
+    Page,
 } from './entities';
 
 import { papi_fetch, getPerformance } from './papi-module';
@@ -76,7 +77,7 @@ export class PapiClient {
     contacts = new Endpoint<Contact>(this, '/contacts');
     images = new Endpoint<Image>(this, '/images');
     notification = new NotificationEndpoint(this);
-    pages = new Endpoint<Profile>(this, '/pages');
+    pages = new Endpoint<Page>(this, '/pages');
 
     constructor(private options: PapiClientOptions) {}
 

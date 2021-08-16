@@ -1,5 +1,5 @@
 import { AddonData, NgComponentRelation } from "./addons";
-import { ResourceType } from "./data-view";
+import { DataViewScreenSize, ResourceType } from "./data-view";
 
 export interface Page extends AddonData {
     Name: string;
@@ -54,12 +54,10 @@ export interface PageLayout {
     MaxWidth?: number;
 }
 
-export type SplitType = '1/4 3/4' | '1/3 2/3' | '1/2 1/2' | '2/3 1/3' | '3/4 1/4' |
-                        '1/3 1/3 1/3' | '1/2 1/4 1/4' | '1/4 1/2 1/4' | '1/4 1/4 1/2' |
-                        '1/4 1/4 1/4 1/4';
-
-           
-export type DeviceType = 'Desktop' | 'Tablet' | 'Mobile';
+export const SplitTypes = ['1/4 3/4', '1/3 2/3', '1/2 1/2', '2/3 1/3', '3/4 1/4', 
+                           '1/3 1/3 1/3', '1/2 1/4 1/4', '1/4 1/2 1/4', '1/4 1/4 1/2',
+                           '1/4 1/4 1/4 1/4'] as const;
+export type SplitType = typeof SplitTypes[number];
 
 export interface PageSection {
     Name: string;
@@ -67,10 +65,10 @@ export interface PageSection {
     Height?: number;
     Columns: PageSectionColumn[];
     Split?: SplitType;
-    Hide: DeviceType[];
+    Hide: DataViewScreenSize[];
 }
 
 export interface PageSectionColumn {
     BlockKey?: string;
-    Hide: DeviceType[];
+    Hide: DataViewScreenSize[];
 }
