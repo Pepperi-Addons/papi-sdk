@@ -7,4 +7,3 @@ export * from './sync';
 export * from './file-storage';
 export * from './data-views';
 export * from './notification';
-export * from './pages';
