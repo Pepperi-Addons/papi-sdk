@@ -1,5 +1,5 @@
-import { AddonData, NgComponentRelation } from "./addons";
-import { DataViewScreenSize, ResourceType } from "./data-view";
+import { AddonData, NgComponentRelation } from './addons';
+import { DataViewScreenSize, ResourceType } from './data-view';
 
 export interface Page extends AddonData {
     Name: string;
@@ -10,9 +10,9 @@ export interface Page extends AddonData {
 }
 
 export interface PageBlock {
-    Key: string,
+    Key: string;
     Relation: PageRelation;
-    Configuration?: any,
+    Configuration?: any;
     PageConfiguration?: PageConfiguration;
 }
 
@@ -22,8 +22,8 @@ export interface PageRelation extends NgComponentRelation {
 }
 
 export interface PageConfiguration {
-    Consume?: PageConsume; 
-    Produce?: PageProduce
+    Consume?: PageConsume;
+    Produce?: PageProduce;
 }
 
 export interface PageConsume {
@@ -54,9 +54,18 @@ export interface PageLayout {
     MaxWidth?: number;
 }
 
-export const SplitTypes = ['1/4 3/4', '1/3 2/3', '1/2 1/2', '2/3 1/3', '3/4 1/4', 
-                           '1/3 1/3 1/3', '1/2 1/4 1/4', '1/4 1/2 1/4', '1/4 1/4 1/2',
-                           '1/4 1/4 1/4 1/4'] as const;
+export const SplitTypes = [
+    '1/4 3/4',
+    '1/3 2/3',
+    '1/2 1/2',
+    '2/3 1/3',
+    '3/4 1/4',
+    '1/3 1/3 1/3',
+    '1/2 1/4 1/4',
+    '1/4 1/2 1/4',
+    '1/4 1/4 1/2',
+    '1/4 1/4 1/4 1/4',
+] as const;
 export type SplitType = typeof SplitTypes[number];
 
 export interface PageSection {
