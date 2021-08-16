@@ -35,12 +35,12 @@ jobs:
     - name: Compilation & testing
       run: npm run prepare
 
-    # # Bump the version number
-    # - name: Bump version
-    #   run: npm version patch
+    # Bump the version number
+    - name: Bump version
+      run: npm version patch
 
-    # # push the new version
-    # - name: Push
-    #   run: git push
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # push the new version
+    - name: Push
+      run: git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
