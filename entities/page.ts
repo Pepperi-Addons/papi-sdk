@@ -79,6 +79,10 @@ export interface PageSection {
 }
 
 export interface PageSectionColumn {
+    Block?: PageSectionBlock;
+}
+
+export interface PageSectionBlock {
     BlockKey?: string;
     Hide: DataViewScreenSize[];
 }
