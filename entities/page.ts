@@ -75,10 +75,14 @@ export interface PageSection {
     Height?: number;
     Columns: PageSectionColumn[];
     Split?: SplitType;
-    Hide: DataViewScreenSize[];
+    Hide?: DataViewScreenSize[];
 }
 
 export interface PageSectionColumn {
-    BlockKey?: string;
-    Hide: DataViewScreenSize[];
+    Block?: PageSectionBlock;
+}
+
+export interface PageSectionBlock {
+    BlockKey: string;
+    Hide?: DataViewScreenSize[];
 }
