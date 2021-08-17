@@ -8,14 +8,15 @@ export interface Addon {
 }
 
 export interface InstalledAddon {
+    UUID?: string;
     Addon: Addon;
     Version?: string;
+    SystemData?: any;
     AdditionalData?: string;
-    UUID?: string;
+    Hidden?: boolean;
+    PublicBaseURL: string;
     Name?: string;
     Description?: string;
-    SystemData?: any;
-    Hidden?: boolean;
     Type?: number;
 }
 
