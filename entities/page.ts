@@ -69,7 +69,8 @@ export const SplitTypes = [
 export type SplitType = typeof SplitTypes[number];
 
 export interface PageSection {
-    Name: string;
+    Key: string;
+    Name?: string;
     // IsHeightFixed?: boolean;
     Height?: number;
     Columns: PageSectionColumn[];
