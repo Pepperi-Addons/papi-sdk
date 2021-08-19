@@ -2,7 +2,8 @@ import { AddonData, NgComponentRelation } from './addons';
 import { DataViewScreenSize, ResourceType } from './data-view';
 
 export interface Page extends AddonData {
-    Name: string;
+    Key: string;
+    Name?: string;
     Description?: string;
     Type?: 'Home' | 'AccountHome' | 'None';
     Blocks: PageBlock[];
@@ -11,14 +12,9 @@ export interface Page extends AddonData {
 
 export interface PageBlock {
     Key: string;
-    Relation: PageRelation;
+    Relation: NgComponentRelation;
     Configuration?: any;
     PageConfiguration?: PageConfiguration;
-}
-
-export interface PageRelation extends NgComponentRelation {
-    EditorModuleName?: string;
-    EditorComponentName?: string;
 }
 
 export interface PageConfiguration {
@@ -71,7 +67,7 @@ export type SplitType = typeof SplitTypes[number];
 export interface PageSection {
     Key: string;
     Name?: string;
-    // IsHeightFixed?: boolean;
+    MinHeight?: number;
     Height?: number;
     Columns: PageSectionColumn[];
     Split?: SplitType;
