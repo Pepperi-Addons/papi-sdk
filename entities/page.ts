@@ -48,7 +48,7 @@ export interface PageLayout {
     VerticalSpacing?: PageSizeType;
     HorizontalSpacing?: PageSizeType;
     SectionsGap?: PageSizeType;
-    CoulmnsGap?: PageSizeType;
+    ColumnsGap?: PageSizeType;
     // RoundedCorners?: PageSizeType;
     MaxWidth?: number;
 }
