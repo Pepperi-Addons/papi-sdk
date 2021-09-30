@@ -2,7 +2,6 @@ import { AddonData, NgComponentRelation } from './addons';
 import { DataViewScreenSize, ResourceType } from './data-view';
 
 export interface Page extends AddonData {
-    Key: string;
     Name?: string;
     Description?: string;
     Type?: 'Home' | 'AccountHome' | 'None';
@@ -45,8 +44,11 @@ export type PageSizeType = 'SM' | 'MD' | 'LG';
 
 export interface PageLayout {
     Sections: PageSection[];
+    VerticalSpacing?: PageSizeType;
+    HorizontalSpacing?: PageSizeType;
     SectionsGap?: PageSizeType;
-    CoulmnsGap?: PageSizeType;
+    ColumnsGap?: PageSizeType;
+    // RoundedCorners?: PageSizeType;
     MaxWidth?: number;
 }
 
