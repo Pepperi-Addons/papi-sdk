@@ -2,7 +2,6 @@ import { AddonData, NgComponentRelation } from './addons';
 import { DataViewScreenSize, ResourceType } from './data-view';
 
 export interface Page extends AddonData {
-    Key: string;
     Name?: string;
     Description?: string;
     Type?: 'Home' | 'AccountHome' | 'None';
