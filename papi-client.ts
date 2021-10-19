@@ -8,7 +8,6 @@ import {
     AuditLogsEndpoint,
     SyncEndpoint,
     FileStorageEndpoint,
-    DataViewsEndpoint,
     NotificationEndpoint,
 } from './endpoints';
 import {
@@ -27,6 +26,8 @@ import {
     TransactionLines,
     Contact,
     Image,
+    Page,
+    DataView,
 } from './entities';
 
 import { papi_fetch, getPerformance } from './papi-module';
@@ -49,7 +50,7 @@ export class PapiClient {
         type: (typeObject: string) => {
             return new TypeMetaData(this, typeObject);
         },
-        dataViews: new DataViewsEndpoint(this),
+        dataViews: new Endpoint<DataView>(this, '/meta_data/data_views'),
         pepperiObjects: new Endpoint<PepperiObject>(this, '/meta_data/pepperiObjects'),
     };
 
@@ -76,6 +77,7 @@ export class PapiClient {
     contacts = new Endpoint<Contact>(this, '/contacts');
     images = new Endpoint<Image>(this, '/images');
     notification = new NotificationEndpoint(this);
+    pages = new Endpoint<Page>(this, '/pages');
 
     constructor(private options: PapiClientOptions) {}
 

@@ -1,7 +1,7 @@
 import { AddonData } from './addons';
 
 type PNSMessageType = 'data' | 'event';
-type PNSActionTypeType = 'insert' | 'update';
+type PNSActionTypeType = 'insert' | 'update' | 'remove';
 
 export interface Subscription extends AddonData {
     AddonRelativeURL: string;
@@ -12,7 +12,7 @@ export interface Subscription extends AddonData {
         Action?: PNSActionTypeType[];
         ModifiedFields?: string[];
         AddonUUID?: string[];
-        [key: string]: any;
+        [key: string]: string[] | undefined;
     };
     Name: string;
 }

@@ -8,14 +8,15 @@ export interface Addon {
 }
 
 export interface InstalledAddon {
+    UUID?: string;
     Addon: Addon;
     Version?: string;
+    SystemData?: any;
     AdditionalData?: string;
-    UUID?: string;
+    Hidden?: boolean;
+    PublicBaseURL: string;
     Name?: string;
     Description?: string;
-    SystemData?: any;
-    Hidden?: boolean;
     Type?: number;
 }
 
@@ -63,4 +64,22 @@ export interface AddonDataScheme {
         };
     };
     Validator?: string;
+}
+
+export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigation';
+
+export interface Relation extends AddonData {
+    AddonUUID: string;
+    Name: string;
+    RelationName: string;
+    Type: RelationType;
+    Description?: string;
+    AddonRelativeURL?: string;
+    [key: string]: any;
+}
+
+export interface NgComponentRelation extends Relation {
+    SubType?: string;
+    ComponentName?: string;
+    ModuleName?: string;
 }

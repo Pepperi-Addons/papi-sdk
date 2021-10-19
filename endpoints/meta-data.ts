@@ -1,5 +1,6 @@
 import { PapiClient } from '../papi-client';
 import { ApiFieldObject, ATDSettings, ATDMetaData } from '../entities';
+import Endpoint from '../endpoint';
 
 export class DistributorFlagsEndpoint {
     private options = {
@@ -61,9 +62,12 @@ export class Fields {
     constructor(private service: PapiClient, private type: string, private subtypeid?: string) {}
 
     async get(apiName: string): Promise<ApiFieldObject>;
-    async get(params?: { include_owned: boolean }): Promise<ApiFieldObject[]>;
+    async get(params?: { include_owned?: boolean; include_internal?: boolean }): Promise<ApiFieldObject[]>;
     async get(
-        p: string | { include_owned: boolean } = { include_owned: true },
+        p: string | { include_owned?: boolean; include_internal?: boolean } = {
+            include_owned: true,
+            include_internal: false,
+        },
     ): Promise<ApiFieldObject | ApiFieldObject[]> {
         let url = this.createUrl();
 
@@ -72,11 +76,8 @@ export class Fields {
                 url = `${url}/${p}`;
             }
         } else if (typeof p === 'object') {
-            if (p) {
-                url = `${url}?include_owned=${p.include_owned}`;
-            } else {
-                url = `${url}?include_owned=true`;
-            }
+            const queryString = Endpoint.encodeQueryParams(p);
+            url = queryString ? url + '?' + queryString : url;
         }
         return await this.service.get(url);
     }
