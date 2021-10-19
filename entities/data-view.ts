@@ -90,6 +90,7 @@ export const ResourceTypes = [
     'contacts',
     'lists',
     'catalogs',
+    'types',
 ] as const;
 export type ResourceType = typeof ResourceTypes[number];
 
