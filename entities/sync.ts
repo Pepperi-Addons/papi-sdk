@@ -21,6 +21,7 @@ export interface SyncBody {
     DeviceScreenSize?: number;
     SystemName?: string;
     ClientDBUUID: string;
+    SystemVersion?: string;
 }
 
 export interface SyncResponse {

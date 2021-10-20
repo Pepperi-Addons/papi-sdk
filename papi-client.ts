@@ -27,6 +27,7 @@ import {
     Contact,
     Image,
     Page,
+    DataView,
 } from './entities';
 
 import { papi_fetch, getPerformance } from './papi-module';
