@@ -40,7 +40,8 @@ export interface PageContext {
     Resource?: ResourceType;
 }
 
-export type PageSizeType = 'SM' | 'MD' | 'LG';
+export const PageSizeTypes = ['SM', 'MD', 'LG'] as const;
+export type PageSizeType = typeof PageSizeTypes[number];
 
 export interface PageLayout {
     Sections: PageSection[];
