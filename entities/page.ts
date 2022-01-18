@@ -4,7 +4,6 @@ import { DataViewScreenSize, ResourceType } from './data-view';
 export interface Page extends AddonData {
     Name?: string;
     Description?: string;
-    // Type?: 'Home' | 'AccountHome' | 'None';
     Blocks: PageBlock[];
     Layout: PageLayout;
 }
@@ -50,25 +49,6 @@ export interface PageConfigurationParameterFilter extends PageConfigurationParam
     Fields: string[];
 }
 
-// export interface PageConsume {
-//     Filter: PageFilter;
-//     Context: PageContext;
-// }
-
-// export interface PageProduce {
-//     Filters: PageFilter[];
-//     Context: PageContext;
-// }
-
-// export interface PageFilter {
-//     Resource: ResourceType;
-//     Fields: string[];
-// }
-
-// export interface PageContext {
-//     Resource?: ResourceType;
-// }
-
 export const PageSizeTypes = ['sm', 'md', 'lg'] as const;
 export type PageSizeType = typeof PageSizeTypes[number];
 
@@ -100,7 +80,6 @@ export interface PageSection {
     Key: string;
     Name?: string;
     Height?: number;
-    // MinHeight?: number;
     Columns: PageSectionColumn[];
     Split?: SplitType;
     Hide?: DataViewScreenSize[];
