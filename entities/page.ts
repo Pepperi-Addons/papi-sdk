@@ -12,7 +12,7 @@ export interface Page extends AddonData {
 export interface PageBlock {
     Key: string;
     Relation: NgComponentRelation;
-    Configuration?: ResourceDataConfiguration;
+    Configuration: ResourceDataConfiguration;
     ConfigurationPerScreenSize?: ScreenSizeDataConfiguration;
     PageConfiguration?: PageConfiguration;
 }
