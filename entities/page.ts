@@ -4,7 +4,6 @@ import { DataViewScreenSize, ResourceType } from './data-view';
 export interface Page extends AddonData {
     Name?: string;
     Description?: string;
-    Type?: 'Home' | 'AccountHome' | 'None';
     Blocks: PageBlock[];
     Layout: PageLayout;
 }
@@ -12,35 +11,45 @@ export interface Page extends AddonData {
 export interface PageBlock {
     Key: string;
     Relation: NgComponentRelation;
-    Configuration?: any;
+    Configuration: ResourceDataConfiguration;
+    ConfigurationPerScreenSize?: ScreenSizeDataConfiguration;
     PageConfiguration?: PageConfiguration;
 }
 
+export interface ResourceDataConfiguration {
+    Resource: string;
+    AddonUUID: string;
+    Data: any; // For desktop
+}
+
+export interface ScreenSizeDataConfiguration {
+    Tablet?: any;
+    Mobile?: any;
+}
+
 export interface PageConfiguration {
-    Consume?: PageConsume;
-    Produce?: PageProduce;
+    Parameters: PageConfigurationParameter[];
 }
 
-export interface PageConsume {
-    Filter: PageFilter;
-    Context: PageContext;
+export type PageConfigurationParameter = PageConfigurationParameterString | PageConfigurationParameterFilter;
+export interface PageConfigurationParameterBase {
+    Key: string;
+    Type: string;
+    Mandatory: boolean;
+    Consume: boolean;
+    Produce: boolean;
 }
 
-export interface PageProduce {
-    Filters: PageFilter[];
-    Context: PageContext;
+export interface PageConfigurationParameterString extends PageConfigurationParameterBase {
+    Type: 'String';
 }
-
-export interface PageFilter {
+export interface PageConfigurationParameterFilter extends PageConfigurationParameterBase {
+    Type: 'Filter';
     Resource: ResourceType;
     Fields: string[];
 }
 
-export interface PageContext {
-    Resource?: ResourceType;
-}
-
-export const PageSizeTypes = ['SM', 'MD', 'LG'] as const;
+export const PageSizeTypes = ['sm', 'md', 'lg'] as const;
 export type PageSizeType = typeof PageSizeTypes[number];
 
 export interface PageLayout {
@@ -70,7 +79,6 @@ export type SplitType = typeof SplitTypes[number];
 export interface PageSection {
     Key: string;
     Name?: string;
-    MinHeight?: number;
     Height?: number;
     Columns: PageSectionColumn[];
     Split?: SplitType;
@@ -78,10 +86,10 @@ export interface PageSection {
 }
 
 export interface PageSectionColumn {
-    Block?: PageSectionBlock;
+    BlockContainer?: PageBlockContainer;
 }
 
-export interface PageSectionBlock {
+export interface PageBlockContainer {
     BlockKey: string;
     Hide?: DataViewScreenSize[];
 }
