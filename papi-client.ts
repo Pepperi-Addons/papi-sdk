@@ -81,14 +81,6 @@ export class PapiClient {
 
     constructor(private options: PapiClientOptions) {}
 
-    ParseHeaders(request: any){
-        let headers:any = {};  
-        if(request.header != null){
-            for (let key in request.header) { headers[key.toLowerCase()] = request.header[key]; }   
-            request.header = headers;   
-        }        
-    }
-
     async get(url: string): Promise<any> {
         return this.apiCall('GET', url)
             .then((res) => res.text())
