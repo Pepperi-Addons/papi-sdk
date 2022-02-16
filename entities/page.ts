@@ -35,7 +35,7 @@ export type PageConfigurationParameter = PageConfigurationParameterString | Page
 export interface PageConfigurationParameterBase {
     Key: string;
     Type: string;
-    Mandatory: boolean;
+    // Mandatory: boolean;
     Consume: boolean;
     Produce: boolean;
 }
