@@ -140,13 +140,21 @@ export class AddonEndpoint extends Endpoint<Addon> {
 
     data = {
         schemes: {
-            get: async (): Promise<AddonDataScheme[]> => {
-                return await this.service.get('/addons/data/schemes');
+            get: async (params: any): Promise<AddonDataScheme[]> => {
+                let url = '/addons/data/schemes';
+                const query = Endpoint.encodeQueryParams(params);
+                url = query ? url + '?' + query : url;
+                return await this.service.get(url);
             },
-            name: {
-                get: async (name: string): Promise<AddonDataScheme> => {
-                    return await this.service.get(`/addons/data/schemes/${name}`);
-                },
+            name: (name: string) => {
+                return {
+                    get: async (params: any): Promise<AddonDataScheme> => {
+                        let url = `/addons/data/schemes/${name}`;
+                        const query = Endpoint.encodeQueryParams(params);
+                        url = query ? url + '?' + query : url;
+                        return await this.service.get(url);
+                    },
+                };
             },
             post: async (body: AddonDataScheme): Promise<AddonDataScheme> => {
                 return await this.service.post('/addons/data/schemes', body);
