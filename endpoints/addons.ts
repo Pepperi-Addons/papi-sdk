@@ -1,4 +1,4 @@
-import Endpoint from '../endpoint';
+import Endpoint, { FindOptions } from '../endpoint';
 import {
     Addon,
     InstalledAddon,
@@ -140,7 +140,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
 
     data = {
         schemes: {
-            get: async (params: any): Promise<AddonDataScheme[]> => {
+            get: async (params: FindOptions): Promise<AddonDataScheme[]> => {
                 let url = '/addons/data/schemes';
                 const query = Endpoint.encodeQueryParams(params);
                 url = query ? url + '?' + query : url;
@@ -148,7 +148,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
             },
             name: (name: string) => {
                 return {
-                    get: async (params: any): Promise<AddonDataScheme> => {
+                    get: async (params: FindOptions): Promise<AddonDataScheme> => {
                         let url = `/addons/data/schemes/${name}`;
                         const query = Endpoint.encodeQueryParams(params);
                         url = query ? url + '?' + query : url;
