@@ -28,6 +28,7 @@ export interface Collection {
     CreationDateTime?: string;
     ModificationDateTime?: string;
     Name: string;
+    Description?: string;
     Type?: 'meta_data';
     DocumentKey?: DocumentKey;
     ListView?: GridDataView;
