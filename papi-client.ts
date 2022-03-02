@@ -83,7 +83,7 @@ export class PapiClient {
     userDefinedCollections = {
         schemes: new SchemesEndpoint(this),
         documents: (collectionName: string) => {
-            return new Endpoint<AddonData>(this, `/user_defined_collection/${collectionName}`);
+            return new Endpoint<AddonData>(this, `/user_defined_collections/${collectionName}`);
         },
     };
 
