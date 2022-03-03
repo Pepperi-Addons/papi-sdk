@@ -9,6 +9,7 @@ import {
     SyncEndpoint,
     FileStorageEndpoint,
     NotificationEndpoint,
+    SchemesEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -28,6 +29,7 @@ import {
     Image,
     Page,
     DataView,
+    AddonData,
 } from './entities';
 
 import { papi_fetch, getPerformance } from './papi-module';
@@ -78,6 +80,12 @@ export class PapiClient {
     images = new Endpoint<Image>(this, '/images');
     notification = new NotificationEndpoint(this);
     pages = new Endpoint<Page>(this, '/pages');
+    userDefinedCollections = {
+        schemes: new SchemesEndpoint(this),
+        documents: (collectionName: string) => {
+            return new Endpoint<AddonData>(this, `/user_defined_collections/${collectionName}`);
+        },
+    };
 
     constructor(private options: PapiClientOptions) {}
 

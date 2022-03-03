@@ -6,3 +6,4 @@ export * from './audit-logs';
 export * from './sync';
 export * from './file-storage';
 export * from './notification';
+export * from './user-defined-collections';
