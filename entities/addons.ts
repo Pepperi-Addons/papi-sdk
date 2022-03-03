@@ -60,7 +60,7 @@ export interface AddonDataScheme {
     Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data';
     Fields?: {
         [key: string]: {
-            Type: 'String' | 'Bool' | 'Integer' | 'MultipleStringValues';
+            Type: SchemeFieldType;
         };
     };
     Validator?: string;
@@ -83,3 +83,15 @@ export interface NgComponentRelation extends Relation {
     ComponentName?: string;
     ModuleName?: string;
 }
+
+export const SchemeFieldTypes = [
+    'String',
+    'MultipleStringValues',
+    'Bool',
+    'Integer',
+    'Double',
+    'Object',
+    'Array',
+] as const;
+
+export type SchemeFieldType = typeof SchemeFieldTypes[number];

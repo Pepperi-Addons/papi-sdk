@@ -1,17 +1,14 @@
+import { AddonDataScheme, SchemeFieldType } from './addons';
 import { GridDataView } from './data-view';
-
-export const FieldTypes = ['String', 'Bool', 'Integer', 'Double', 'Object', 'Array'] as const;
-
-export type FieldType = typeof FieldTypes[number];
 
 export const DocumentKeyTypes = ['AutoGenerate', 'Composite', 'Key'] as const;
 
 export type DocumentKeyType = typeof DocumentKeyTypes[number];
 export interface CollectionField {
     Items?: {
-        Type: FieldType;
+        Type: SchemeFieldType;
     };
-    Type: FieldType;
+    Type: SchemeFieldType;
     Mandatory: boolean;
     OptionalValues?: string[];
     Description: string;
@@ -19,9 +16,9 @@ export interface CollectionField {
 export interface DocumentKey {
     Type: DocumentKeyType;
     Fields?: string[];
-    Delimiter: string;
+    Delimiter?: string;
 }
-export interface Collection {
+export interface Collection extends AddonDataScheme {
     Hidden?: boolean;
     CreationDateTime?: string;
     ModificationDateTime?: string;
@@ -32,5 +29,5 @@ export interface Collection {
     ListView?: GridDataView;
     Fields?: {
         [key: string]: CollectionField;
-    }[];
+    };
 }
