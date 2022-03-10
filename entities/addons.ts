@@ -92,6 +92,7 @@ export const SchemeFieldTypes = [
     'Double',
     'Object',
     'Array',
+    'DateTime',
 ] as const;
 
 export type SchemeFieldType = typeof SchemeFieldTypes[number];
