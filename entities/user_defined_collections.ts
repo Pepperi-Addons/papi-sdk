@@ -24,7 +24,6 @@ export interface Collection extends AddonDataScheme {
     ModificationDateTime?: string;
     Name: string;
     Description?: string;
-    Type?: 'meta_data';
     DocumentKey?: DocumentKey;
     ListView?: GridDataView;
     Fields?: {
