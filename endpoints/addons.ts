@@ -7,6 +7,7 @@ import {
     AddonData,
     AddonDataScheme,
     Relation,
+    AddonFile,
 } from '../entities';
 import { PapiClient } from '../papi-client';
 
@@ -166,5 +167,25 @@ export class AddonEndpoint extends Endpoint<Addon> {
         },
 
         relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
+    };
+
+    files = {
+        uuid: (addonUUID: string) => {
+            return {
+                get: async (keyName: string): Promise<AddonFile> => {
+                    return await this.service.get(`/addons/files/${addonUUID}/${keyName}`);
+                },
+                getFiles: async (folder: string, params: FindOptions): Promise<AddonFile[]> => {
+                    let url = `/addons/files/${addonUUID}`;
+                    const query = Endpoint.encodeQueryParams(params);
+                    url = `${url}?folder=${folder}${query ? `&${query}` : ''}`;
+
+                    return await this.service.get(url);
+                },
+                post: async (body: AddonFile): Promise<AddonFile> => {
+                    return await this.service.post(`/addons/files/${addonUUID}`, body);
+                },
+            };
+        },
     };
 }
