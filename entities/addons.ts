@@ -57,12 +57,13 @@ export interface AddonDataScheme {
     CreationDateTime?: string;
     ModificationDateTime?: string;
     Name: string;
-    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data';
+    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data' | 'index' | 'typed_index';
     Fields?: {
         [key: string]: {
             Type: SchemeFieldType;
         };
     };
+    DataSourceData?: any;
     Validator?: string;
 }
 
