@@ -61,6 +61,8 @@ export interface AddonDataScheme {
     Fields?: {
         [key: string]: {
             Type: SchemeFieldType;
+            Indexed?: boolean;
+            Keyword?: boolean;
         };
     };
     DataSourceData?: any;
