@@ -57,13 +57,17 @@ export interface AddonDataScheme {
     CreationDateTime?: string;
     ModificationDateTime?: string;
     Name: string;
-    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data';
+    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data' | 'index' | 'typed_index';
     Fields?: {
         [key: string]: {
             Type: SchemeFieldType;
+            Indexed?: boolean;
+            Keyword?: boolean;
         };
     };
+    DataSourceData?: any;
     Validator?: string;
+    DataSourceURL?: string;
 }
 
 export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigation';
