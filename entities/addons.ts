@@ -67,6 +67,7 @@ export interface AddonDataScheme {
     };
     DataSourceData?: any;
     Validator?: string;
+    DataSourceURL?: string;
 }
 
 export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigation';
