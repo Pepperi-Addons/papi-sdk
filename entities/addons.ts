@@ -117,5 +117,4 @@ export interface AddonFile extends AddonData {
     URI?: string;
     PresignedURL?: string;
     FileVersion?: string;
-    [key: string]: any;
 }

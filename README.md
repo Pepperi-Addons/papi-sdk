@@ -122,4 +122,4 @@ When you create or update a PR, there are GitHub Actions that will verify that y
 Once the PR is merged into master, a GitHub Action will publish the new version to the npm registry.
 If you do not increment the version number. This script will fail.
 
-To locally test your changes, run `npm pack`. Then run `npm install` in the project you want to test the papi-sdk in.
+To locally test your changes, run `npm pack`. Then run `npm install path_to_local_papi_sdk` in the project you want to test the papi-sdk in.

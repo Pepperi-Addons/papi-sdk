@@ -1,4 +1,4 @@
-import Endpoint, { FindOptions } from '../endpoint';
+import Endpoint, { FileFindOptions, FindOptions } from '../endpoint';
 import {
     Addon,
     InstalledAddon,
@@ -172,13 +172,13 @@ export class AddonEndpoint extends Endpoint<Addon> {
     files = {
         uuid: (addonUUID: string) => {
             return {
-                get: async (keyName: string): Promise<AddonFile> => {
-                    return await this.service.get(`/addons/files/${addonUUID}/${keyName}`);
+                get: async (key: string): Promise<AddonFile> => {
+                    return await this.service.get(`/addons/files/${addonUUID}/${key}`);
                 },
-                getFiles: async (folder: string, params: FindOptions): Promise<AddonFile[]> => {
+                find: async (params: FileFindOptions): Promise<AddonFile[]> => {
                     let url = `/addons/files/${addonUUID}`;
                     const query = Endpoint.encodeQueryParams(params);
-                    url = `${url}?folder=${folder}${query ? `&${query}` : ''}`;
+                    url = `${url}?${query}`;
 
                     return await this.service.get(url);
                 },
