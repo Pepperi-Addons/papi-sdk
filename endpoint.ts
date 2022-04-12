@@ -13,6 +13,10 @@ export interface FindOptions {
     is_distinct?: boolean;
 }
 
+export interface FileFindOptions extends FindOptions {
+    folder: string;
+}
+
 export class IterableEndpoint<T> {
     constructor(protected service: PapiClient, protected endpoint: string) {}
 

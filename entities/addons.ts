@@ -100,3 +100,21 @@ export const SchemeFieldTypes = [
 ] as const;
 
 export type SchemeFieldType = typeof SchemeFieldTypes[number];
+
+export interface AddonFile extends AddonData {
+    Folder?: string;
+    Name?: string;
+    Description?: string;
+    Mime?: string;
+    Thumbnails?: [
+        {
+            Size: '200x200';
+            URL?: string;
+        },
+    ];
+    Sync?: 'None' | 'Device' | 'DeviceThumbnail' | 'Always';
+    URL?: string;
+    URI?: string;
+    PresignedURL?: string;
+    FileVersion?: string;
+}
