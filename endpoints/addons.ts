@@ -172,8 +172,12 @@ export class AddonEndpoint extends Endpoint<Addon> {
     files = {
         uuid: (addonUUID: string) => {
             return {
-                get: async (key: string): Promise<AddonFile> => {
-                    return await this.service.get(`/addons/files/${addonUUID}/${key}`);
+                key: (keyName: string) => {
+                    return {
+                        get: async (): Promise<AddonFile> => {
+                            return await this.service.get(`/addons/files/${addonUUID}/${keyName}`);
+                        },
+                    };
                 },
                 find: async (params: FileFindOptions): Promise<AddonFile[]> => {
                     let url = `/addons/files/${addonUUID}`;
