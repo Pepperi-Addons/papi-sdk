@@ -8,6 +8,7 @@ import {
     AddonDataScheme,
     Relation,
     AddonFile,
+    ElasticSearchDocument,
 } from '../entities';
 import { PapiClient } from '../papi-client';
 
@@ -165,7 +166,160 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 },
             };
         },
-
+        index: {
+            uuid: (addonUUID: string) => {
+                return {
+                    create: async (body: ElasticSearchDocument) => {
+                        return await this.service.post(`/addons/data/index/${addonUUID}/create`, body);
+                    },
+                    purge: async (body: ElasticSearchDocument) => {
+                        return await this.service.post(`/addons/data/index/${addonUUID}/purge`, body);
+                    },
+                    table: (tableName: string) => {
+                        return {
+                            create: async (body: ElasticSearchDocument) => {
+                                return await this.service.post(
+                                    `/addons/data/index/${addonUUID}/${tableName}/create`,
+                                    body,
+                                );
+                            },
+                            key: (key: string) => {
+                                return {
+                                    get: async (): Promise<ElasticSearchDocument> => {
+                                        return await this.service.get(
+                                            `/addons/data/index/${addonUUID}/${tableName}/${key}`,
+                                        );
+                                    },
+                                };
+                            },
+                            find: async (params: FindOptions): Promise<ElasticSearchDocument[]> => {
+                                let url = `/addons/data/index/${addonUUID}/${tableName}`;
+                                const query = Endpoint.encodeQueryParams(params);
+                                url = query ? url + '?' + query : url;
+                                return await this.service.get(url);
+                            },
+                        };
+                    },
+                    batch: (body: ElasticSearchDocument[]) => {
+                        return {
+                            table: async (tableName: string) => {
+                                return await this.service.post(
+                                    `/addons/data/index/${addonUUID}/batch/${tableName}`,
+                                    body,
+                                );
+                            },
+                        };
+                    },
+                    search: async (dslQuery: any) => {
+                        return {
+                            table: async (tableName: string) => {
+                                return await this.service.post(
+                                    `/addons/data/index/${addonUUID}/search/${tableName}`,
+                                    dslQuery,
+                                );
+                            },
+                        };
+                    },
+                    delete: async (dslQuery: any) => {
+                        return {
+                            table: async (tableName: string) => {
+                                return await this.service.post(
+                                    `/addons/data/index/${addonUUID}/delete/${tableName}`,
+                                    dslQuery,
+                                );
+                            },
+                        };
+                    },
+                    update: async (dslQuery: any) => {
+                        return {
+                            table: async (tableName: string) => {
+                                return await this.service.post(
+                                    `/addons/data/index/${addonUUID}/update/${tableName}`,
+                                    dslQuery,
+                                );
+                            },
+                        };
+                    },
+                };
+            },
+        },
+        typedIndex: {
+            uuid: (addonUUID: string) => {
+                return {
+                    create: async (body: ElasticSearchDocument) => {
+                        return await this.service.post(`/addons/data/typed_index/${addonUUID}/create`, body);
+                    },
+                    purge: async (body: ElasticSearchDocument) => {
+                        return await this.service.post(`/addons/data/typed_index/${addonUUID}/purge`, body);
+                    },
+                    table: (tableName: string) => {
+                        return {
+                            create: async (body: ElasticSearchDocument) => {
+                                return await this.service.post(
+                                    `/addons/data/typed_index/${addonUUID}/${tableName}/create`,
+                                    body,
+                                );
+                            },
+                            key: (key: string) => {
+                                return {
+                                    get: async (): Promise<ElasticSearchDocument> => {
+                                        return await this.service.get(
+                                            `/addons/data/typed_index/${addonUUID}/${tableName}/${key}`,
+                                        );
+                                    },
+                                };
+                            },
+                            find: async (params: FindOptions): Promise<ElasticSearchDocument[]> => {
+                                let url = `/addons/data/typed_index/${addonUUID}/${tableName}`;
+                                const query = Endpoint.encodeQueryParams(params);
+                                url = query ? url + '?' + query : url;
+                                return await this.service.get(url);
+                            },
+                        };
+                    },
+                    batch: (body: ElasticSearchDocument[]) => {
+                        return {
+                            table: async (tableName: string) => {
+                                return await this.service.post(
+                                    `/addons/data/typed_index/${addonUUID}/batch/${tableName}`,
+                                    body,
+                                );
+                            },
+                        };
+                    },
+                    search: async (dslQuery: any) => {
+                        return {
+                            table: async (tableName: string) => {
+                                return await this.service.post(
+                                    `/addons/data/typed_index/${addonUUID}/search/${tableName}`,
+                                    dslQuery,
+                                );
+                            },
+                        };
+                    },
+                    delete: async (dslQuery: any) => {
+                        return {
+                            table: async (tableName: string) => {
+                                return await this.service.post(
+                                    `/addons/data/typed_index/${addonUUID}/delete/${tableName}`,
+                                    dslQuery,
+                                );
+                            },
+                        };
+                    },
+                    update: async (dslQuery: any) => {
+                        return {
+                            table: async (tableName: string) => {
+                                return await this.service.post(
+                                    `/addons/data/typed_index/${addonUUID}/update/${tableName}`,
+                                    dslQuery,
+                                );
+                            },
+                        };
+                    },
+                };
+            },
+        },
         relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
     };
 

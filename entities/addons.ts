@@ -52,6 +52,11 @@ export interface AddonData {
     [key: string]: any;
 }
 
+export interface ElasticSearchDocument {
+    Key?: string;
+    [key: string]: any;
+}
+
 export interface AddonDataScheme {
     Hidden?: boolean;
     CreationDateTime?: string;
