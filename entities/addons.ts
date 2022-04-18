@@ -63,6 +63,9 @@ export interface AddonDataScheme {
             Type: SchemeFieldType;
             Indexed?: boolean;
             Keyword?: boolean;
+            Items?: {
+                Type: SchemeFieldType;
+            };
         };
     };
     DataSourceData?: any;
