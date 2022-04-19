@@ -167,74 +167,93 @@ export class AddonEndpoint extends Endpoint<Addon> {
             };
         },
         index: {
+            schemes: {
+                uuid: (addonUUID: string) => {
+                    return {
+                        create: async (body: ElasticSearchDocument) => {
+                            return await this.service.post(`/addons/data/index/schemes/${addonUUID}/create`, body);
+                        },
+                        purge: async (body: ElasticSearchDocument) => {
+                            return await this.service.post(`/addons/data/index/schemes/${addonUUID}/purge`, body);
+                        },
+                    };
+                },
+            },
             uuid: (addonUUID: string) => {
                 return {
-                    create: async (body: ElasticSearchDocument) => {
-                        return await this.service.post(`/addons/data/index/${addonUUID}/create`, body);
-                    },
-                    purge: async (body: ElasticSearchDocument) => {
-                        return await this.service.post(`/addons/data/index/${addonUUID}/purge`, body);
-                    },
-                    table: (tableName: string) => {
+                    resource: (resourceName: string) => {
                         return {
                             create: async (body: ElasticSearchDocument) => {
-                                return await this.service.post(
-                                    `/addons/data/index/${addonUUID}/${tableName}/create`,
-                                    body,
-                                );
+                                return await this.service.post(`/addons/data/index/${addonUUID}/${resourceName}`, body);
                             },
                             key: (key: string) => {
                                 return {
                                     get: async (): Promise<ElasticSearchDocument> => {
                                         return await this.service.get(
-                                            `/addons/data/index/${addonUUID}/${tableName}/${key}`,
+                                            `/addons/data/index/${addonUUID}/${resourceName}/${key}`,
                                         );
                                     },
                                 };
                             },
                             find: async (params: FindOptions): Promise<ElasticSearchDocument[]> => {
-                                let url = `/addons/data/index/${addonUUID}/${tableName}`;
+                                let url = `/addons/data/index/${addonUUID}/${resourceName}`;
                                 const query = Endpoint.encodeQueryParams(params);
                                 url = query ? url + '?' + query : url;
                                 return await this.service.get(url);
                             },
                         };
                     },
-                    batch: (body: ElasticSearchDocument[]) => {
+                };
+            },
+            batch: (body: ElasticSearchDocument[]) => {
+                return {
+                    uuid: (addonUUID: string) => {
                         return {
-                            table: async (tableName: string) => {
+                            resource: async (resourceName: string) => {
                                 return await this.service.post(
-                                    `/addons/data/index/${addonUUID}/batch/${tableName}`,
+                                    `/addons/data/index/batch/${addonUUID}/${resourceName}`,
                                     body,
                                 );
                             },
                         };
                     },
-                    search: async (dslQuery: any) => {
+                };
+            },
+            search: async (dslQuery: any) => {
+                return {
+                    uuid: (addonUUID: string) => {
                         return {
-                            table: async (tableName: string) => {
+                            resource: async (resourceName: string) => {
                                 return await this.service.post(
-                                    `/addons/data/index/${addonUUID}/search/${tableName}`,
+                                    `/addons/data/index/${addonUUID}/search/${resourceName}`,
                                     dslQuery,
                                 );
                             },
                         };
                     },
-                    delete: async (dslQuery: any) => {
+                };
+            },
+            delete: async (dslQuery: any) => {
+                return {
+                    uuid: (addonUUID: string) => {
                         return {
-                            table: async (tableName: string) => {
+                            resource: async (resourceName: string) => {
                                 return await this.service.post(
-                                    `/addons/data/index/${addonUUID}/delete/${tableName}`,
+                                    `/addons/data/index/${addonUUID}/delete/${resourceName}`,
                                     dslQuery,
                                 );
                             },
                         };
                     },
-                    update: async (dslQuery: any) => {
+                };
+            },
+            update: async (dslQuery: any) => {
+                return {
+                    uuid: (addonUUID: string) => {
                         return {
-                            table: async (tableName: string) => {
+                            resource: async (resourceName: string) => {
                                 return await this.service.post(
-                                    `/addons/data/index/${addonUUID}/update/${tableName}`,
+                                    `/addons/data/index/${addonUUID}/update/${resourceName}`,
                                     dslQuery,
                                 );
                             },
@@ -243,20 +262,29 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 };
             },
         },
-        typedIndex: {
+        typed_index: {
+            schemes: {
+                uuid: (addonUUID: string) => {
+                    return {
+                        create: async (body: ElasticSearchDocument) => {
+                            return await this.service.post(
+                                `/addons/data/typed_index/schemes/${addonUUID}/create`,
+                                body,
+                            );
+                        },
+                        purge: async (body: ElasticSearchDocument) => {
+                            return await this.service.post(`/addons/data/typed_index/schemes/${addonUUID}/purge`, body);
+                        },
+                    };
+                },
+            },
             uuid: (addonUUID: string) => {
                 return {
-                    create: async (body: ElasticSearchDocument) => {
-                        return await this.service.post(`/addons/data/typed_index/${addonUUID}/create`, body);
-                    },
-                    purge: async (body: ElasticSearchDocument) => {
-                        return await this.service.post(`/addons/data/typed_index/${addonUUID}/purge`, body);
-                    },
-                    table: (tableName: string) => {
+                    resource: (resourceName: string) => {
                         return {
                             create: async (body: ElasticSearchDocument) => {
                                 return await this.service.post(
-                                    `/addons/data/typed_index/${addonUUID}/${tableName}/create`,
+                                    `/addons/data/typed_index/${addonUUID}/${resourceName}`,
                                     body,
                                 );
                             },
@@ -264,54 +292,70 @@ export class AddonEndpoint extends Endpoint<Addon> {
                                 return {
                                     get: async (): Promise<ElasticSearchDocument> => {
                                         return await this.service.get(
-                                            `/addons/data/typed_index/${addonUUID}/${tableName}/${key}`,
+                                            `/addons/data/typed_index/${addonUUID}/${resourceName}/${key}`,
                                         );
                                     },
                                 };
                             },
                             find: async (params: FindOptions): Promise<ElasticSearchDocument[]> => {
-                                let url = `/addons/data/typed_index/${addonUUID}/${tableName}`;
+                                let url = `/addons/data/typed_index/${addonUUID}/${resourceName}`;
                                 const query = Endpoint.encodeQueryParams(params);
                                 url = query ? url + '?' + query : url;
                                 return await this.service.get(url);
                             },
                         };
                     },
-                    batch: (body: ElasticSearchDocument[]) => {
+                };
+            },
+            batch: (body: ElasticSearchDocument[]) => {
+                return {
+                    uuid: (addonUUID: string) => {
                         return {
-                            table: async (tableName: string) => {
+                            resource: async (resourceName: string) => {
                                 return await this.service.post(
-                                    `/addons/data/typed_index/${addonUUID}/batch/${tableName}`,
+                                    `/addons/data/typed_index/batch/${addonUUID}/${resourceName}`,
                                     body,
                                 );
                             },
                         };
                     },
-                    search: async (dslQuery: any) => {
+                };
+            },
+            search: async (dslQuery: any) => {
+                return {
+                    uuid: (addonUUID: string) => {
                         return {
-                            table: async (tableName: string) => {
+                            resource: async (resourceName: string) => {
                                 return await this.service.post(
-                                    `/addons/data/typed_index/${addonUUID}/search/${tableName}`,
+                                    `/addons/data/typed_index/${addonUUID}/search/${resourceName}`,
                                     dslQuery,
                                 );
                             },
                         };
                     },
-                    delete: async (dslQuery: any) => {
+                };
+            },
+            delete: async (dslQuery: any) => {
+                return {
+                    uuid: (addonUUID: string) => {
                         return {
-                            table: async (tableName: string) => {
+                            resource: async (resourceName: string) => {
                                 return await this.service.post(
-                                    `/addons/data/typed_index/${addonUUID}/delete/${tableName}`,
+                                    `/addons/data/typed_index/${addonUUID}/delete/${resourceName}`,
                                     dslQuery,
                                 );
                             },
                         };
                     },
-                    update: async (dslQuery: any) => {
+                };
+            },
+            update: async (dslQuery: any) => {
+                return {
+                    uuid: (addonUUID: string) => {
                         return {
-                            table: async (tableName: string) => {
+                            resource: async (resourceName: string) => {
                                 return await this.service.post(
-                                    `/addons/data/typed_index/${addonUUID}/update/${tableName}`,
+                                    `/addons/data/typed_index/${addonUUID}/update/${resourceName}`,
                                     dslQuery,
                                 );
                             },
