@@ -57,13 +57,20 @@ export interface AddonDataScheme {
     CreationDateTime?: string;
     ModificationDateTime?: string;
     Name: string;
-    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data';
+    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data' | 'index' | 'typed_index';
     Fields?: {
         [key: string]: {
-            Type: 'String' | 'Bool' | 'Integer' | 'MultipleStringValues';
+            Type: SchemeFieldType;
+            Indexed?: boolean;
+            Keyword?: boolean;
+            Items?: {
+                Type: SchemeFieldType;
+            };
         };
     };
+    DataSourceData?: any;
     Validator?: string;
+    DataSourceURL?: string;
 }
 
 export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigation';
@@ -82,4 +89,35 @@ export interface NgComponentRelation extends Relation {
     SubType?: string;
     ComponentName?: string;
     ModuleName?: string;
+}
+
+export const SchemeFieldTypes = [
+    'String',
+    'MultipleStringValues',
+    'Bool',
+    'Integer',
+    'Double',
+    'Object',
+    'Array',
+    'DateTime',
+] as const;
+
+export type SchemeFieldType = typeof SchemeFieldTypes[number];
+
+export interface AddonFile extends AddonData {
+    Folder?: string;
+    Name?: string;
+    Description?: string;
+    Mime?: string;
+    Thumbnails?: [
+        {
+            Size: '200x200';
+            URL?: string;
+        },
+    ];
+    Sync?: 'None' | 'Device' | 'DeviceThumbnail' | 'Always';
+    URL?: string;
+    URI?: string;
+    PresignedURL?: string;
+    FileVersion?: string;
 }

@@ -75,7 +75,7 @@ The `iter` function on all enpoints support the same paramters that the `GET` su
 etc. See https://developer.pepperi.com/account-resources/apis/get/accounts
 
 We chose that the Interfaces (eg. Account) representing the objects that are returned from the API, 
-should include all the endpoints known properties. Properties that must be sent in `upsert` are marked as non-optional in the interfaces. The rest are all marked as optional. Although the fields that you will get by calling `iter()` depends on the `fields` parameter that you send, we decided that the `iter` willl return and object with the interface type `eg. Account`, for easy code-completion & intelisense.
+should include all the endpoints known properties. Properties that must be sent in `upsert` are marked as non-optional in the interfaces. The rest are all marked as optional. Although the fields that you will get by calling `iter()` depend on the `fields` parameter that you send, we decided that the `iter` will return an object with the interface type `eg. Account`, for easy code-completion & intelisense.
 
 With endpoints that are more complicated, we encorperated the API route into the function signature. 
 
@@ -87,7 +87,7 @@ For example:
 | /meta_data/transactions/types/Sales Order/fields | client.metaData.type('transactions').types.subtype('Sales Order').fields.get() |
 
 ## Versioning
-This repo follows sematic versioning. See https://semver.org/.
+This repo follows semantic versioning. See https://semver.org/.
 
 Given a version number **MAJOR**.**MINOR**.**PATCH**, increment the:
 
@@ -121,3 +121,5 @@ Every PR must be approved by at least one other person before it can be merged i
 When you create or update a PR, there are GitHub Actions that will verify that your PR complies to the above.
 Once the PR is merged into master, a GitHub Action will publish the new version to the npm registry.
 If you do not increment the version number. This script will fail.
+
+To locally test your changes, run `npm pack`. Then run `npm install path_to_local_papi_sdk` in the project you want to test the papi-sdk in.

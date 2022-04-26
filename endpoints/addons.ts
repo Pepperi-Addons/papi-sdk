@@ -1,4 +1,4 @@
-import Endpoint from '../endpoint';
+import Endpoint, { FileFindOptions, FindOptions } from '../endpoint';
 import {
     Addon,
     InstalledAddon,
@@ -7,6 +7,7 @@ import {
     AddonData,
     AddonDataScheme,
     Relation,
+    AddonFile,
 } from '../entities';
 import { PapiClient } from '../papi-client';
 
@@ -140,6 +141,19 @@ export class AddonEndpoint extends Endpoint<Addon> {
 
     data = {
         schemes: {
+            get: async (params: FindOptions): Promise<AddonDataScheme[]> => {
+                let url = '/addons/data/schemes';
+                const query = Endpoint.encodeQueryParams(params);
+                url = query ? url + '?' + query : url;
+                return await this.service.get(url);
+            },
+            name: (name: string) => {
+                return {
+                    get: async (): Promise<AddonDataScheme> => {
+                        return await this.service.get(`/addons/data/schemes/${name}`);
+                    },
+                };
+            },
             post: async (body: AddonDataScheme): Promise<AddonDataScheme> => {
                 return await this.service.post('/addons/data/schemes', body);
             },
@@ -153,5 +167,29 @@ export class AddonEndpoint extends Endpoint<Addon> {
         },
 
         relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
+    };
+
+    files = {
+        uuid: (addonUUID: string) => {
+            return {
+                key: (keyName: string) => {
+                    return {
+                        get: async (): Promise<AddonFile> => {
+                            return await this.service.get(`/addons/files/${addonUUID}/${keyName}`);
+                        },
+                    };
+                },
+                find: async (params: FileFindOptions): Promise<AddonFile[]> => {
+                    let url = `/addons/files/${addonUUID}`;
+                    const query = Endpoint.encodeQueryParams(params);
+                    url = `${url}?${query}`;
+
+                    return await this.service.get(url);
+                },
+                post: async (body: AddonFile): Promise<AddonFile> => {
+                    return await this.service.post(`/addons/files/${addonUUID}`, body);
+                },
+            };
+        },
     };
 }
