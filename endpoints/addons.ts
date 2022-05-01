@@ -229,7 +229,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         },
                     };
                 },
-                search: async (dslQuery: any) => {
+                search: (dslQuery: any) => {
                     return {
                         uuid: (addonUUID: string) => {
                             return {
@@ -243,7 +243,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         },
                     };
                 },
-                delete: async (dslQuery: any) => {
+                delete: (dslQuery: any) => {
                     return {
                         uuid: (addonUUID: string) => {
                             return {
@@ -257,7 +257,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         },
                     };
                 },
-                update: async (dslQuery: any) => {
+                update: (dslQuery: any) => {
                     return {
                         uuid: (addonUUID: string) => {
                             return {
