@@ -235,7 +235,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             return {
                                 resource: async (resourceName: string) => {
                                     return await this.service.post(
-                                        `/addons/data/${indexType}/${addonUUID}/search/${resourceName}`,
+                                        `/addons/data/${indexType}/search/${addonUUID}/${resourceName}`,
                                         dslQuery,
                                     );
                                 },
@@ -249,7 +249,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             return {
                                 resource: async (resourceName: string) => {
                                     return await this.service.post(
-                                        `/addons/data/${indexType}/${addonUUID}/delete/${resourceName}`,
+                                        `/addons/data/${indexType}/delete/${addonUUID}/${resourceName}`,
                                         dslQuery,
                                     );
                                 },
@@ -263,7 +263,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             return {
                                 resource: async (resourceName: string) => {
                                     return await this.service.post(
-                                        `/addons/data/${indexType}/${addonUUID}/update/${resourceName}`,
+                                        `/addons/data/${indexType}/update/${addonUUID}/${resourceName}`,
                                         dslQuery,
                                     );
                                 },
