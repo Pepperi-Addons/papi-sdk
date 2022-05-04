@@ -8,6 +8,7 @@ import {
     AddonDataScheme,
     Relation,
     AddonFile,
+    DIMXObject,
 } from '../entities';
 import { PapiClient } from '../papi-client';
 
@@ -167,6 +168,68 @@ export class AddonEndpoint extends Endpoint<Addon> {
         },
 
         relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
+        import: {
+            uuid: (addonUUID: string) => {
+                return {
+                    table: (tableName: string) => {
+                        return {
+                            upsert: async (body: {
+                                Objects: any[];
+                                OverwriteObject?: boolean;
+                                Version?: string;
+                            }): Promise<DIMXObject[]> => {
+                                return await this.service.post(`/addons/data/import/${addonUUID}/${tableName}`, body);
+                            },
+                        };
+                    },
+                };
+            },
+            file: {
+                uuid: (addonUUID: string) => {
+                    return {
+                        table: (tableName: string) => {
+                            return {
+                                upsert: async (body: {
+                                    URI: string;
+                                    OverwriteObject?: boolean;
+                                    Delimiter?: string;
+                                    Version?: string;
+                                }): Promise<AddonAPIAsyncResult> => {
+                                    return await this.service.post(
+                                        `/addons/data/import/file/${addonUUID}/${tableName}`,
+                                        body,
+                                    );
+                                },
+                            };
+                        },
+                    };
+                },
+            },
+        },
+        export: {
+            file: {
+                uuid: (addonUUID: string) => {
+                    return {
+                        table: (tableName: string) => {
+                            return {
+                                get: async (body: {
+                                    Format?: 'csv' | 'json';
+                                    IncludeDeleted?: boolean;
+                                    Where?: string;
+                                    Fields?: string;
+                                    Delimiter?: string;
+                                }): Promise<AddonAPIAsyncResult> => {
+                                    return await this.service.post(
+                                        `/addons/data/export/file/${addonUUID}/${tableName}`,
+                                        body,
+                                    );
+                                },
+                            };
+                        },
+                    };
+                },
+            },
+        },
     };
 
     files = {

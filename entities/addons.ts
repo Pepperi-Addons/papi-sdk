@@ -20,6 +20,12 @@ export interface InstalledAddon {
     Type?: number;
 }
 
+export interface DIMXObject {
+    Key: string; // Unique key of the object. Should match the internal Object's Key property.
+    Status: 'Update' | 'Insert' | 'Ignore' | 'Error' | 'Merge'; // Current status of the object in the import process.
+    Details?: string; // extra details in case Status is "Error" or "Merge"
+}
+
 export interface AddonVersion {
     UUID?: string;
     Hidden?: boolean;
