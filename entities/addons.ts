@@ -120,5 +120,5 @@ export interface AddonFile extends AddonData {
     URI?: string;
     PresignedURL?: string;
     FileVersion?: string;
-    Cache?: boolean
+    Cache?: boolean;
 }
