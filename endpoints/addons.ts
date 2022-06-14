@@ -166,114 +166,205 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 },
             };
         },
-        type: (indexType: 'index' | 'typed_index') => {
-            return {
-                schemes: {
-                    uuid: (addonUUID: string) => {
-                        return {
-                            create: async (body: ElasticSearchDocument) => {
-                                return await this.service.post(
-                                    `/addons/data/${indexType}/schemes/${addonUUID}/create`,
-                                    body,
-                                );
-                            },
-                            purge: async (body: ElasticSearchDocument) => {
-                                return await this.service.post(
-                                    `/addons/data/${indexType}/schemes/${addonUUID}/purge`,
-                                    body,
-                                );
-                            },
-                        };
+        relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
+    };
+
+    index = {
+        schemes: {
+            uuid: (addonUUID: string) => {
+                return {
+                    create: async (body: ElasticSearchDocument) => {
+                        return await this.service.post(`/addons/index/schemes/${addonUUID}/create`, body);
                     },
-                },
-                uuid: (addonUUID: string) => {
+                    purge: async (body: ElasticSearchDocument) => {
+                        return await this.service.post(`/addons/index/schemes/${addonUUID}/purge`, body);
+                    },
+                };
+            },
+        },
+        uuid: (addonUUID: string) => {
+            return {
+                resource: (resourceName: string) => {
                     return {
-                        resource: (resourceName: string) => {
+                        create: async (body: ElasticSearchDocument) => {
+                            return await this.service.post(`/addons/index/${addonUUID}/${resourceName}`, body);
+                        },
+                        key: (key: string) => {
                             return {
-                                create: async (body: ElasticSearchDocument) => {
-                                    return await this.service.post(
-                                        `/addons/data/${indexType}/${addonUUID}/${resourceName}`,
-                                        body,
-                                    );
-                                },
-                                key: (key: string) => {
-                                    return {
-                                        get: async (): Promise<ElasticSearchDocument> => {
-                                            return await this.service.get(
-                                                `/addons/data/${indexType}/${addonUUID}/${resourceName}/${key}`,
-                                            );
-                                        },
-                                    };
-                                },
-                                find: async (params: FindOptions): Promise<ElasticSearchDocument[]> => {
-                                    let url = `/addons/data/${indexType}/${addonUUID}/${resourceName}`;
-                                    const query = Endpoint.encodeQueryParams(params);
-                                    url = query ? url + '?' + query : url;
-                                    return await this.service.get(url);
+                                get: async (): Promise<ElasticSearchDocument> => {
+                                    return await this.service.get(`/addons/index/${addonUUID}/${resourceName}/${key}`);
                                 },
                             };
                         },
-                    };
-                },
-                batch: (body: ElasticSearchDocument[]) => {
-                    return {
-                        uuid: (addonUUID: string) => {
-                            return {
-                                resource: async (resourceName: string) => {
-                                    return await this.service.post(
-                                        `/addons/data/${indexType}/batch/${addonUUID}/${resourceName}`,
-                                        body,
-                                    );
-                                },
-                            };
-                        },
-                    };
-                },
-                search: (dslQuery: any) => {
-                    return {
-                        uuid: (addonUUID: string) => {
-                            return {
-                                resource: async (resourceName: string) => {
-                                    return await this.service.post(
-                                        `/addons/data/${indexType}/search/${addonUUID}/${resourceName}`,
-                                        dslQuery,
-                                    );
-                                },
-                            };
-                        },
-                    };
-                },
-                delete: (dslQuery: any) => {
-                    return {
-                        uuid: (addonUUID: string) => {
-                            return {
-                                resource: async (resourceName: string) => {
-                                    return await this.service.post(
-                                        `/addons/data/${indexType}/delete/${addonUUID}/${resourceName}`,
-                                        dslQuery,
-                                    );
-                                },
-                            };
-                        },
-                    };
-                },
-                update: (dslQuery: any) => {
-                    return {
-                        uuid: (addonUUID: string) => {
-                            return {
-                                resource: async (resourceName: string) => {
-                                    return await this.service.post(
-                                        `/addons/data/${indexType}/update/${addonUUID}/${resourceName}`,
-                                        dslQuery,
-                                    );
-                                },
-                            };
+                        find: async (params: FindOptions): Promise<ElasticSearchDocument[]> => {
+                            let url = `/addons/index/${addonUUID}/${resourceName}`;
+                            const query = Endpoint.encodeQueryParams(params);
+                            url = query ? url + '?' + query : url;
+                            return await this.service.get(url);
                         },
                     };
                 },
             };
         },
-        relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
+        batch: (body: ElasticSearchDocument[]) => {
+            return {
+                uuid: (addonUUID: string) => {
+                    return {
+                        resource: async (resourceName: string) => {
+                            return await this.service.post(`/addons/index/batch/${addonUUID}/${resourceName}`, body);
+                        },
+                    };
+                },
+            };
+        },
+        search: (dslQuery: any) => {
+            return {
+                uuid: (addonUUID: string) => {
+                    return {
+                        resource: async (resourceName: string) => {
+                            return await this.service.post(
+                                `/addons/index/search/${addonUUID}/${resourceName}`,
+                                dslQuery,
+                            );
+                        },
+                    };
+                },
+            };
+        },
+        delete: (dslQuery: any) => {
+            return {
+                uuid: (addonUUID: string) => {
+                    return {
+                        resource: async (resourceName: string) => {
+                            return await this.service.post(
+                                `/addons/index/delete/${addonUUID}/${resourceName}`,
+                                dslQuery,
+                            );
+                        },
+                    };
+                },
+            };
+        },
+        update: (dslQuery: any) => {
+            return {
+                uuid: (addonUUID: string) => {
+                    return {
+                        resource: async (resourceName: string) => {
+                            return await this.service.post(
+                                `/addons/index/update/${addonUUID}/${resourceName}`,
+                                dslQuery,
+                            );
+                        },
+                    };
+                },
+            };
+        },
+    };
+
+    shared_index = {
+        schemes: {
+            uuid: (addonUUID: string) => {
+                return {
+                    create: async (body: ElasticSearchDocument) => {
+                        return await this.service.post(`/addons/shared_index/schemes/${addonUUID}/create`, body);
+                    },
+                    purge: async (body: ElasticSearchDocument) => {
+                        return await this.service.post(`/addons/shared_index/schemes/${addonUUID}/purge`, body);
+                    },
+                };
+            },
+        },
+        index: {
+            index_name: (indexName: string) => {
+                return {
+                    uuid: (addonUUID: string) => {
+                        return {
+                            resource: (resourceName: string) => {
+                                return {
+                                    create: async (body: ElasticSearchDocument) => {
+                                        return await this.service.post(
+                                            `/addons/shared_index/index/${indexName}/${addonUUID}/${resourceName}`,
+                                            body,
+                                        );
+                                    },
+                                    key: (key: string) => {
+                                        return {
+                                            get: async (): Promise<ElasticSearchDocument> => {
+                                                return await this.service.get(
+                                                    `/addons/shared_index/index/${indexName}/${addonUUID}/${resourceName}/${key}`,
+                                                );
+                                            },
+                                        };
+                                    },
+                                    find: async (params: FindOptions): Promise<ElasticSearchDocument[]> => {
+                                        let url = `/addons/shared_index/index/${indexName}/${addonUUID}/${resourceName}`;
+                                        const query = Endpoint.encodeQueryParams(params);
+                                        url = query ? url + '?' + query : url;
+                                        return await this.service.get(url);
+                                    },
+                                };
+                            },
+                        };
+                    },
+                    batch: (body: ElasticSearchDocument[]) => {
+                        return {
+                            uuid: (addonUUID: string) => {
+                                return {
+                                    resource: async (resourceName: string) => {
+                                        return await this.service.post(
+                                            `/addons/shared_index/batch/${addonUUID}/${resourceName}`,
+                                            body,
+                                        );
+                                    },
+                                };
+                            },
+                        };
+                    },
+                    search: (dslQuery: any) => {
+                        return {
+                            uuid: (addonUUID: string) => {
+                                return {
+                                    resource: async (resourceName: string) => {
+                                        return await this.service.post(
+                                            `/addons/shared_index/index/${indexName}/search/${addonUUID}/${resourceName}`,
+                                            dslQuery,
+                                        );
+                                    },
+                                };
+                            },
+                        };
+                    },
+                    delete: (dslQuery: any) => {
+                        return {
+                            uuid: (addonUUID: string) => {
+                                return {
+                                    resource: async (resourceName: string) => {
+                                        return await this.service.post(
+                                            `/addons/shared_index/index/${indexName}/delete/${addonUUID}/${resourceName}`,
+                                            dslQuery,
+                                        );
+                                    },
+                                };
+                            },
+                        };
+                    },
+                    update: (dslQuery: any) => {
+                        return {
+                            uuid: (addonUUID: string) => {
+                                return {
+                                    resource: async (resourceName: string) => {
+                                        return await this.service.post(
+                                            `/addons/shared_index/index/${indexName}/update/${addonUUID}/${resourceName}`,
+                                            dslQuery,
+                                        );
+                                    },
+                                };
+                            },
+                        };
+                    },
+                };
+            },
+        },
     };
 
     files = {
