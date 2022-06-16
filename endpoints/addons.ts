@@ -10,6 +10,7 @@ import {
     AddonFile,
     DIMXObject,
 } from '../entities';
+import { DataImportInput, FileExportInput, FileImportInput, MappingInput, RecursiveExportInput, RecursiveImportInput } from '../entities/dimx_inputs';
 import { PapiClient } from '../papi-client';
 
 class InstalledAddonEnpoint {
@@ -173,12 +174,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 return {
                     table: (tableName: string) => {
                         return {
-                            upsert: async (body: {
-                                Objects: any[];
-                                OverwriteObject?: boolean;
-                                OverwriteTable?: boolean;
-                                Version?: string;
-                            }): Promise<DIMXObject[]> => {
+                            upsert: async (body: DataImportInput): Promise<DIMXObject[]> => {
                                 return await this.service.post(`/addons/data/import/${addonUUID}/${tableName}`, body);
                             },
                         };
@@ -190,13 +186,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                     return {
                         table: (tableName: string) => {
                             return {
-                                upsert: async (body: {
-                                    URI: string;
-                                    OverwriteObject?: boolean;
-                                    OverwriteTable?: boolean;
-                                    Delimiter?: string;
-                                    Version?: string;
-                                }): Promise<AddonAPIAsyncResult> => {
+                                upsert: async (body: FileImportInput): Promise<AddonAPIAsyncResult> => {
                                     return await this.service.post(
                                         `/addons/data/import/file/${addonUUID}/${tableName}`,
                                         body,
@@ -211,28 +201,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         return {
                             table: (tableName: string) => {
                                 return {
-                                    upsert: async (body: {
-                                        URI: string;
-                                        OverwriteObject?: boolean;
-                                        OverwriteTable?: boolean;
-                                        Version?: string;
-                                        Mapping?: {
-                                            [addonUUID_tableName: string]: {
-                                                [oldKey: string]: {
-                                                    Action: 'Replace' | 'Ask';
-                                                    NewKey: string;
-                                                };
-                                            };
-                                        };
-                                        Resources: {
-                                            URI: string;
-                                            OverwriteObject: boolean;
-                                            OverwriteTable: boolean;
-                                            AddonUUID: string;
-                                            Resource: string;
-                                            Version: string;
-                                        };
-                                    }): Promise<AddonAPIAsyncResult> => {
+                                    upsert: async (body: RecursiveImportInput): Promise<AddonAPIAsyncResult> => {
                                         return await this.service.post(
                                             `/addons/data/import/file/recursive/${addonUUID}/${tableName}`,
                                             body,
@@ -251,14 +220,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                     return {
                         table: (tableName: string) => {
                             return {
-                                get: async (body: {
-                                    Format?: 'csv' | 'json';
-                                    IncludeDeleted?: boolean;
-                                    Where?: string;
-                                    Fields?: string;
-                                    Delimiter?: string;
-                                    ExcludedKeys?: string[];
-                                }): Promise<AddonAPIAsyncResult> => {
+                                get: async (body: FileExportInput): Promise<AddonAPIAsyncResult> => {
                                     return await this.service.post(
                                         `/addons/data/export/file/${addonUUID}/${tableName}`,
                                         body,
@@ -273,12 +235,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         return {
                             table: (tableName: string) => {
                                 return {
-                                    get: async (body: {
-                                        IncludeDeleted?: boolean;
-                                        Where?: string;
-                                        Fields?: string;
-                                        ExcludedKeys?: string[];
-                                    }): Promise<AddonAPIAsyncResult> => {
+                                    get: async (body: RecursiveExportInput): Promise<AddonAPIAsyncResult> => {
                                         return await this.service.post(
                                             `/addons/data/export/file/recursive/${addonUUID}/${tableName}`,
                                             body,
@@ -296,17 +253,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 return {
                     table: (tableName: string) => {
                         return {
-                            upsert: async (body: {
-                                URI: string;
-                                Resources: {
-                                    URI: string;
-                                    OverwriteObject: boolean;
-                                    OverwriteTable: boolean;
-                                    AddonUUID: string;
-                                    Resource: string;
-                                    Version: string;
-                                };
-                            }): Promise<AddonAPIAsyncResult> => {
+                            upsert: async (body: MappingInput): Promise<AddonAPIAsyncResult> => {
                                 return await this.service.post(`/addons/data/mapping/${addonUUID}/${tableName}`, body);
                             },
                         };
