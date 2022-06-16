@@ -176,6 +176,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             upsert: async (body: {
                                 Objects: any[];
                                 OverwriteObject?: boolean;
+                                OverwriteTable?: boolean;
                                 Version?: string;
                             }): Promise<DIMXObject[]> => {
                                 return await this.service.post(`/addons/data/import/${addonUUID}/${tableName}`, body);
@@ -192,6 +193,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                                 upsert: async (body: {
                                     URI: string;
                                     OverwriteObject?: boolean;
+                                    OverwriteTable?: boolean;
                                     Delimiter?: string;
                                     Version?: string;
                                 }): Promise<AddonAPIAsyncResult> => {
@@ -203,6 +205,44 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             };
                         },
                     };
+                },
+                recursive:{
+                    uuid: (addonUUID: string) => {
+                        return {
+                            table: (tableName: string) => {
+                                return {
+                                    upsert: async (body: {
+                                        URI: string;
+                                        OverwriteObject?: boolean;
+                                        OverwriteTable?: boolean;
+                                        Version?: string;
+                                        Mapping?: {
+                                            [addonUUID_tableName: string]: {
+                                                [oldKey:string]: {
+                                                    Action: "Replace" | "Ask";
+                                                    NewKey: string;
+                                                },
+                                            },
+                                        },
+                                        Resources: {
+                                            "URI": string;
+                                            "OverwriteObject": boolean;
+                                            "OverwriteTable": boolean;
+                                            "AddonUUID": string;
+                                            "Resource": string;
+                                            "Version": string;
+                                        },
+
+                                    }): Promise<AddonAPIAsyncResult> => {
+                                        return await this.service.post(
+                                            `/addons/data/import/file/recursive/${addonUUID}/${tableName}`,
+                                            body,
+                                        );
+                                    },
+                                };
+                            },
+                        };
+                    },  
                 },
             },
         },
@@ -218,6 +258,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                                     Where?: string;
                                     Fields?: string;
                                     Delimiter?: string;
+                                    ExcludedKeys?: string[];
                                 }): Promise<AddonAPIAsyncResult> => {
                                     return await this.service.post(
                                         `/addons/data/export/file/${addonUUID}/${tableName}`,
@@ -228,7 +269,55 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         },
                     };
                 },
+                recursive: {
+                    uuid: (addonUUID: string) => {
+                        return {
+                            table: (tableName: string) => {
+                                return {
+                                    get: async (body: {
+                                        IncludeDeleted?: boolean;
+                                        Where?: string;
+                                        Fields?: string;
+                                        ExcludedKeys?: string[];
+                                    }): Promise<AddonAPIAsyncResult> => {
+                                        return await this.service.post(
+                                            `/addons/data/export/file/recursive/${addonUUID}/${tableName}`,
+                                            body,
+                                        );
+                                    },
+                                };
+                            },
+                        };
+                    },
+                },
             },
+        },
+        mapping: {
+            uuid: (addonUUID: string) => {
+                return {
+                    table: (tableName: string) => {
+                        return {
+                            upsert: async (body: {
+                                URI: string;
+                                Resources: {
+                                    "URI": string;
+                                    "OverwriteObject": boolean;
+                                    "OverwriteTable": boolean;
+                                    "AddonUUID": string;
+                                    "Resource": string;
+                                    "Version": string;
+                                },
+
+                            }): Promise<AddonAPIAsyncResult> => {
+                                return await this.service.post(
+                                    `/addons/data/mapping/${addonUUID}/${tableName}`,
+                                    body,
+                                );
+                            },
+                        };
+                    },
+                };
+            }, 
         },
     };
 
