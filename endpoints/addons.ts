@@ -206,7 +206,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         },
                     };
                 },
-                recursive:{
+                recursive: {
                     uuid: (addonUUID: string) => {
                         return {
                             table: (tableName: string) => {
@@ -218,21 +218,20 @@ export class AddonEndpoint extends Endpoint<Addon> {
                                         Version?: string;
                                         Mapping?: {
                                             [addonUUID_tableName: string]: {
-                                                [oldKey:string]: {
-                                                    Action: "Replace" | "Ask";
+                                                [oldKey: string]: {
+                                                    Action: 'Replace' | 'Ask';
                                                     NewKey: string;
-                                                },
-                                            },
-                                        },
+                                                };
+                                            };
+                                        };
                                         Resources: {
-                                            "URI": string;
-                                            "OverwriteObject": boolean;
-                                            "OverwriteTable": boolean;
-                                            "AddonUUID": string;
-                                            "Resource": string;
-                                            "Version": string;
-                                        },
-
+                                            'URI': string;
+                                            'OverwriteObject': boolean;
+                                            'OverwriteTable': boolean;
+                                            'AddonUUID': string;
+                                            'Resource': string;
+                                            'Version': string;
+                                        };
                                     }): Promise<AddonAPIAsyncResult> => {
                                         return await this.service.post(
                                             `/addons/data/import/file/recursive/${addonUUID}/${tableName}`,
@@ -242,7 +241,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                                 };
                             },
                         };
-                    },  
+                    },
                 },
             },
         },
@@ -300,18 +299,15 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             upsert: async (body: {
                                 URI: string;
                                 Resources: {
-                                    "URI": string;
-                                    "OverwriteObject": boolean;
-                                    "OverwriteTable": boolean;
-                                    "AddonUUID": string;
-                                    "Resource": string;
-                                    "Version": string;
-                                },
-
+                                    'URI': string;
+                                    'OverwriteObject': boolean;
+                                    'OverwriteTable': boolean;
+                                    'AddonUUID': string;
+                                    'Resource': string;
+                                    'Version': string;
+                                };
                             }): Promise<AddonAPIAsyncResult> => {
-                                return await this.service.post(
-                                    `/addons/data/mapping/${addonUUID}/${tableName}`,
-                                    body,
+                                return await this.service.post(`/addons/data/mapping/${addonUUID}/${tableName}`, body,
                                 );
                             },
                         };
