@@ -10,7 +10,14 @@ import {
     AddonFile,
     DIMXObject,
 } from '../entities';
-import { DataImportInput, FileExportInput, FileImportInput, MappingInput, RecursiveExportInput, RecursiveImportInput } from '../entities/dimx_inputs';
+import { 
+    DataImportInput,
+    FileExportInput,
+    FileImportInput,
+    MappingInput,
+    RecursiveExportInput,
+    RecursiveImportInput,
+} from '../entities/dimx_inputs';
 import { PapiClient } from '../papi-client';
 
 class InstalledAddonEnpoint {

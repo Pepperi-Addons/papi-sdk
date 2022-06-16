@@ -22,7 +22,6 @@ export interface MappingInput {
     Resources: ResourceObject[];
 }
 
-
 export interface RecursiveImportInput extends BaseFileImportInput {
     Resources: ResourceObject[];
     Mapping: {
