@@ -225,12 +225,12 @@ export class AddonEndpoint extends Endpoint<Addon> {
                                             };
                                         };
                                         Resources: {
-                                            'URI': string;
-                                            'OverwriteObject': boolean;
-                                            'OverwriteTable': boolean;
-                                            'AddonUUID': string;
-                                            'Resource': string;
-                                            'Version': string;
+                                            URI: string;
+                                            OverwriteObject: boolean;
+                                            OverwriteTable: boolean;
+                                            AddonUUID: string;
+                                            Resource: string;
+                                            Version: string;
                                         };
                                     }): Promise<AddonAPIAsyncResult> => {
                                         return await this.service.post(
@@ -299,21 +299,20 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             upsert: async (body: {
                                 URI: string;
                                 Resources: {
-                                    'URI': string;
-                                    'OverwriteObject': boolean;
-                                    'OverwriteTable': boolean;
-                                    'AddonUUID': string;
-                                    'Resource': string;
-                                    'Version': string;
+                                    URI: string;
+                                    OverwriteObject: boolean;
+                                    OverwriteTable: boolean;
+                                    AddonUUID: string;
+                                    Resource: string;
+                                    Version: string;
                                 };
                             }): Promise<AddonAPIAsyncResult> => {
-                                return await this.service.post(`/addons/data/mapping/${addonUUID}/${tableName}`, body,
-                                );
+                                return await this.service.post(`/addons/data/mapping/${addonUUID}/${tableName}`, body);
                             },
                         };
                     },
                 };
-            }, 
+            },
         },
     };
 
