@@ -10,7 +10,7 @@ import {
     AddonFile,
     DIMXObject,
 } from '../entities';
-import { 
+import {
     DataImportInput,
     FileExportInput,
     FileImportInput,
