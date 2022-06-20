@@ -62,8 +62,7 @@ interface BaseExportInput {
 }
 
 // input to the Data Export function.
-export interface RecursiveExportInput extends BaseExportInput{
-}
+export type RecursiveExportInput = BaseExportInput 
 
 // input to the Data Export function.
 export interface FileExportInput extends BaseExportInput {
