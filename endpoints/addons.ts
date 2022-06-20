@@ -270,25 +270,29 @@ export class AddonEndpoint extends Endpoint<Addon> {
         },
     };
 
-    files = {
+    pfs = {
         uuid: (addonUUID: string) => {
             return {
-                key: (keyName: string) => {
+                schema: (schemaName: string) => {
                     return {
-                        get: async (): Promise<AddonFile> => {
-                            return await this.service.get(`/addons/files/${addonUUID}/${keyName}`);
+                        key: (keyName: string) => {
+                            return {
+                                get: async (): Promise<AddonFile> => {
+                                    return await this.service.get(`/addons/pfs/${addonUUID}/${schemaName}/${keyName}`);
+                                },
+                            };
+                        },
+                        find: async (params: FileFindOptions): Promise<AddonFile[]> => {
+                            let url = `/addons/pfs/${addonUUID}/${schemaName}`;
+                            const query = Endpoint.encodeQueryParams(params);
+                            url = `${url}?${query}`;
+
+                            return await this.service.get(url);
+                        },
+                        post: async (body: AddonFile): Promise<AddonFile> => {
+                            return await this.service.post(`/addons/pfs/${addonUUID}/${schemaName}`, body);
                         },
                     };
-                },
-                find: async (params: FileFindOptions): Promise<AddonFile[]> => {
-                    let url = `/addons/files/${addonUUID}`;
-                    const query = Endpoint.encodeQueryParams(params);
-                    url = `${url}?${query}`;
-
-                    return await this.service.get(url);
-                },
-                post: async (body: AddonFile): Promise<AddonFile> => {
-                    return await this.service.post(`/addons/files/${addonUUID}`, body);
                 },
             };
         },
