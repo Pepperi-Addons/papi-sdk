@@ -53,16 +53,20 @@ export interface RecursiveImportInput extends BaseFileImportInput {
 
 // Exports:
 
-// input to the Data Export function.
-export interface RecursiveExportInput {
-    IncludeDeleted?: boolean;
+// Basic export parameters. all exports have these optional parameters and they all extend this interface.
+interface BaseExportInput {
+    IncludeObjects?: boolean;
     Where?: string;
     Fields?: string;
     ExcludedKeys?: string[];
 }
 
-// input to the Data Export function. This function accepts all parameters of the Data Export function and extends it with the following parameters.
-export interface FileExportInput extends RecursiveExportInput {
+// input to the Data Export function.
+export interface RecursiveExportInput extends BaseExportInput{
+}
+
+// input to the Data Export function.
+export interface FileExportInput extends BaseExportInput {
     Format?: 'csv' | 'json';
     Delimiter?: string;
 }
