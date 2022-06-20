@@ -139,9 +139,7 @@ export interface Job extends AddonData {
     };
     Status: string;
     ExpirationDateTime: Date;
-    CreationDateTime: string | undefined;
-    ModificationDateTime: string | undefined;
-    CallbackUUID: string;
-    CodeJobUUID: string;
-    ResultObject: any | undefined;
+    CallbackUUID?: string;
+    CodeJobUUID?: string;
+    ResultObject?: any | undefined;
 }
