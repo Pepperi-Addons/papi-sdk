@@ -20,6 +20,12 @@ export interface InstalledAddon {
     Type?: number;
 }
 
+export interface DIMXObject {
+    Key: string; // Unique key of the object. Should match the internal Object's Key property.
+    Status: 'Update' | 'Insert' | 'Ignore' | 'Error' | 'Merge'; // Current status of the object in the import process.
+    Details?: string; // extra details in case Status is "Error" or "Merge"
+}
+
 export interface AddonVersion {
     UUID?: string;
     Hidden?: boolean;
@@ -57,12 +63,15 @@ export interface AddonDataScheme {
     CreationDateTime?: string;
     ModificationDateTime?: string;
     Name: string;
-    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data' | 'index' | 'typed_index';
+    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data' | 'index' | 'typed_index' | 'pfs';
     Fields?: {
         [key: string]: {
             Type: SchemeFieldType;
             Indexed?: boolean;
             Keyword?: boolean;
+            Items?: {
+                Type: SchemeFieldType;
+            };
         };
     };
     DataSourceData?: any;
