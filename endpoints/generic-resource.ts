@@ -1,24 +1,17 @@
 import Endpoint, { FindOptions } from '../endpoint';
-import {
-    AddonAPIAsyncResult,
-    AddonData,
-    AddonDataScheme,
-    DataImportInput,
-    FileExportInput,
-    FileImportInput,
-} from '../entities';
+import { AddonAPIAsyncResult, AddonData, DataImportInput, FileExportInput, FileImportInput } from '../entities';
 import { PapiClient } from '../papi-client';
 
 export class GenericResourceEndpoint {
     constructor(private service: PapiClient, private baseUrl: string) {}
 
-    async get(options?: FindOptions): Promise<AddonDataScheme[]> {
+    async get(options?: FindOptions): Promise<AddonData[]> {
         const query = Endpoint.encodeQueryParams(options);
         const url = query ? this.baseUrl + '?' + query : this.baseUrl;
         return await this.service.get(url);
     }
 
-    async post(body: AddonDataScheme): Promise<AddonDataScheme> {
+    async post(body: AddonData): Promise<AddonData> {
         return await this.service.post(this.baseUrl, body);
     }
 
