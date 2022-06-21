@@ -312,7 +312,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                                 return {
                                     resource: async (resourceName: string) => {
                                         return await this.service.post(
-                                            `/addons/shared_index/batch/${addonUUID}/${resourceName}`,
+                                            `/addons/shared_index/index/${indexName}/batch/${addonUUID}/${resourceName}`,
                                             body,
                                         );
                                     },
