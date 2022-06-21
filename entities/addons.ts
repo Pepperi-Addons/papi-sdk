@@ -127,3 +127,28 @@ export interface AddonFile extends AddonData {
     PresignedURL?: string;
     FileVersion?: string;
 }
+
+export interface Job extends AddonData {
+    Key: string;
+    Version: string;
+    UserUUID: string;
+    NumberOfTry: number;
+    NumberOfTries: number;
+    AddonUUID: string;
+    AddonPath: string;
+    AddonFunctionName: string;
+    AddonVersion: string;
+    Request: {
+        path: string;
+        header: any;
+        originalUrl: string;
+        body: any;
+        method: string;
+        query: any;
+    };
+    Status: string;
+    ExpirationDateTime: Date;
+    CallbackUUID?: string;
+    CodeJobUUID?: string;
+    ResultObject?: any | undefined;
+}

@@ -7,6 +7,7 @@ import {
     AddonData,
     AddonDataScheme,
     Relation,
+    Job,
     AddonFile,
     DIMXObject,
 } from '../entities';
@@ -295,6 +296,22 @@ export class AddonEndpoint extends Endpoint<Addon> {
                     };
                 },
             };
+        },
+    };
+
+    jobs = {
+        uuid: (uuid: string) => {
+            return {
+                get: async (): Promise<Job> => {
+                    return await this.service.get(`/addons/jobs/${uuid}`);
+                },
+            };
+        },
+        find: async (params: FindOptions): Promise<Job[]> => {
+            let url = '/addons/jobs';
+            const query = Endpoint.encodeQueryParams(params);
+            url = query ? url + '?' + query : url;
+            return await this.service.get(url);
         },
     };
 }
