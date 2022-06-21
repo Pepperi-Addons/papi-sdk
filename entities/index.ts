@@ -27,6 +27,7 @@ export * from './subscription';
 export * from './page';
 export * from './user_defined_collections';
 export * from './dimx_inputs';
+export * from './generic-resource';
 // need something here that can be transpiled to js
 // all the other entities are interfaces
 export class Entities {}
