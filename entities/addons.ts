@@ -58,12 +58,17 @@ export interface AddonData {
     [key: string]: any;
 }
 
+export interface ElasticSearchDocument {
+    Key?: string;
+    [key: string]: any;
+}
+
 export interface AddonDataScheme {
     Hidden?: boolean;
     CreationDateTime?: string;
     ModificationDateTime?: string;
     Name: string;
-    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data' | 'index' | 'typed_index' | 'pfs';
+    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data' | 'index' | 'shared_index' | 'pfs';
     Fields?: {
         [key: string]: {
             Type: SchemeFieldType;
@@ -77,6 +82,7 @@ export interface AddonDataScheme {
     DataSourceData?: any;
     Validator?: string;
     DataSourceURL?: string;
+    Lock?: string;
 }
 
 export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigation';
