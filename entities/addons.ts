@@ -20,6 +20,12 @@ export interface InstalledAddon {
     Type?: number;
 }
 
+export interface DIMXObject {
+    Key: string; // Unique key of the object. Should match the internal Object's Key property.
+    Status: 'Update' | 'Insert' | 'Ignore' | 'Error' | 'Merge'; // Current status of the object in the import process.
+    Details?: string; // extra details in case Status is "Error" or "Merge"
+}
+
 export interface AddonVersion {
     UUID?: string;
     Hidden?: boolean;
@@ -62,7 +68,7 @@ export interface AddonDataScheme {
     CreationDateTime?: string;
     ModificationDateTime?: string;
     Name: string;
-    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data' | 'index' | 'typed_index';
+    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data' | 'index' | 'shared_index' | 'pfs';
     Fields?: {
         [key: string]: {
             Type: SchemeFieldType;
@@ -76,6 +82,7 @@ export interface AddonDataScheme {
     DataSourceData?: any;
     Validator?: string;
     DataSourceURL?: string;
+    Lock?: string;
 }
 
 export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigation';
@@ -125,4 +132,29 @@ export interface AddonFile extends AddonData {
     URI?: string;
     PresignedURL?: string;
     FileVersion?: string;
+}
+
+export interface Job extends AddonData {
+    Key: string;
+    Version: string;
+    UserUUID: string;
+    NumberOfTry: number;
+    NumberOfTries: number;
+    AddonUUID: string;
+    AddonPath: string;
+    AddonFunctionName: string;
+    AddonVersion: string;
+    Request: {
+        path: string;
+        header: any;
+        originalUrl: string;
+        body: any;
+        method: string;
+        query: any;
+    };
+    Status: string;
+    ExpirationDateTime: Date;
+    CallbackUUID?: string;
+    CodeJobUUID?: string;
+    ResultObject?: any | undefined;
 }

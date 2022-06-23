@@ -7,13 +7,23 @@ import {
     AddonData,
     AddonDataScheme,
     Relation,
+    Job,
     AddonFile,
     ElasticSearchDocument,
+    DIMXObject,
 } from '../entities';
+import {
+    DataImportInput,
+    FileExportInput,
+    FileImportInput,
+    MappingInput,
+    RecursiveExportInput,
+    RecursiveImportInput,
+} from '../entities/dimx_inputs';
 import { PapiClient } from '../papi-client';
 
 class InstalledAddonEnpoint {
-    constructor(private service: PapiClient, private addonUUID: string) {}
+    constructor(private service: PapiClient, private addonUUID: string) { }
     async install(version = ''): Promise<AddonAPIAsyncResult> {
         if (version) return await this.service.post(`/addons/installed_addons/${this.addonUUID}/install/${version}`);
         else return await this.service.post(`/addons/installed_addons/${this.addonUUID}/install`);
@@ -55,7 +65,7 @@ class AddonApiEndpoint {
         sync: true,
         queryString: '',
     };
-    constructor(private service: PapiClient) {}
+    constructor(private service: PapiClient) { }
 
     uuid(uuid: string) {
         this.options.uuid = uuid;
@@ -167,6 +177,98 @@ export class AddonEndpoint extends Endpoint<Addon> {
             };
         },
         relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
+        import: {
+            uuid: (addonUUID: string) => {
+                return {
+                    table: (tableName: string) => {
+                        return {
+                            upsert: async (body: DataImportInput): Promise<DIMXObject[]> => {
+                                return await this.service.post(`/addons/data/import/${addonUUID}/${tableName}`, body);
+                            },
+                        };
+                    },
+                };
+            },
+            file: {
+                uuid: (addonUUID: string) => {
+                    return {
+                        table: (tableName: string) => {
+                            return {
+                                upsert: async (body: FileImportInput): Promise<AddonAPIAsyncResult> => {
+                                    return await this.service.post(
+                                        `/addons/data/import/file/${addonUUID}/${tableName}`,
+                                        body,
+                                    );
+                                },
+                            };
+                        },
+                    };
+                },
+                recursive: {
+                    uuid: (addonUUID: string) => {
+                        return {
+                            table: (tableName: string) => {
+                                return {
+                                    upsert: async (body: RecursiveImportInput): Promise<AddonAPIAsyncResult> => {
+                                        return await this.service.post(
+                                            `/addons/data/import/file/recursive/${addonUUID}/${tableName}`,
+                                            body,
+                                        );
+                                    },
+                                };
+                            },
+                        };
+                    },
+                },
+            },
+        },
+        export: {
+            file: {
+                uuid: (addonUUID: string) => {
+                    return {
+                        table: (tableName: string) => {
+                            return {
+                                get: async (body: FileExportInput): Promise<AddonAPIAsyncResult> => {
+                                    return await this.service.post(
+                                        `/addons/data/export/file/${addonUUID}/${tableName}`,
+                                        body,
+                                    );
+                                },
+                            };
+                        },
+                    };
+                },
+                recursive: {
+                    uuid: (addonUUID: string) => {
+                        return {
+                            table: (tableName: string) => {
+                                return {
+                                    get: async (body: RecursiveExportInput): Promise<AddonAPIAsyncResult> => {
+                                        return await this.service.post(
+                                            `/addons/data/export/file/recursive/${addonUUID}/${tableName}`,
+                                            body,
+                                        );
+                                    },
+                                };
+                            },
+                        };
+                    },
+                },
+            },
+        },
+        mapping: {
+            uuid: (addonUUID: string) => {
+                return {
+                    table: (tableName: string) => {
+                        return {
+                            upsert: async (body: MappingInput): Promise<AddonAPIAsyncResult> => {
+                                return await this.service.post(`/addons/data/mapping/${addonUUID}/${tableName}`, body);
+                            },
+                        };
+                    },
+                };
+            },
+        },
     };
 
     index = {
@@ -367,27 +469,47 @@ export class AddonEndpoint extends Endpoint<Addon> {
         },
     };
 
-    files = {
+    pfs = {
         uuid: (addonUUID: string) => {
             return {
-                key: (keyName: string) => {
+                schema: (schemaName: string) => {
                     return {
-                        get: async (): Promise<AddonFile> => {
-                            return await this.service.get(`/addons/files/${addonUUID}/${keyName}`);
+                        key: (keyName: string) => {
+                            return {
+                                get: async (): Promise<AddonFile> => {
+                                    return await this.service.get(`/addons/pfs/${addonUUID}/${schemaName}/${keyName}`);
+                                },
+                            };
+                        },
+                        find: async (params: FileFindOptions): Promise<AddonFile[]> => {
+                            let url = `/addons/pfs/${addonUUID}/${schemaName}`;
+                            const query = Endpoint.encodeQueryParams(params);
+                            url = `${url}?${query}`;
+
+                            return await this.service.get(url);
+                        },
+                        post: async (body: AddonFile): Promise<AddonFile> => {
+                            return await this.service.post(`/addons/pfs/${addonUUID}/${schemaName}`, body);
                         },
                     };
                 },
-                find: async (params: FileFindOptions): Promise<AddonFile[]> => {
-                    let url = `/addons/files/${addonUUID}`;
-                    const query = Endpoint.encodeQueryParams(params);
-                    url = `${url}?${query}`;
+            };
+        },
+    };
 
-                    return await this.service.get(url);
-                },
-                post: async (body: AddonFile): Promise<AddonFile> => {
-                    return await this.service.post(`/addons/files/${addonUUID}`, body);
+    jobs = {
+        uuid: (uuid: string) => {
+            return {
+                get: async (): Promise<Job> => {
+                    return await this.service.get(`/addons/jobs/${uuid}`);
                 },
             };
+        },
+        find: async (params: FindOptions): Promise<Job[]> => {
+            let url = '/addons/jobs';
+            const query = Endpoint.encodeQueryParams(params);
+            url = query ? url + '?' + query : url;
+            return await this.service.get(url);
         },
     };
 }
