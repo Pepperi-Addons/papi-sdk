@@ -120,7 +120,7 @@ export interface AddonFile extends AddonData {
     Folder?: string;
     Name?: string;
     Description?: string;
-    Mime?: string;
+    MIME?: string;
     Thumbnails?: [
         {
             Size: '200x200';
@@ -133,6 +133,7 @@ export interface AddonFile extends AddonData {
     PresignedURL?: string;
     FileVersion?: string;
     Cache?: boolean;
+    UploadedBy?: string;
 }
 
 export interface Job extends AddonData {
