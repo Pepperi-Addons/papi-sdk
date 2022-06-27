@@ -164,6 +164,8 @@ export interface SchemeField {
     Items?: {
         Type: SchemeFieldType;
     };
+    // Name of the resource we reference to
+    Resource?: string;
     AddonUUID?: string;
     IndexedFields?: {
         // Fields will be exported to data index from the resource
