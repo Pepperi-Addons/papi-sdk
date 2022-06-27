@@ -161,9 +161,8 @@ export interface SchemeField {
     Type: SchemeFieldType;
     Indexed?: boolean;
     Keyword?: boolean;
-    Items?: {
-        Type: SchemeFieldType;
-    };
+    // For Array, each item can be a scheme field of it's own
+    Items?: SchemeField;
     // Name of the resource we reference to
     Resource?: string;
     AddonUUID?: string;
