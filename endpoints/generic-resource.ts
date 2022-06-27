@@ -44,7 +44,7 @@ export class GenericResourceEndpoint {
 
     import = {
         data: async (body: DataImportInput): Promise<AddonAPIAsyncResult> => {
-            return await this.service.post(`${this.baseUrl}/import`, body);
+            return await this.service.post(`${this.baseUrl}/import/data`, body);
         },
         file: () => {
             return {
