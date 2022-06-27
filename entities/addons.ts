@@ -70,19 +70,13 @@ export interface AddonDataScheme {
     Name: string;
     Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data' | 'index' | 'shared_index' | 'pfs';
     Fields?: {
-        [key: string]: {
-            Type: SchemeFieldType;
-            Indexed?: boolean;
-            Keyword?: boolean;
-            Items?: {
-                Type: SchemeFieldType;
-            };
-        };
+        [key: string]: SchemeField;
     };
     DataSourceData?: any;
     Validator?: string;
     DataSourceURL?: string;
     Lock?: string;
+    GenericResource?: boolean;
 }
 
 export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigation';
@@ -112,6 +106,10 @@ export const SchemeFieldTypes = [
     'Object',
     'Array',
     'DateTime',
+    'Resource',
+    'ContainedResource',
+    'DynamicResource',
+    'ContainedDynamicResource',
 ] as const;
 
 export type SchemeFieldType = typeof SchemeFieldTypes[number];
@@ -157,4 +155,23 @@ export interface Job extends AddonData {
     CallbackUUID?: string;
     CodeJobUUID?: string;
     ResultObject?: any | undefined;
+}
+
+export interface SchemeField {
+    Type: SchemeFieldType;
+    Indexed?: boolean;
+    Keyword?: boolean;
+    // For Array, each item can be a scheme field of it's own
+    Items?: SchemeField;
+    // Name of the resource we reference to
+    Resource?: string;
+    AddonUUID?: string;
+    IndexedFields?: {
+        // Fields will be exported to data index from the resource
+        [key: string]: SchemeField;
+    };
+    Fields?: {
+        // Define fields for object Type
+        [key: string]: SchemeField;
+    };
 }
