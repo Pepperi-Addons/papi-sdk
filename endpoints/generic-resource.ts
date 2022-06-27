@@ -1,5 +1,12 @@
 import Endpoint, { FindOptions } from '../endpoint';
-import { AddonAPIAsyncResult, AddonData, DataImportInput, FileExportInput, FileImportInput } from '../entities';
+import {
+    AddonAPIAsyncResult,
+    AddonData,
+    DataImportInput,
+    FileExportInput,
+    FileImportInput,
+    SearchBody,
+} from '../entities';
 import { PapiClient } from '../papi-client';
 
 export class GenericResourceEndpoint {
@@ -31,38 +38,30 @@ export class GenericResourceEndpoint {
         };
     }
 
-    search() {
-        return {
-            post: async (body: any): Promise<AddonData[]> => {
-                return await this.service.post(`${this.baseUrl}/search`, body);
-            },
-        };
+    async search(body: SearchBody): Promise<AddonData[]> {
+        return await this.service.post(`${this.baseUrl}/search`, body);
     }
 
-    import() {
-        return {
-            post: async (body: DataImportInput): Promise<AddonAPIAsyncResult> => {
-                return await this.service.post(`${this.baseUrl}/import`, body);
-            },
-            file: () => {
-                return {
-                    post: async (body: FileImportInput): Promise<AddonAPIAsyncResult> => {
-                        return await this.service.post(`${this.baseUrl}/import/file`, body);
-                    },
-                };
-            },
-        };
-    }
+    import = {
+        data: async (body: DataImportInput): Promise<AddonAPIAsyncResult> => {
+            return await this.service.post(`${this.baseUrl}/import`, body);
+        },
+        file: () => {
+            return {
+                post: async (body: FileImportInput): Promise<AddonAPIAsyncResult> => {
+                    return await this.service.post(`${this.baseUrl}/import/file`, body);
+                },
+            };
+        },
+    };
 
-    export() {
-        return {
-            file: () => {
-                return {
-                    post: async (body: FileExportInput): Promise<AddonAPIAsyncResult> => {
-                        return await this.service.post(`${this.baseUrl}/export/file`, body);
-                    },
-                };
-            },
-        };
-    }
+    export = {
+        file: () => {
+            return {
+                post: async (body: FileExportInput): Promise<AddonAPIAsyncResult> => {
+                    return await this.service.post(`${this.baseUrl}/export/file`, body);
+                },
+            };
+        },
+    };
 }
