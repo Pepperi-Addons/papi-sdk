@@ -5,6 +5,7 @@ export const DocumentKeyTypes = ['AutoGenerate', 'Composite', 'Key'] as const;
 
 export type DocumentKeyType = typeof DocumentKeyTypes[number];
 export interface CollectionField extends SchemeField {
+    Mandatory: boolean;
     OptionalValues?: string[];
     Description: string;
 }
