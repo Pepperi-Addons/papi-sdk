@@ -130,6 +130,7 @@ export interface AddonFile extends AddonData {
     URI?: string;
     PresignedURL?: string;
     FileVersion?: string;
+    FileSize?: number;
 }
 
 export interface Job extends AddonData {
