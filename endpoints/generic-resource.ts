@@ -12,7 +12,7 @@ import { PapiClient } from '../papi-client';
 export class GenericResourceEndpoint {
     constructor(private service: PapiClient, private baseUrl: string) {}
 
-    async get(options?: FindOptions): Promise<AddonData[]> {
+    async get(options: FindOptions = {}): Promise<AddonData[]> {
         const query = Endpoint.encodeQueryParams(options);
         const url = query ? this.baseUrl + '?' + query : this.baseUrl;
         return await this.service.get(url);
