@@ -77,7 +77,7 @@ export interface AddonDataScheme {
     DataSourceURL?: string;
     Lock?: string;
     GenericResource?: boolean;
-    AddonUUID: string;
+    AddonUUID?: string;
 }
 
 export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigation';
