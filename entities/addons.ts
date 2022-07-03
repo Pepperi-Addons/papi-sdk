@@ -78,6 +78,11 @@ export interface AddonDataScheme {
     Lock?: string;
     GenericResource?: boolean;
     AddonUUID?: string;
+    SyncData?: {
+        GDBQuery: string;
+        SyncFieldLevel?: boolean;
+        IndexedField?: string;
+    };
 }
 
 export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigation';
