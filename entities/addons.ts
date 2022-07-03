@@ -181,4 +181,5 @@ export interface SchemeField {
         // Define fields for object Type
         [key: string]: SchemeField;
     };
+    Sync?: boolean;
 }
