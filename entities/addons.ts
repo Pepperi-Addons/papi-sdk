@@ -78,6 +78,12 @@ export interface AddonDataScheme {
     Lock?: string;
     GenericResource?: boolean;
     AddonUUID?: string;
+    SyncData?: {
+        Sync: boolean;
+        GDBQuery?: string;
+        SyncFieldLevel?: boolean;
+        IndexedField?: string;
+    };
 }
 
 export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigation';
@@ -176,4 +182,5 @@ export interface SchemeField {
         // Define fields for object Type
         [key: string]: SchemeField;
     };
+    Sync?: boolean;
 }
