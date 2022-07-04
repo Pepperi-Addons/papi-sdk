@@ -79,6 +79,7 @@ export interface AddonDataScheme {
     GenericResource?: boolean;
     AddonUUID?: string;
     SyncData?: {
+        Sync: boolean
         GDBQuery?: string;
         SyncFieldLevel?: boolean;
         IndexedField?: string;
