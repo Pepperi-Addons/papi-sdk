@@ -183,4 +183,5 @@ export interface SchemeField {
         [key: string]: SchemeField;
     };
     Sync?: boolean;
+    Unique?: boolean;
 }
