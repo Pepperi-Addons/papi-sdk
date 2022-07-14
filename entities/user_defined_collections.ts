@@ -11,6 +11,7 @@ export interface CollectionField extends SchemeField {
     Fields?: {
         [key: string]: CollectionField;
     };
+    Items?: CollectionField;
 }
 export interface DocumentKey {
     Type: DocumentKeyType;
