@@ -86,7 +86,7 @@ export interface AddonDataScheme {
     };
 }
 
-export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigation';
+export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigate';
 
 export interface Relation extends AddonData {
     AddonUUID: string;
