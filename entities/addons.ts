@@ -68,7 +68,7 @@ export interface AddonDataScheme {
     CreationDateTime?: string;
     ModificationDateTime?: string;
     Name: string;
-    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data' | 'index' | 'shared_index' | 'pfs';
+    Type?: 'data' | 'meta_data' | 'indexed_data' | 'index' | 'shared_index' | 'pfs' | 'contained' | 'papi';
     Fields?: {
         [key: string]: SchemeField;
     };
