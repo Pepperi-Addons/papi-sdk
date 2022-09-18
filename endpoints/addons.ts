@@ -7,8 +7,8 @@ import {
     AddonData,
     AddonDataScheme,
     Relation,
+    Job,
     AddonFile,
-    DIMXObject,
 } from '../entities';
 import {
     DataImportInput,
@@ -176,98 +176,6 @@ export class AddonEndpoint extends Endpoint<Addon> {
         },
 
         relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
-        import: {
-            uuid: (addonUUID: string) => {
-                return {
-                    table: (tableName: string) => {
-                        return {
-                            upsert: async (body: DataImportInput): Promise<DIMXObject[]> => {
-                                return await this.service.post(`/addons/data/import/${addonUUID}/${tableName}`, body);
-                            },
-                        };
-                    },
-                };
-            },
-            file: {
-                uuid: (addonUUID: string) => {
-                    return {
-                        table: (tableName: string) => {
-                            return {
-                                upsert: async (body: FileImportInput): Promise<AddonAPIAsyncResult> => {
-                                    return await this.service.post(
-                                        `/addons/data/import/file/${addonUUID}/${tableName}`,
-                                        body,
-                                    );
-                                },
-                            };
-                        },
-                    };
-                },
-                recursive: {
-                    uuid: (addonUUID: string) => {
-                        return {
-                            table: (tableName: string) => {
-                                return {
-                                    upsert: async (body: RecursiveImportInput): Promise<AddonAPIAsyncResult> => {
-                                        return await this.service.post(
-                                            `/addons/data/import/file/recursive/${addonUUID}/${tableName}`,
-                                            body,
-                                        );
-                                    },
-                                };
-                            },
-                        };
-                    },
-                },
-            },
-        },
-        export: {
-            file: {
-                uuid: (addonUUID: string) => {
-                    return {
-                        table: (tableName: string) => {
-                            return {
-                                get: async (body: FileExportInput): Promise<AddonAPIAsyncResult> => {
-                                    return await this.service.post(
-                                        `/addons/data/export/file/${addonUUID}/${tableName}`,
-                                        body,
-                                    );
-                                },
-                            };
-                        },
-                    };
-                },
-                recursive: {
-                    uuid: (addonUUID: string) => {
-                        return {
-                            table: (tableName: string) => {
-                                return {
-                                    get: async (body: RecursiveExportInput): Promise<AddonAPIAsyncResult> => {
-                                        return await this.service.post(
-                                            `/addons/data/export/file/recursive/${addonUUID}/${tableName}`,
-                                            body,
-                                        );
-                                    },
-                                };
-                            },
-                        };
-                    },
-                },
-            },
-        },
-        mapping: {
-            uuid: (addonUUID: string) => {
-                return {
-                    table: (tableName: string) => {
-                        return {
-                            upsert: async (body: MappingInput): Promise<AddonAPIAsyncResult> => {
-                                return await this.service.post(`/addons/data/mapping/${addonUUID}/${tableName}`, body);
-                            },
-                        };
-                    },
-                };
-            },
-        },
     };
 
     pfs = {
@@ -295,6 +203,22 @@ export class AddonEndpoint extends Endpoint<Addon> {
                     };
                 },
             };
+        },
+    };
+
+    jobs = {
+        uuid: (uuid: string) => {
+            return {
+                get: async (): Promise<Job> => {
+                    return await this.service.get(`/addons/jobs/${uuid}`);
+                },
+            };
+        },
+        find: async (params: FindOptions): Promise<Job[]> => {
+            let url = '/addons/jobs';
+            const query = Endpoint.encodeQueryParams(params);
+            url = query ? url + '?' + query : url;
+            return await this.service.get(url);
         },
     };
 }
