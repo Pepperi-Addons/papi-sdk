@@ -94,7 +94,7 @@ export class PapiClient {
         },
     };
 
-    constructor(private options: PapiClientOptions) { }
+    constructor(private options: PapiClientOptions) {}
 
     async get(url: string): Promise<any> {
         return this.apiCall('GET', url)
@@ -109,7 +109,6 @@ export class PapiClient {
     }
 
 
-
     async asyncPost(url: string, body: any = undefined, headers: any = undefined): Promise<any> {
         const asyncURL = this.getAsyncRelativeURL(url);
 
@@ -117,8 +116,7 @@ export class PapiClient {
             const postResults = await this.post(asyncURL, body, headers);
 
             if (!postResults.URI) {
-                throw new Error(`Async post to ${asyncURL} returned without URI: ${JSON.stringify(postResults)}`);
-            }
+                throw new Error(`Async post to ${asyncURL} returned without URI: ${JSON.stringify(postResults)}`);}
             else {
                 const pollingResults: AuditLog = await this.getAuditLogResultObject(postResults.URI);
 
@@ -127,12 +125,10 @@ export class PapiClient {
                 }
 
                 return JSON.parse(pollingResults.AuditInfo.ResultObject);
-            }
-        }
+            }}
         catch (ex) {
             console.error(`asyncPost: ${ex}`);
-            throw new Error((ex as { message: string }).message);
-        }
+            throw new Error((ex as { message: string }).message);}
 
 
     }
@@ -181,7 +177,7 @@ export class PapiClient {
             let error = '';
             try {
                 error = JSON.stringify(await res.json());
-            } catch { }
+            } catch {}
 
             throw new Error(`${fullURL} failed with status: ${res.status} - ${res.statusText} error: ${error}`);
         }
@@ -203,10 +199,8 @@ export class PapiClient {
         let auditLogResponse;
 
         do {
-
             try {
-                auditLogResponse = await this.get(uri);
-            }
+                auditLogResponse = await this.get(uri);}
 
             catch (ex) {
                 console.error(`getAuditLogResultObject: ${ex}`);
@@ -217,8 +211,8 @@ export class PapiClient {
                 auditLogResponse === null
                     ? auditLogResponse
                     : auditLogResponse[0] === undefined
-                        ? auditLogResponse
-                        : auditLogResponse[0];
+                    ? auditLogResponse
+                    : auditLogResponse[0];
 
             //This case is used when AuditLog was not created at all (This can happen and it is valid)
             if (auditLogResponse === null) {
@@ -231,18 +225,17 @@ export class PapiClient {
             else if (auditLogResponse.Status.ID == '2' || auditLogResponse.Status.ID == '5') {
                 this.sleep(2000);
                 console.log(
-                    `%c${auditLogResponse.Status.ID === 2 ? 'In_Progress' : 'Started'}: Status ID is ${auditLogResponse.Status.ID
-                    }, Retry ${loopsAmount} Times.`
+                    `%c${auditLogResponse.Status.ID === 2 ? 'In_Progress' : 'Started'}: Status ID is ${auditLogResponse.Status.ID}, 
+                    Retry ${loopsAmount} Times.`,
                 );
                 loopsAmount--;
             }
 
             // Action failed. Throwing error
             else if (auditLogResponse.Status.ID === 0) {
-                const errorMessage = auditLogResponse["AuditInfo"].ErrorMessage;
-                console.log("Execution failed:", errorMessage);
-                throw new Error(errorMessage)
-            }
+                const errorMessage = auditLogResponse['AuditInfo'].ErrorMessage;
+                console.log('Execution failed:', errorMessage);
+                throw new Error(errorMessage);}
 
         } while (
             (auditLogResponse === null || auditLogResponse.Status.ID == '2' || auditLogResponse.Status.ID == '5') &&
@@ -257,7 +250,7 @@ export class PapiClient {
         // async relative URL is in the format of: /addons/api/async/{{addonUUID}}/...
         // regular relativeURL is in the format of: /addons/api/{{addonUUID}}/...
 
-        let splitURL = url.split('/');
+        const splitURL = url.split('/');
 
         if (splitURL.length < 4) {
             throw new Error(`Relative URL: ${url} is invalid!`);
