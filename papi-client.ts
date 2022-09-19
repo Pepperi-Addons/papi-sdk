@@ -108,7 +108,6 @@ export class PapiClient {
             .then((res) => (res ? JSON.parse(res) : ''));
     }
 
-
     async asyncPost(url: string, body: any = undefined, headers: any = undefined): Promise<any> {
         const asyncURL = this.getAsyncRelativeURL(url);
 
@@ -116,8 +115,8 @@ export class PapiClient {
             const postResults = await this.post(asyncURL, body, headers);
 
             if (!postResults.URI) {
-                throw new Error(`Async post to ${asyncURL} returned without URI: ${JSON.stringify(postResults)}`);}
-            else {
+                throw new Error(`Async post to ${asyncURL} returned without URI: ${JSON.stringify(postResults)}`);
+            } else {
                 const pollingResults: AuditLog = await this.getAuditLogResultObject(postResults.URI);
 
                 if (!pollingResults.AuditInfo?.ResultObject) {
@@ -125,12 +124,11 @@ export class PapiClient {
                 }
 
                 return JSON.parse(pollingResults.AuditInfo.ResultObject);
-            }}
-        catch (ex) {
+            }
+        } catch (ex) {
             console.error(`asyncPost: ${ex}`);
-            throw new Error((ex as { message: string }).message);}
-
-
+            throw new Error((ex as { message: string }).message);
+        }
     }
 
     async delete(url: string): Promise<any> {
@@ -200,9 +198,8 @@ export class PapiClient {
 
         do {
             try {
-                auditLogResponse = await this.get(uri);}
-
-            catch (ex) {
+                auditLogResponse = await this.get(uri);
+            } catch (ex) {
                 console.error(`getAuditLogResultObject: ${ex}`);
                 throw new Error((ex as { message: string }).message);
             }
@@ -225,7 +222,9 @@ export class PapiClient {
             else if (auditLogResponse.Status.ID == '2' || auditLogResponse.Status.ID == '5') {
                 this.sleep(2000);
                 console.log(
-                    `%c${auditLogResponse.Status.ID === 2 ? 'In_Progress' : 'Started'}: Status ID is ${auditLogResponse.Status.ID}, 
+                    `%c${auditLogResponse.Status.ID === 2 ? 'In_Progress' : 'Started'}: Status ID is ${
+                        auditLogResponse.Status.ID
+                    }, 
                     Retry ${loopsAmount} Times.`,
                 );
                 loopsAmount--;
@@ -235,8 +234,8 @@ export class PapiClient {
             else if (auditLogResponse.Status.ID === 0) {
                 const errorMessage = auditLogResponse['AuditInfo'].ErrorMessage;
                 console.log('Execution failed:', errorMessage);
-                throw new Error(errorMessage);}
-
+                throw new Error(errorMessage);
+            }
         } while (
             (auditLogResponse === null || auditLogResponse.Status.ID == '2' || auditLogResponse.Status.ID == '5') &&
             loopsAmount > 0
