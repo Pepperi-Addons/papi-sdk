@@ -125,7 +125,7 @@ export interface AddonFile extends AddonData {
     Folder?: string;
     Name?: string;
     Description?: string;
-    Mime?: string;
+    MIME?: string;
     Thumbnails?: [
         {
             Size: '200x200';
@@ -137,6 +137,8 @@ export interface AddonFile extends AddonData {
     URI?: string;
     PresignedURL?: string;
     FileVersion?: string;
+    Cache?: boolean;
+    UploadedBy?: string;
     FileSize?: number;
 }
 
