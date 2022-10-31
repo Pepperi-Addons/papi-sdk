@@ -49,7 +49,7 @@ export interface PageConfigurationParameterFilter extends PageConfigurationParam
     Fields: string[];
 }
 
-export const PageSizeTypes = ['sm', 'md', 'lg'] as const;
+export const PageSizeTypes = ['none', 'sm', 'md', 'lg'] as const;
 export type PageSizeType = typeof PageSizeTypes[number];
 
 export interface PageLayout {
