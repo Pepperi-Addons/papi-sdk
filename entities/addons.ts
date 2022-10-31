@@ -68,7 +68,7 @@ export interface AddonDataScheme {
     CreationDateTime?: string;
     ModificationDateTime?: string;
     Name: string;
-    Type?: 'data' | 'meta_data' | 'indexed_data' | 'index' | 'shared_index' | 'pfs' | 'contained' | 'papi';
+    Type?: 'data' | 'meta_data' | 'indexed_data' | 'index' | 'shared_index' | 'pfs' | 'contained' | 'papi' | 'abstract';
     Fields?: {
         [key: string]: SchemeField;
     };
@@ -125,7 +125,7 @@ export interface AddonFile extends AddonData {
     Folder?: string;
     Name?: string;
     Description?: string;
-    Mime?: string;
+    MIME?: string;
     Thumbnails?: [
         {
             Size: '200x200';
@@ -137,6 +137,8 @@ export interface AddonFile extends AddonData {
     URI?: string;
     PresignedURL?: string;
     FileVersion?: string;
+    Cache?: boolean;
+    UploadedBy?: string;
     FileSize?: number;
 }
 
