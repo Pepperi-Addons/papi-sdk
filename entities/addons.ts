@@ -84,6 +84,10 @@ export interface AddonDataScheme {
         SyncFieldLevel?: boolean;
         IndexedField?: string;
     };
+    Extends?: {
+        AddonUUID: string;
+        Name: string;
+    };
 }
 
 export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigate';
