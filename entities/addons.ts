@@ -191,5 +191,5 @@ export interface SchemeField {
     Sync?: boolean;
     Unique?: boolean;
     // Is the field inherited from base schema
-    ExtendedField: boolean;
+    ExtendedField?: boolean;
 }
