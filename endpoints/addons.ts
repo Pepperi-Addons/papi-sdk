@@ -308,7 +308,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 },
             };
         },
-        batch: (body: ElasticSearchDocument[]) => {
+        batch: (body: { Objects: ElasticSearchDocument[]; OverwriteObject?: boolean }) => {
             return {
                 uuid: (addonUUID: string) => {
                     return {
