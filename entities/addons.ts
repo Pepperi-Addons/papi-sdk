@@ -84,6 +84,10 @@ export interface AddonDataScheme {
         SyncFieldLevel?: boolean;
         IndexedField?: string;
     };
+    Extends?: {
+        AddonUUID: string;
+        Name: string;
+    };
 }
 
 export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigate';
@@ -186,4 +190,6 @@ export interface SchemeField {
     };
     Sync?: boolean;
     Unique?: boolean;
+    // Is the field inherited from base schema
+    ExtendedField?: boolean;
 }
