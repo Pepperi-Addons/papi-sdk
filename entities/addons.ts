@@ -83,6 +83,10 @@ export interface AddonDataScheme {
         GDBQuery?: string;
         SyncFieldLevel?: boolean;
         IndexedField?: string;
+        Associative?: {
+            FieldID1: string;
+            FieldID2: string;
+        };
     };
     Extends?: {
         AddonUUID: string;
