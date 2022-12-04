@@ -193,3 +193,8 @@ export interface SchemeField {
     // Is the field inherited from base schema
     ExtendedField?: boolean;
 }
+
+export interface SearchData {
+    Objects: AddonData[];
+    Count?: number;
+}

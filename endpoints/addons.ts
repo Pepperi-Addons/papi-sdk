@@ -11,6 +11,8 @@ import {
     AddonFile,
     ElasticSearchDocument,
     DIMXObject,
+    SearchBody,
+    SearchData,
 } from '../entities';
 import {
     DataImportInput,
@@ -263,6 +265,22 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         return {
                             upsert: async (body: MappingInput): Promise<AddonAPIAsyncResult> => {
                                 return await this.service.post(`/addons/data/mapping/${addonUUID}/${tableName}`, body);
+                            },
+                        };
+                    },
+                };
+            },
+        },
+        search: {
+            uuid: (addonUUID: string) => {
+                return {
+                    table: (tableName: string) => {
+                        return {
+                            post: async (searchBody: SearchBody): Promise<SearchData> => {
+                                return await this.service.post(
+                                    `/addons/data/search/${addonUUID}/${tableName}`,
+                                    searchBody,
+                                );
                             },
                         };
                     },
