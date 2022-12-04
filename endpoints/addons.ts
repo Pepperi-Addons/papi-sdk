@@ -276,7 +276,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 return {
                     table: (tableName: string) => {
                         return {
-                            post: async (searchBody: SearchBody): Promise<SearchData> => {
+                            post: async (searchBody: SearchBody): Promise<SearchData<AddonData>> => {
                                 return await this.service.post(
                                     `/addons/data/search/${addonUUID}/${tableName}`,
                                     searchBody,

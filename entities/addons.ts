@@ -194,7 +194,7 @@ export interface SchemeField {
     ExtendedField?: boolean;
 }
 
-export interface SearchData {
-    Objects: AddonData[];
+export interface SearchData<T> {
+    Objects: T[];
     Count?: number;
 }
