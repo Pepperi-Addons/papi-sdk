@@ -80,8 +80,11 @@ export interface AddonDataScheme {
     AddonUUID?: string;
     SyncData?: {
         Sync: boolean;
-        GDBQuery?: string;
-        SyncFieldLevel?: boolean;
+        Associative?: {
+            FieldID1: string,
+            FieldID2: string
+        };
+        ReferenceFieldIDs?: string[];
         IndexedField?: string;
     };
     Extends?: {
