@@ -193,6 +193,8 @@ export interface SchemeField {
     Unique?: boolean;
     // Is the field inherited from base schema
     ExtendedField?: boolean;
+    // should this field be used as a user scope filter (sync)
+    ApplySystemFilter?: boolean;
 }
 
 export interface SearchData<T> {
