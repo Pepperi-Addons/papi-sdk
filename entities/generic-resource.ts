@@ -6,5 +6,6 @@ export interface SearchBody {
     UniqueFieldsList?: string[];
     UniqueFieldID?: string;
     IncludeCount?: boolean;
+    IncludeDeleted?: boolean;
     Fields?: string[];
 }
