@@ -117,6 +117,7 @@ export const SchemeFieldTypes = [
     'String',
     'MultipleStringValues',
     'Bool',
+    'Users',
     'Integer',
     'Double',
     'Object',
