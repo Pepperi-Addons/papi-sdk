@@ -6,6 +6,7 @@ import {
     FileExportInput,
     FileImportInput,
     SearchBody,
+    SearchData,
 } from '../entities';
 import { PapiClient } from '../papi-client';
 
@@ -38,7 +39,7 @@ export class GenericResourceEndpoint {
         };
     }
 
-    async search(body: SearchBody): Promise<AddonData[]> {
+    async search(body: SearchBody): Promise<SearchData<AddonData>> {
         return await this.service.post(`${this.baseUrl}/search`, body);
     }
 
