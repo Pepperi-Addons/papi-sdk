@@ -2,10 +2,10 @@ import { BaseActivity } from './base-activity';
 
 export interface Survey extends BaseActivity {
     Template: string; // reference to the SurveyTemplate
-    Answers?: Answer[]; // contains object
+    Answers?: SurveyAnswer[]; // contains object
 }
 
-export interface Answer {
+export interface SurveyAnswer {
     Key: string; // reference to the SurveyTemplate question key
     Answer: any;
 }
