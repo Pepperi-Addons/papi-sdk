@@ -204,4 +204,5 @@ export interface SchemeField {
 export interface SearchData<T> {
     Objects: T[];
     Count?: number;
+    NextPageKey?: string;
 }
