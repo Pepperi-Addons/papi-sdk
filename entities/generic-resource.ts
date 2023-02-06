@@ -8,4 +8,5 @@ export interface SearchBody {
     IncludeCount?: boolean;
     IncludeDeleted?: boolean;
     Fields?: string[];
+    PageKey?: string;
 }
