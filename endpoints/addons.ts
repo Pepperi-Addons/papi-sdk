@@ -126,6 +126,16 @@ class TableEndpoint extends Endpoint<AddonData> {
         this.tableName = tableName;
     }
 
+    async upsert(object: AddonData, waitForIndex = false): Promise<AddonData> {
+        let headers = undefined;
+        if (waitForIndex) {
+            headers = {
+                'x-pepperi-await-indexing': true,
+            };
+        }
+        return this.service.post(this.getEndpointURL(), object, headers);
+    }
+
     key(keyName: string) {
         return {
             get: async (): Promise<AddonData> => {
