@@ -50,7 +50,7 @@ export async function foo(client: Client, request: Request) {
 ```
 
 ## Endpoints
-Most of Pepperi API endpoints support similar functionality, and therfore most of the endpoints in the *papi-sdk* have the same functions.
+Most of Pepperi API endpoints support similar functionality, and therefore most of the endpoints in the *papi-sdk* have the same functions.
 
 Let's take the accounts endpoint for example.
 ``` bash
@@ -64,7 +64,7 @@ const accounts: Account[] = papiClient.accounts.iter().toArray();
 const updated: Account = papiClient.accounts.upsert(account);
 ```
 
-The `iter` function on all enpoints support the same paramters that the `GET` supports.
+The `iter` function on all endpoints support the same parameters that the `GET` supports.
 
 `fields` - The APIName that the endpoint should return
 
@@ -77,7 +77,7 @@ etc. See https://developer.pepperi.com/account-resources/apis/get/accounts
 We chose that the Interfaces (eg. Account) representing the objects that are returned from the API, 
 should include all the endpoints known properties. Properties that must be sent in `upsert` are marked as non-optional in the interfaces. The rest are all marked as optional. Although the fields that you will get by calling `iter()` depend on the `fields` parameter that you send, we decided that the `iter` will return an object with the interface type `eg. Account`, for easy code-completion & intelisense.
 
-With endpoints that are more complicated, we encorperated the API route into the function signature. 
+With endpoints that are more complicated, we incorporated the API route into the function signature. 
 
 For example:
 | API | SDK |
@@ -101,13 +101,13 @@ Given a version number **MAJOR**.**MINOR**.**PATCH**, increment the:
 ## Contributing
 Contributions to this package are encouraged strongly.
 
-To contribute commit your changes to a seperate branch, and then create a PR at https://github.com/pepperi-addons/papi-sdk.
+To contribute commit your changes to a separate branch, and then create a PR at https://github.com/pepperi-addons/papi-sdk.
 
 Before submitting your PR make sure:
 - That your branch compiles `npm run compile`
 - That your branch follows this repo's linting guides `npm run lint`
   You can fix most linting issues by running `npm run fix-lint`. Make sure that these scripts do not return an error or warning.
-- That you increment the version number for your changes to be published, according to the specfications above.
+- That you increment the version number for your changes to be published, according to the specifications above.
 
 To increment the package version:
 
