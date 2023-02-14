@@ -1,6 +1,6 @@
 {
     "name": "@pepperi-addons/papi-sdk",
-    "version": "1.45.3",
+    "version": "1.45.4",
     "description": "",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
