@@ -87,6 +87,11 @@ export interface AddonDataScheme {
             FieldID1: string;
             FieldID2: string;
         };
+        /**
+         * Defines whether changes done offline should be Synced.
+         * Default is true.
+         */
+        PushLocalChanges?: boolean;
     };
     Extends?: {
         AddonUUID: string;
