@@ -72,7 +72,14 @@ export interface AddonDataScheme {
     Fields?: {
         [key: string]: SchemeField;
     };
-    DataSourceData?: any;
+    DataSourceData?: {
+        NumberOfShards?: number;
+        IndexName?: string;
+        IndexVersion?: number;
+        ReindexIsOngoing?: boolean;
+        ReindexActionUUID?: string;
+        [key: string]: any;
+    };
     Validator?: string;
     DataSourceURL?: string;
     Lock?: string;
