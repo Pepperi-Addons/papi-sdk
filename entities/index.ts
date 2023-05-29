@@ -30,6 +30,7 @@ export * from './dimx_inputs';
 export * from './generic-resource';
 export * from './base-activity';
 export * from './survey';
+export * from './user-defined-flows';
 
 // need something here that can be transpiled to js
 // all the other entities are interfaces

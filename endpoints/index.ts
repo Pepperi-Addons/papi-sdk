@@ -8,3 +8,4 @@ export * from './file-storage';
 export * from './notification';
 export * from './user-defined-collections';
 export * from './generic-resource';
+export * from './user-defined-flows';
