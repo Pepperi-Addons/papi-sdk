@@ -31,6 +31,7 @@ import {
     Page,
     DataView,
     AddonData,
+    Flow,
 } from './entities';
 
 import { papi_fetch, getPerformance } from './papi-module';
@@ -92,6 +93,7 @@ export class PapiClient {
             return new GenericResourceEndpoint(this, `/resources/${resourceName}`);
         },
     };
+    userDefinedFlows = new Endpoint<Flow>(this, '/user_defined_flows');
 
     constructor(private options: PapiClientOptions) {}
 
