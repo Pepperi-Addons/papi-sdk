@@ -8,17 +8,20 @@ export interface FlowParam {
     Internal: boolean;
 }
 
-export interface FlowGroupStep {
-    Type: 'Group';
-    Steps: FlowSteps[];
-    Concurrent: boolean;
+export interface FlowBaseStep {
+    Name: string;
     Disabled: boolean;
 }
 
-export interface FlowBlockStep {
+export interface FlowGroupStep extends FlowBaseStep {
+    Type: 'Group';
+    Steps: FlowSteps[];
+    Concurrent: boolean;
+}
+
+export interface FlowBlockStep extends FlowBaseStep {
     Type: 'LogicBlock';
     Configuration: any;
-    Disabled: boolean;
     Relation: {
         AddonUUID: string;
         Name: string;
