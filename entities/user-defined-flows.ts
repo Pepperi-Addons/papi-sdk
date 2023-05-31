@@ -12,15 +12,19 @@ export interface FlowGroupStep {
     Type: 'Group';
     Steps: FlowSteps[];
     Concurrent: boolean;
+    Disabled: boolean;
 }
 
 export interface FlowBlockStep {
     Type: 'LogicBlock';
     Configuration: any;
+    Disabled: boolean;
     Relation: {
         AddonUUID: string;
         Name: string;
         ExecutionURL: string;
+        ModuleName: string;
+        ComponentName: string;
     };
 }
 
