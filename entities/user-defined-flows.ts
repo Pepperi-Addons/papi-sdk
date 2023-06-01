@@ -26,8 +26,6 @@ export interface FlowBlockStep extends FlowBaseStep {
         AddonUUID: string;
         Name: string;
         ExecutionURL: string;
-        ModuleName: string;
-        ComponentName: string;
     };
 }
 
