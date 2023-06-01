@@ -8,13 +8,18 @@ export interface FlowParam {
     Internal: boolean;
 }
 
-export interface FlowGroupStep {
+export interface FlowBaseStep {
+    Name: string;
+    Disabled: boolean;
+}
+
+export interface FlowGroupStep extends FlowBaseStep {
     Type: 'Group';
     Steps: FlowSteps[];
     Concurrent: boolean;
 }
 
-export interface FlowBlockStep {
+export interface FlowBlockStep extends FlowBaseStep {
     Type: 'LogicBlock';
     Configuration: any;
     Relation: {
