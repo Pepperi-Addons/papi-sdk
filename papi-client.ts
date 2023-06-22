@@ -11,6 +11,7 @@ import {
     NotificationEndpoint,
     SchemesEndpoint,
     GenericResourceEndpoint,
+    FlowsEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -93,7 +94,7 @@ export class PapiClient {
             return new GenericResourceEndpoint(this, `/resources/${resourceName}`);
         },
     };
-    userDefinedFlows = new Endpoint<Flow>(this, '/user_defined_flows');
+    userDefinedFlows = new FlowsEndpoint(this);
 
     constructor(private options: PapiClientOptions) {}
 
