@@ -25,7 +25,7 @@ import {
 import { PapiClient } from '../papi-client';
 
 class InstalledAddonEnpoint {
-    constructor(private service: PapiClient, private addonUUID: string) {}
+    constructor(private service: PapiClient, private addonUUID: string) { }
     async install(version = ''): Promise<AddonAPIAsyncResult> {
         if (version) return await this.service.post(`/addons/installed_addons/${this.addonUUID}/install/${version}`);
         else return await this.service.post(`/addons/installed_addons/${this.addonUUID}/install`);
@@ -67,7 +67,7 @@ class AddonApiEndpoint {
         sync: true,
         queryString: '',
     };
-    constructor(private service: PapiClient) {}
+    constructor(private service: PapiClient) { }
 
     uuid(uuid: string) {
         this.options.uuid = uuid;
@@ -336,7 +336,11 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 },
             };
         },
-        batch: (body: { Objects: ElasticSearchDocument[]; OverwriteObject?: boolean }) => {
+        batch: (body: {
+            Objects: ElasticSearchDocument[];
+            OverwriteObject?: boolean;
+            WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+        }) => {
             return {
                 uuid: (addonUUID: string) => {
                     return {
@@ -436,7 +440,11 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             },
                         };
                     },
-                    batch: (body: { Objects: ElasticSearchDocument[]; OverwriteObject?: boolean }) => {
+                    batch: (body: {
+                        Objects: ElasticSearchDocument[];
+                        OverwriteObject?: boolean;
+                        WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+                    }) => {
                         return {
                             uuid: (addonUUID: string) => {
                                 return {
