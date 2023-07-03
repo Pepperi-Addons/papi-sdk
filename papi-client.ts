@@ -32,7 +32,6 @@ import {
     Page,
     DataView,
     AddonData,
-    Flow,
 } from './entities';
 
 import { papi_fetch, getPerformance } from './papi-module';

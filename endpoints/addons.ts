@@ -336,7 +336,11 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 },
             };
         },
-        batch: (body: { Objects: ElasticSearchDocument[]; OverwriteObject?: boolean }) => {
+        batch: (body: {
+            Objects: ElasticSearchDocument[];
+            OverwriteObject?: boolean;
+            WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+        }) => {
             return {
                 uuid: (addonUUID: string) => {
                     return {
@@ -436,7 +440,11 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             },
                         };
                     },
-                    batch: (body: { Objects: ElasticSearchDocument[]; OverwriteObject?: boolean }) => {
+                    batch: (body: {
+                        Objects: ElasticSearchDocument[];
+                        OverwriteObject?: boolean;
+                        WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+                    }) => {
                         return {
                             uuid: (addonUUID: string) => {
                                 return {
