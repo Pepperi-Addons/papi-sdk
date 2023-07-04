@@ -342,18 +342,12 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 OverwriteObject?: boolean;
                 WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
             },
-            awaitIndexing = false,
+            headers: any = undefined,
         ) => {
             return {
                 uuid: (addonUUID: string) => {
                     return {
                         resource: async (resourceName: string) => {
-                            let headers = undefined;
-                            if (awaitIndexing) {
-                                headers = {
-                                    'x-pepperi-await-indexing': true,
-                                };
-                            }
                             return await this.service.post(
                                 `/addons/index/batch/${addonUUID}/${resourceName}`,
                                 body,
@@ -459,18 +453,12 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             OverwriteObject?: boolean;
                             WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
                         },
-                        awaitIndexing = false,
+                        headers: any = undefined,
                     ) => {
                         return {
                             uuid: (addonUUID: string) => {
                                 return {
                                     resource: async (resourceName: string) => {
-                                        let headers = undefined;
-                                        if (awaitIndexing) {
-                                            headers = {
-                                                'x-pepperi-await-indexing': true,
-                                            };
-                                        }
                                         return await this.service.post(
                                             `/addons/shared_index/index/${indexName}/batch/${addonUUID}/${resourceName}`,
                                             body,
