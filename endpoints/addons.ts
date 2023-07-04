@@ -336,16 +336,29 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 },
             };
         },
-        batch: (body: {
-            Objects: ElasticSearchDocument[];
-            OverwriteObject?: boolean;
-            WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
-        }) => {
+        batch: (
+            body: {
+                Objects: ElasticSearchDocument[];
+                OverwriteObject?: boolean;
+                WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+            },
+            awaitIndexing = false,
+        ) => {
             return {
                 uuid: (addonUUID: string) => {
                     return {
                         resource: async (resourceName: string) => {
-                            return await this.service.post(`/addons/index/batch/${addonUUID}/${resourceName}`, body);
+                            let headers = undefined;
+                            if (awaitIndexing) {
+                                headers = {
+                                    'x-pepperi-await-indexing': true,
+                                };
+                            }
+                            return await this.service.post(
+                                `/addons/index/batch/${addonUUID}/${resourceName}`,
+                                body,
+                                headers,
+                            );
                         },
                     };
                 },
@@ -440,18 +453,28 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             },
                         };
                     },
-                    batch: (body: {
-                        Objects: ElasticSearchDocument[];
-                        OverwriteObject?: boolean;
-                        WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
-                    }) => {
+                    batch: (
+                        body: {
+                            Objects: ElasticSearchDocument[];
+                            OverwriteObject?: boolean;
+                            WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+                        },
+                        awaitIndexing = false,
+                    ) => {
                         return {
                             uuid: (addonUUID: string) => {
                                 return {
                                     resource: async (resourceName: string) => {
+                                        let headers = undefined;
+                                        if (awaitIndexing) {
+                                            headers = {
+                                                'x-pepperi-await-indexing': true,
+                                            };
+                                        }
                                         return await this.service.post(
                                             `/addons/shared_index/index/${indexName}/batch/${addonUUID}/${resourceName}`,
                                             body,
+                                            headers,
                                         );
                                     },
                                 };
