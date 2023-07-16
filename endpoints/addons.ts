@@ -23,6 +23,7 @@ import {
     RecursiveImportInput,
 } from '../entities/dimx_inputs';
 import { PapiClient } from '../papi-client';
+import { ConfigurationsEndpoints } from './configurations';
 
 class InstalledAddonEnpoint {
     constructor(private service: PapiClient, private addonUUID: string) {}
@@ -163,6 +164,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
     // data = new AddonDataEndpoint(this.service);
 
     data = {
+        configurations: new ConfigurationsEndpoints(this.service, '/addons/data/configurations'),
         schemes: {
             get: async (params: FindOptions): Promise<AddonDataScheme[]> => {
                 let url = '/addons/data/schemes';
