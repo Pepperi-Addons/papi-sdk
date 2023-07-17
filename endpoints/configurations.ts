@@ -27,7 +27,7 @@ export class ConfigurationsEndpoints {
         this.objects = new ConfigurationsCRUDEndpoints<ConfigurationObject>(this.service, this.url + '/objects');
     }
 
-    uuid(addonUUID: string) {
+    addonUUID(addonUUID: string) {
         return {
             scheme: (scheme: string) => {
                 return {
