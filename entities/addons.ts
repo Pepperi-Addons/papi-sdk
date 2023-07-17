@@ -102,6 +102,9 @@ export interface AddonDataScheme {
     };
     SuperTypes?: string[];
     PurgeTaskID?: string;
+    Internals?: {
+        [key: string]: any;
+    };
 }
 
 export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigate';
