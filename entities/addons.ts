@@ -173,20 +173,19 @@ export interface AddonFile extends AddonData {
      * Mutually exclusive with "URI".
      */
     TemporaryFileURLs?: string[];
-    
 }
 
 export interface TemporaryFile {
     /**
      * The URL to which the file should be uploaded using PUT method.
      */
-	PutURL: string,
+    PutURL: string;
 
     /**
      * The URL from which you can download the file.
      * Can be passed in the AddonFile.TemporaryFileURLs property.
      */
-	TemporaryFileURL: string
+    TemporaryFileURL: string;
 }
 
 export type TemporaryFileRequest = {
@@ -194,8 +193,8 @@ export type TemporaryFileRequest = {
      * The file name to be used when saving the file.
      * If not provided, the file name will be a random UUID.
      */
-	FileName?: string,
-}
+    FileName?: string;
+};
 
 export interface Job extends AddonData {
     Key: string;
