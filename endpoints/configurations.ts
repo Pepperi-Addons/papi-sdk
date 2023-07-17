@@ -19,12 +19,11 @@ class ConfigurationsCRUDEndpoints<T> extends Endpoint<T> {
 }
 
 //configurations/
-export class ConfigurationsEndpoints {
+export class ConfigurationsEndpoints extends ConfigurationsCRUDEndpoints<ConfigurationObject> {
     schemes: ConfigurationsCRUDEndpoints<ConfigurationScheme>;
-    objects: ConfigurationsCRUDEndpoints<ConfigurationObject>;
     constructor(protected service: PapiClient, protected url: string) {
+        super(service, url)
         this.schemes = new ConfigurationsCRUDEndpoints<ConfigurationScheme>(this.service, this.url + '/schemes');
-        this.objects = new ConfigurationsCRUDEndpoints<ConfigurationObject>(this.service, this.url + '/objects');
     }
 
     addonUUID(addonUUID: string) {
