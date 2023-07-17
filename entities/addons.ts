@@ -155,12 +155,46 @@ export interface AddonFile extends AddonData {
     ];
     Sync?: 'None' | 'Device' | 'DeviceThumbnail' | 'Always';
     URL?: string;
+    /**
+     * DataURI ot a URL link to the file.
+     * Mutually exclusive with "TemporaryFileURLs".
+     */
     URI?: string;
+    /**
+     * @deprecated PresignedURL functionality is deprecated starting at PFS 1.3. Use "URI" or "TemporaryFileURLs" instead.
+     */
     PresignedURL?: string;
     FileVersion?: string;
     Cache?: boolean;
     UploadedBy?: string;
     FileSize?: number;
+    /**
+     * A list of TemporaryFileURLs from which the final file will be constructed.
+     * Mutually exclusive with "URI".
+     */
+    TemporaryFileURLs?: string[];
+    
+}
+
+export interface TemporaryFile {
+    /**
+     * The URL to which the file should be uploaded using PUT method.
+     */
+	PutURL: string,
+
+    /**
+     * The URL from which you can download the file.
+     * Can be passed in the AddonFile.TemporaryFileURLs property.
+     */
+	TemporaryFileURL: string
+}
+
+export type TemporaryFileRequest = {
+    /**
+     * The file name to be used when saving the file.
+     * If not provided, the file name will be a random UUID.
+     */
+	FileName?: string,
 }
 
 export interface Job extends AddonData {

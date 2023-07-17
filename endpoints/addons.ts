@@ -13,6 +13,8 @@ import {
     DIMXObject,
     SearchBody,
     SearchData,
+    TemporaryFileRequest,
+    TemporaryFile,
 } from '../entities';
 import {
     DataImportInput,
@@ -541,6 +543,9 @@ export class AddonEndpoint extends Endpoint<Addon> {
                     };
                 },
             };
+        },
+        temporaryFile: async (temporaryFileRequest?: TemporaryFileRequest): Promise<TemporaryFile> => {
+            return await this.service.post(`/addons/pfs/temporary_file`, temporaryFileRequest ?? {});
         },
     };
 
