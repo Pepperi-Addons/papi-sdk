@@ -22,7 +22,7 @@ class ConfigurationsCRUDEndpoints<T> extends Endpoint<T> {
 export class ConfigurationsEndpoints extends ConfigurationsCRUDEndpoints<ConfigurationObject> {
     schemes: ConfigurationsCRUDEndpoints<ConfigurationScheme>;
     constructor(protected service: PapiClient, protected url: string) {
-        super(service, url)
+        super(service, url);
         this.schemes = new ConfigurationsCRUDEndpoints<ConfigurationScheme>(this.service, this.url + '/schemes');
     }
 
