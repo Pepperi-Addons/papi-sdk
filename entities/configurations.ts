@@ -1,31 +1,23 @@
-import { SchemeFieldType } from './addons';
+import { AddonData, AddonDataScheme, SchemeFieldType } from './addons';
 
-export interface ConfigurationScheme {
-    Key?: string;
+export interface ConfigurationScheme extends AddonData{
     Name: string;
     Fields: ConfigurationFields;
-    Sync: Sync;
+    Sync: AddonDataScheme['SyncData'];
     AddonUUID: string;
-    Hidden?: boolean;
 }
 
 interface ConfigurationFields {
     [key: string]: { Type: SchemeFieldType; PerProfile?: boolean };
 }
 
-interface Sync {
-    SyncData: boolean;
-}
-
-export interface Draft {
-    Key?: string;
+export interface Draft extends AddonData{
     AddonUUID: string;
     ConfigurationSchemaName: string;
     Description: string;
     PublishedVersion?: string; //reference to version
     Data: DraftData;
     Profiles: ConfigurationsProfile[];
-    Hidden?: boolean;
 }
 
 export interface DraftData {
@@ -37,9 +29,7 @@ export interface ConfigurationsProfile {
     Data: DraftData;
 }
 
-export interface Version {
-    Key?: string;
-    Hidden?: boolean;
+export interface Version extends AddonData {
     Description: string;
     Draft: string; //ref to draft
     State: VersionState;
@@ -52,9 +42,7 @@ export interface VersionState {
     Profiles: ConfigurationsProfile[];
 }
 
-export interface ConfigurationObject {
-    Key?: string; //should be consist of draftKey_profileKey
-    Hidden?: boolean;
+export interface ConfigurationObject extends AddonData {
     ConfigurationSchemeName: string;
     Draft: string; //reference to the draft
     Version: string; //reference to the version
