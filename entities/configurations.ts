@@ -1,6 +1,6 @@
 import { AddonData, AddonDataScheme, SchemeFieldType } from './addons';
 
-export interface ConfigurationScheme extends AddonData{
+export interface ConfigurationScheme extends AddonData {
     Name: string;
     Fields: ConfigurationFields;
     Sync: AddonDataScheme['SyncData'];
@@ -11,7 +11,7 @@ interface ConfigurationFields {
     [key: string]: { Type: SchemeFieldType; PerProfile?: boolean };
 }
 
-export interface Draft extends AddonData{
+export interface Draft extends AddonData {
     AddonUUID: string;
     ConfigurationSchemaName: string;
     Description: string;
