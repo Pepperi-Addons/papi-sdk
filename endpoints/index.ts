@@ -9,3 +9,4 @@ export * from './notification';
 export * from './user-defined-collections';
 export * from './user-defined-flows';
 export * from './generic-resource';
+export * from './configurations';
