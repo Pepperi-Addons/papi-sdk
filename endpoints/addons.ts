@@ -166,7 +166,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
     // data = new AddonDataEndpoint(this.service);
 
     data = {
-        configurations: new ConfigurationsEndpoints(this.service, '/addons/data/configurations'),
+        configurations: new ConfigurationsEndpoints(this.service, '/addons/configurations'),
         schemes: {
             get: async (params: FindOptions): Promise<AddonDataScheme[]> => {
                 let url = '/addons/data/schemes';
