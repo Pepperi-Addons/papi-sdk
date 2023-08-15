@@ -45,6 +45,7 @@ interface PapiClientOptions {
     suppressLogging?: boolean;
     addonSecretKey?: string;
     actionUUID?: string;
+    codeJobUUID?: string;
 }
 
 export class PapiClient {
@@ -137,6 +138,10 @@ export class PapiClient {
 
         if (this.options.actionUUID) {
             options.headers['X-Pepperi-ActionID'] = this.options.actionUUID;
+        }
+
+        if (this.options.codeJobUUID) {
+            options.headers['X-Pepperi-CodeJobID'] = this.options.codeJobUUID;
         }
         const performance = getPerformance();
         const t0 = performance?.now();
