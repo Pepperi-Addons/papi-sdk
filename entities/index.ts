@@ -31,6 +31,7 @@ export * from './generic-resource';
 export * from './base-activity';
 export * from './survey';
 export * from './user-defined-flows';
+export * from './configurations';
 
 // need something here that can be transpiled to js
 // all the other entities are interfaces

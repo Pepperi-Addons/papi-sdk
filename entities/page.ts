@@ -10,7 +10,7 @@ export interface Page extends AddonData {
 
 export interface PageBlock {
     Key: string;
-    Relation: NgComponentRelation;
+    Relation?: NgComponentRelation; // Deprecated. Use Configuration (Resource & AddonUUID) instead.
     Configuration: ResourceDataConfiguration;
     ConfigurationPerScreenSize?: ScreenSizeDataConfiguration;
     PageConfiguration?: PageConfiguration;
