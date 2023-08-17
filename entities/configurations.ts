@@ -3,9 +3,7 @@ import { AddonData, AddonDataScheme, SchemeFieldType } from './addons';
 export interface ConfigurationScheme extends AddonData {
     Name: string;
     Fields: ConfigurationFields;
-    Sync: {
-        SyncData: boolean;
-    };
+    SyncData: AddonDataScheme['SyncData'];
     AddonUUID: string;
 }
 
