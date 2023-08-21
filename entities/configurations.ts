@@ -18,6 +18,8 @@ export interface Draft extends AddonData {
     PublishedVersion?: string; //reference to version
     Data: DraftData;
     Profiles: ConfigurationsProfile[];
+    Name: string;
+    Dirty?: boolean;
 }
 
 export interface DraftData {
