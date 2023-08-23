@@ -1,10 +1,12 @@
-import { AddonData, AddonDataScheme, SchemeFieldType } from './addons';
+import { AddonData, AddonDataScheme, Relation, SchemeFieldType } from './addons';
 
 export interface ConfigurationScheme extends AddonData {
     Name: string;
     Fields: ConfigurationFields;
     SyncData: AddonDataScheme['SyncData'];
     AddonUUID: string;
+    ExportRelation?: Relation;
+    ImportRelations?: Relation;
 }
 
 interface ConfigurationFields {
