@@ -6,7 +6,7 @@ export interface ConfigurationScheme extends AddonData {
     SyncData: AddonDataScheme['SyncData'];
     AddonUUID: string;
     ExportRelation?: Relation;
-    ImportRelations?: Relation;
+    ImportRelation?: Relation;
 }
 
 interface ConfigurationFields {
