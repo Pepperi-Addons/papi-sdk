@@ -5,6 +5,17 @@ export interface ConfigurationScheme extends AddonData {
     Fields: ConfigurationFields;
     SyncData: AddonDataScheme['SyncData'];
     AddonUUID: string;
+    ExportRelation?: ConfigurationExportRelation;
+    ImportRelation?: ConfigurationImportRelation;
+}
+
+interface ConfigurationExportRelation {
+    AddonRelativeURL?: string;
+    InitRelativeURL: string;
+}
+interface ConfigurationImportRelation extends ConfigurationExportRelation {
+    MappingRelativeURL?: string;
+    FixRelativeURL?: string;
 }
 
 interface ConfigurationFields {
