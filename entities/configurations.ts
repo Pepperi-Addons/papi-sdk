@@ -9,13 +9,13 @@ export interface ConfigurationScheme extends AddonData {
     ImportRelation?: ConfigurationImportRelation;
 }
 
-interface ConfigurationExportRelation{
-    AddonRelativeURL?: string
-    InitRelativeURL: string
+interface ConfigurationExportRelation {
+    AddonRelativeURL?: string;
+    InitRelativeURL: string;
 }
-interface ConfigurationImportRelation extends ConfigurationExportRelation{
-    MappingRelativeURL?: string,
-    FixRelativeURL?: string,
+interface ConfigurationImportRelation extends ConfigurationExportRelation {
+    MappingRelativeURL?: string;
+    FixRelativeURL?: string;
 }
 
 interface ConfigurationFields {
