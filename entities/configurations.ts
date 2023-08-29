@@ -1,4 +1,4 @@
-import { AddonData, AddonDataScheme, Relation, SchemeFieldType } from './addons';
+import { AddonData, AddonDataScheme, SchemeFieldType } from './addons';
 
 export interface ConfigurationScheme extends AddonData {
     Name: string;
