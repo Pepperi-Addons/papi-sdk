@@ -11,7 +11,7 @@ export interface ConfigurationScheme extends AddonData {
 
 interface ConfigurationExportRelation {
     AddonRelativeURL?: string;
-    InitRelativeURL: string;
+    InitRelativeURL?: string;
 }
 interface ConfigurationImportRelation extends ConfigurationExportRelation {
     MappingRelativeURL?: string;
