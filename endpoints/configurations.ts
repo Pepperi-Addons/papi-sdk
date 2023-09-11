@@ -48,8 +48,8 @@ class DraftsEndpoints extends ConfigurationsCRUDEndpoints<Draft> {
     }
     key(key: string) {
         return {
-            publish: async () => {
-                return await this.service.post(this.url + `/key/${key}/publish`);
+            publish: async (description?: string) => {
+                return await this.service.post(this.url + `/key/${key}/publish`, { Description: description });
             },
             restore: async (versionKey: string) => {
                 return await this.service.post(this.url + `/key/${key}/restore`, { VersionKey: versionKey });
