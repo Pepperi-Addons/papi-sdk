@@ -13,6 +13,8 @@ import {
     DIMXObject,
     SearchBody,
     SearchData,
+    TemporaryFileRequest,
+    TemporaryFile,
 } from '../entities';
 import {
     DataImportInput,
@@ -23,6 +25,7 @@ import {
     RecursiveImportInput,
 } from '../entities/dimx_inputs';
 import { PapiClient } from '../papi-client';
+import { ConfigurationsEndpoints } from './configurations';
 
 class InstalledAddonEnpoint {
     constructor(private service: PapiClient, private addonUUID: string) {}
@@ -160,6 +163,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
     installedAddons = new InstalledAddonsEnpoint(this.service);
     versions = new AddonVersionEndpoint(this.service);
     api = new AddonApiEndpoint(this.service);
+    configurations = new ConfigurationsEndpoints(this.service, '/addons/configurations');
     // data = new AddonDataEndpoint(this.service);
 
     data = {
@@ -336,12 +340,23 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 },
             };
         },
-        batch: (body: { Objects: ElasticSearchDocument[]; OverwriteObject?: boolean }) => {
+        batch: (
+            body: {
+                Objects: ElasticSearchDocument[];
+                OverwriteObject?: boolean;
+                WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+            },
+            headers: any = undefined,
+        ) => {
             return {
                 uuid: (addonUUID: string) => {
                     return {
                         resource: async (resourceName: string) => {
-                            return await this.service.post(`/addons/index/batch/${addonUUID}/${resourceName}`, body);
+                            return await this.service.post(
+                                `/addons/index/batch/${addonUUID}/${resourceName}`,
+                                body,
+                                headers,
+                            );
                         },
                     };
                 },
@@ -436,7 +451,14 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             },
                         };
                     },
-                    batch: (body: { Objects: ElasticSearchDocument[]; OverwriteObject?: boolean }) => {
+                    batch: (
+                        body: {
+                            Objects: ElasticSearchDocument[];
+                            OverwriteObject?: boolean;
+                            WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+                        },
+                        headers: any = undefined,
+                    ) => {
                         return {
                             uuid: (addonUUID: string) => {
                                 return {
@@ -444,6 +466,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                                         return await this.service.post(
                                             `/addons/shared_index/index/${indexName}/batch/${addonUUID}/${resourceName}`,
                                             body,
+                                            headers,
                                         );
                                     },
                                 };
@@ -522,6 +545,9 @@ export class AddonEndpoint extends Endpoint<Addon> {
                     };
                 },
             };
+        },
+        temporaryFile: async (temporaryFileRequest?: TemporaryFileRequest): Promise<TemporaryFile> => {
+            return await this.service.post(`/addons/pfs/temporary_file`, temporaryFileRequest ?? {});
         },
     };
 
