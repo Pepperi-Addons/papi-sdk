@@ -1,4 +1,4 @@
-import { AddonData, SchemeFieldType } from '.';
+import { Draft, SchemeFieldType } from '.';
 
 export interface FlowParam {
     Name: string;
@@ -31,9 +31,9 @@ export interface FlowBlockStep extends FlowBaseStep {
 
 export type FlowSteps = FlowBlockStep | FlowGroupStep;
 
-export interface Flow extends AddonData {
-    Name: string;
-    Description?: string;
-    Params: FlowParam[];
-    Steps: FlowSteps[];
+export interface Flow extends Draft {
+    Data: {
+        Params: FlowParam[];
+        Steps: FlowSteps[];
+    };
 }
