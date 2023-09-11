@@ -97,8 +97,8 @@ export class PapiClient {
         },
     };
     userDefinedFlows = new FlowsEndpoint(this);
-    permissionsPolicy = new Endpoint<PermissionsPolicy>(this, '/policies');
-    permissionsProfile = new Endpoint<PermissionsProfile>(this, '/policy_profiles');
+    policies = new Endpoint<PermissionsPolicy>(this, '/policies');
+    policyProfiles = new Endpoint<PermissionsProfile>(this, '/policy_profiles');
 
     constructor(private options: PapiClientOptions) {}
 
