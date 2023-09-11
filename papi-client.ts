@@ -32,6 +32,8 @@ import {
     Page,
     DataView,
     AddonData,
+    PermissionsPolicy,
+    PermissionsProfile,
 } from './entities';
 
 import { papi_fetch, getPerformance } from './papi-module';
@@ -95,6 +97,8 @@ export class PapiClient {
         },
     };
     userDefinedFlows = new FlowsEndpoint(this);
+    policies = new Endpoint<PermissionsPolicy>(this, '/policies');
+    policyProfiles = new Endpoint<PermissionsProfile>(this, '/policy_profiles');
 
     constructor(private options: PapiClientOptions) {}
 
