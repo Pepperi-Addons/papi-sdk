@@ -104,7 +104,7 @@ export interface AddonDataScheme {
     PurgeTaskID?: string;
 }
 
-export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigate';
+export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigate' | 'CPIAddonAPI';
 
 export interface Relation extends AddonData {
     AddonUUID: string;
