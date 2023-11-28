@@ -456,6 +456,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             Objects: ElasticSearchDocument[];
                             OverwriteObject?: boolean;
                             WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+                            StaleModificationFieldID?: string;
                         },
                         headers: any = undefined,
                     ) => {
