@@ -7,3 +7,4 @@ export * from './sync';
 export * from './file-storage';
 export * from './notification';
 export * from './user-defined-collections';
+export * from './generic-resource';

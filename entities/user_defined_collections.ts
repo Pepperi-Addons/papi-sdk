@@ -1,17 +1,17 @@
-import { AddonDataScheme, SchemeFieldType } from './addons';
+import { AddonDataScheme, SchemeField } from './addons';
 import { GridDataView } from './data-view';
 
 export const DocumentKeyTypes = ['AutoGenerate', 'Composite', 'Key'] as const;
 
 export type DocumentKeyType = typeof DocumentKeyTypes[number];
-export interface CollectionField {
-    Items?: {
-        Type: SchemeFieldType;
-    };
-    Type: SchemeFieldType;
+export interface CollectionField extends SchemeField {
     Mandatory: boolean;
     OptionalValues?: string[];
     Description: string;
+    Fields?: {
+        [key: string]: CollectionField;
+    };
+    Items?: CollectionField;
 }
 export interface DocumentKey {
     Type: DocumentKeyType;

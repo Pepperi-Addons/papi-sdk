@@ -10,6 +10,7 @@ import {
     FileStorageEndpoint,
     NotificationEndpoint,
     SchemesEndpoint,
+    GenericResourceEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -84,6 +85,11 @@ export class PapiClient {
         schemes: new SchemesEndpoint(this),
         documents: (collectionName: string) => {
             return new Endpoint<AddonData>(this, `/user_defined_collections/${collectionName}`);
+        },
+    };
+    resources = {
+        resource: (resourceName: string) => {
+            return new GenericResourceEndpoint(this, `/resources/${resourceName}`);
         },
     };
 

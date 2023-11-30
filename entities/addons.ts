@@ -20,6 +20,12 @@ export interface InstalledAddon {
     Type?: number;
 }
 
+export interface DIMXObject {
+    Key: string; // Unique key of the object. Should match the internal Object's Key property.
+    Status: 'Update' | 'Insert' | 'Ignore' | 'Error' | 'Merge'; // Current status of the object in the import process.
+    Details?: string; // extra details in case Status is "Error" or "Merge"
+}
+
 export interface AddonVersion {
     UUID?: string;
     Hidden?: boolean;
@@ -52,29 +58,35 @@ export interface AddonData {
     [key: string]: any;
 }
 
+export interface ElasticSearchDocument {
+    Key?: string;
+    [key: string]: any;
+}
+
 export interface AddonDataScheme {
     Hidden?: boolean;
     CreationDateTime?: string;
     ModificationDateTime?: string;
     Name: string;
-    AddonUUID: string;
-    Type?: 'data' | 'meta_data' | 'cpi_meta_data' | 'indexed_data' | 'index' | 'typed_index';
+    Type?: 'data' | 'meta_data' | 'indexed_data' | 'index' | 'shared_index' | 'pfs' | 'contained' | 'papi' | 'abstract';
     Fields?: {
-        [key: string]: {
-            Type: SchemeFieldType;
-            Indexed?: boolean;
-            Keyword?: boolean;
-            Items?: {
-                Type: SchemeFieldType;
-            };
-        };
+        [key: string]: SchemeField;
     };
     DataSourceData?: any;
     Validator?: string;
     DataSourceURL?: string;
+    Lock?: string;
+    GenericResource?: boolean;
+    AddonUUID?: string;
+    SyncData?: {
+        Sync: boolean;
+        GDBQuery?: string;
+        SyncFieldLevel?: boolean;
+        IndexedField?: string;
+    };
 }
 
-export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigation';
+export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigate';
 
 export interface Relation extends AddonData {
     AddonUUID: string;
@@ -101,6 +113,10 @@ export const SchemeFieldTypes = [
     'Object',
     'Array',
     'DateTime',
+    'Resource',
+    'ContainedResource',
+    'DynamicResource',
+    'ContainedDynamicResource',
 ] as const;
 
 export type SchemeFieldType = typeof SchemeFieldTypes[number];
@@ -109,7 +125,7 @@ export interface AddonFile extends AddonData {
     Folder?: string;
     Name?: string;
     Description?: string;
-    Mime?: string;
+    MIME?: string;
     Thumbnails?: [
         {
             Size: '200x200';
@@ -121,4 +137,53 @@ export interface AddonFile extends AddonData {
     URI?: string;
     PresignedURL?: string;
     FileVersion?: string;
+    Cache?: boolean;
+    UploadedBy?: string;
+    FileSize?: number;
+}
+
+export interface Job extends AddonData {
+    Key: string;
+    Version: string;
+    UserUUID: string;
+    NumberOfTry: number;
+    NumberOfTries: number;
+    AddonUUID: string;
+    AddonPath: string;
+    AddonFunctionName: string;
+    AddonVersion: string;
+    Request: {
+        path: string;
+        header: any;
+        originalUrl: string;
+        body: any;
+        method: string;
+        query: any;
+    };
+    Status: string;
+    ExpirationDateTime: Date;
+    CallbackUUID?: string;
+    CodeJobUUID?: string;
+    ResultObject?: any | undefined;
+}
+
+export interface SchemeField {
+    Type: SchemeFieldType;
+    Indexed?: boolean;
+    Keyword?: boolean;
+    // For Array, each item can be a scheme field of it's own
+    Items?: SchemeField;
+    // Name of the resource we reference to
+    Resource?: string;
+    AddonUUID?: string;
+    IndexedFields?: {
+        // Fields will be exported to data index from the resource
+        [key: string]: SchemeField;
+    };
+    Fields?: {
+        // Define fields for object Type
+        [key: string]: SchemeField;
+    };
+    Sync?: boolean;
+    Unique?: boolean;
 }
