@@ -245,6 +245,7 @@ export interface SchemeField {
     ExtendedField?: boolean;
     // should this field be used as a user scope filter (sync)
     ApplySystemFilter?: boolean;
+    DefaultValue?: any;
 }
 
 export interface SearchData<T> {
