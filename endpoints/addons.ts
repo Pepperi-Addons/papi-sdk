@@ -1,4 +1,4 @@
-import Endpoint, { FileFindOptions, FindOptions } from '../endpoint';
+import Endpoint, { FileFindOptions, FindOptions, IterableEndpoint } from '../endpoint';
 import {
     Addon,
     InstalledAddon,
@@ -15,6 +15,7 @@ import {
     SearchData,
     TemporaryFileRequest,
     TemporaryFile,
+    BatchApiResponse,
 } from '../entities';
 import {
     DataImportInput,
@@ -119,6 +120,35 @@ class AddonVersionEndpoint extends Endpoint<AddonVersion> {
     }
 }
 
+class BatchEndpoint {
+    private addonUUID: string | undefined;
+    private resourceName: string | undefined;
+
+    constructor(
+        private service: PapiClient,
+        private baseURL: string,
+        private body: {
+            Objects: AddonData[];
+            OverwriteObject?: boolean;
+            WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+            MaxPageSize?: number;
+        },
+        private headers: any = undefined,
+    ) {}
+
+    uuid(addonUUID: string) {
+        return {
+            resource: async (resourceName: string): Promise<DIMXObject[]> => {
+                this.resourceName = resourceName;
+                return await this.service.post(
+                    `${this.baseURL}/${addonUUID}/${this.resourceName}`,
+                    this.body,
+                    this.headers,
+                );
+            },
+        };
+    }
+}
 class TableEndpoint extends Endpoint<AddonData> {
     private addonUUID: string;
     private tableName: string;
@@ -191,6 +221,17 @@ export class AddonEndpoint extends Endpoint<Addon> {
                     return new TableEndpoint(this.service, addonUUID, tableName);
                 },
             };
+        },
+        batch: (
+            body: {
+                Objects: AddonData[];
+                OverwriteObject?: boolean;
+                WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+                MaxPageSize?: number;
+            },
+            headers: any = undefined,
+        ) => {
+            return new BatchEndpoint(this.service, '/addons/data/batch', body, headers);
         },
         relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
         import: {
@@ -348,19 +389,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
             },
             headers: any = undefined,
         ) => {
-            return {
-                uuid: (addonUUID: string) => {
-                    return {
-                        resource: async (resourceName: string) => {
-                            return await this.service.post(
-                                `/addons/index/batch/${addonUUID}/${resourceName}`,
-                                body,
-                                headers,
-                            );
-                        },
-                    };
-                },
-            };
+            return new BatchEndpoint(this.service, '/addons/index/batch', body, headers);
         },
         search: (dslQuery: any) => {
             return {
@@ -459,19 +488,12 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         },
                         headers: any = undefined,
                     ) => {
-                        return {
-                            uuid: (addonUUID: string) => {
-                                return {
-                                    resource: async (resourceName: string) => {
-                                        return await this.service.post(
-                                            `/addons/shared_index/index/${indexName}/batch/${addonUUID}/${resourceName}`,
-                                            body,
-                                            headers,
-                                        );
-                                    },
-                                };
-                            },
-                        };
+                        return new BatchEndpoint(
+                            this.service,
+                            `/addons/shared_index/index/${indexName}/batch`,
+                            body,
+                            headers,
+                        );
                     },
                     search: (dslQuery: any) => {
                         return {
