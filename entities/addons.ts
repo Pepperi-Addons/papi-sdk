@@ -138,7 +138,6 @@ export const SchemeFieldTypes = [
     'ContainedResource',
     'DynamicResource',
     'ContainedDynamicResource',
-    'ContainedConfiguration',
 ] as const;
 
 export type SchemeFieldType = typeof SchemeFieldTypes[number];
