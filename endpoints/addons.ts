@@ -120,10 +120,7 @@ class AddonVersionEndpoint extends Endpoint<AddonVersion> {
     }
 }
 
-class BatchEndpoint<T> {
-    private addonUUID: string | undefined;
-    private resourceName: string | undefined;
-
+class BatchEndpoint {
     constructor(
         private service: PapiClient,
         private baseURL: string,
@@ -138,13 +135,8 @@ class BatchEndpoint<T> {
 
     uuid(addonUUID: string) {
         return {
-            resource: async (resourceName: string): Promise<T[]> => {
-                this.resourceName = resourceName;
-                return await this.service.post(
-                    `${this.baseURL}/${addonUUID}/${this.resourceName}`,
-                    this.body,
-                    this.headers,
-                );
+            resource: async (resourceName: string): Promise<DIMXObject[]> => {
+                return await this.service.post(`${this.baseURL}/${addonUUID}/${resourceName}`, this.body, this.headers);
             },
         };
     }
@@ -231,7 +223,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
             },
             headers: any = undefined,
         ) => {
-            return new BatchEndpoint<DIMXObject>(this.service, '/addons/data/batch', body, headers);
+            return new BatchEndpoint(this.service, '/addons/data/batch', body, headers);
         },
         relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
         import: {
@@ -389,7 +381,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
             },
             headers: any = undefined,
         ) => {
-            return new BatchEndpoint<BatchApiResponse>(this.service, '/addons/index/batch', body, headers);
+            return new BatchEndpoint(this.service, '/addons/index/batch', body, headers);
         },
         search: (dslQuery: any) => {
             return {
@@ -489,7 +481,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         },
                         headers: any = undefined,
                     ) => {
-                        return new BatchEndpoint<BatchApiResponse>(
+                        return new BatchEndpoint(
                             this.service,
                             `/addons/shared_index/index/${indexName}/batch`,
                             body,
