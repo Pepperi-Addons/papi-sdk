@@ -120,7 +120,7 @@ class AddonVersionEndpoint extends Endpoint<AddonVersion> {
     }
 }
 
-class BatchEndpoint {
+class BatchEndpoint<T> {
     private addonUUID: string | undefined;
     private resourceName: string | undefined;
 
@@ -138,7 +138,7 @@ class BatchEndpoint {
 
     uuid(addonUUID: string) {
         return {
-            resource: async (resourceName: string): Promise<DIMXObject[]> => {
+            resource: async (resourceName: string): Promise<T[]> => {
                 this.resourceName = resourceName;
                 return await this.service.post(
                     `${this.baseURL}/${addonUUID}/${this.resourceName}`,
@@ -231,7 +231,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
             },
             headers: any = undefined,
         ) => {
-            return new BatchEndpoint(this.service, '/addons/data/batch', body, headers);
+            return new BatchEndpoint<DIMXObject>(this.service, '/addons/data/batch', body, headers);
         },
         relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
         import: {
@@ -389,7 +389,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
             },
             headers: any = undefined,
         ) => {
-            return new BatchEndpoint(this.service, '/addons/index/batch', body, headers);
+            return new BatchEndpoint<BatchApiResponse>(this.service, '/addons/index/batch', body, headers);
         },
         search: (dslQuery: any) => {
             return {
@@ -489,7 +489,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         },
                         headers: any = undefined,
                     ) => {
-                        return new BatchEndpoint(
+                        return new BatchEndpoint<BatchApiResponse>(
                             this.service,
                             `/addons/shared_index/index/${indexName}/batch`,
                             body,
