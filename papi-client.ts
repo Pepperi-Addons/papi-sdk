@@ -12,6 +12,7 @@ import {
     SchemesEndpoint,
     GenericResourceEndpoint,
     FlowsEndpoint,
+    CrawlerEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -34,6 +35,7 @@ import {
     AddonData,
     PermissionsPolicy,
     PermissionsProfile,
+    CrawlerInput,
 } from './entities';
 
 import { papi_fetch, getPerformance } from './papi-module';
@@ -99,6 +101,8 @@ export class PapiClient {
     userDefinedFlows = new FlowsEndpoint(this);
     policies = new Endpoint<PermissionsPolicy>(this, '/policies');
     policyProfiles = new Endpoint<PermissionsProfile>(this, '/policy_profiles');
+
+    crawl = new CrawlerEndpoint(this, '/addons/crawler');
 
     constructor(private options: PapiClientOptions) {}
 
