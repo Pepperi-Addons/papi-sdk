@@ -85,13 +85,37 @@ export interface AddonDataScheme {
     Lock?: string;
     GenericResource?: boolean;
     AddonUUID?: string;
+    /**
+     * Defines if and how the table will be synced (via {@link https://github.com/Pepperi-Addons/Nebula Nebula}, using {@link  GDB}).
+     */
     SyncData?: {
+        /**
+         * Should the table be synced.
+         *
+         * Default - false.
+         */
         Sync: boolean;
+        /**
+         * Should the records of the table be synced.
+         *
+         * Default - true.
+         */
         SyncRecords?: boolean;
+        /**
+         * If false, data that is added to the schema from the CPI-side will not be pushed to the server
+         * and other users/devices will not be able to see it.
+         * Default - false.
+         */
         PushLocalChanges?: boolean;
         GDBQuery?: string;
         SyncFieldLevel?: boolean;
         IndexedField?: string;
+        /**
+         * If present - means that this is a {@link https://en.wikipedia.org/wiki/Many-to-many_(data_model) many-to-many table}.
+         *
+         * No data from this table will be synced, instead it will used to create edges in the graph
+         * (using the two reference fields listed).
+         */
         Associative?: {
             FieldID1: string;
             FieldID2: string;
