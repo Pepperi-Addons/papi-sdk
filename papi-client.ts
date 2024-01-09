@@ -35,7 +35,6 @@ import {
     AddonData,
     PermissionsPolicy,
     PermissionsProfile,
-    CrawlerInput,
 } from './entities';
 
 import { papi_fetch, getPerformance } from './papi-module';
