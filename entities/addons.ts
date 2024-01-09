@@ -87,6 +87,7 @@ export interface AddonDataScheme {
     AddonUUID?: string;
     SyncData?: {
         Sync: boolean;
+        SyncRecords?: boolean;
         PushLocalChanges?: boolean;
         GDBQuery?: string;
         SyncFieldLevel?: boolean;
