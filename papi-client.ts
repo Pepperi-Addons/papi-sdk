@@ -12,6 +12,7 @@ import {
     SchemesEndpoint,
     GenericResourceEndpoint,
     FlowsEndpoint,
+    CrawlerEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -99,6 +100,8 @@ export class PapiClient {
     userDefinedFlows = new FlowsEndpoint(this);
     policies = new Endpoint<PermissionsPolicy>(this, '/policies');
     policyProfiles = new Endpoint<PermissionsProfile>(this, '/policy_profiles');
+
+    crawl = new CrawlerEndpoint(this, '/addons/crawler');
 
     constructor(private options: PapiClientOptions) {}
 
