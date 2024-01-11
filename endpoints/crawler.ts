@@ -7,7 +7,7 @@ export class CrawlerEndpoint extends Endpoint<CrawlerOutput> {
         super(service, url);
     }
 
-    async crawl(input: CrawlerInput): Promise<AddonAPIAsyncResult> {
-        return await this.service.post(`${this.url}/crawl`, input);
+    async crawl(input: CrawlerInput, retries = 1): Promise<AddonAPIAsyncResult> {
+        return await this.service.post(`${this.url}/crawl?retry=${retries}`, input);
     }
 }
