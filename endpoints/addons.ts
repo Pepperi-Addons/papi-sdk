@@ -1,4 +1,4 @@
-import Endpoint, { FileFindOptions, FindOptions, IterableEndpoint } from '../endpoint';
+import Endpoint, { FileFindOptions, FindOptions } from '../endpoint';
 import {
     Addon,
     InstalledAddon,
@@ -15,7 +15,6 @@ import {
     SearchData,
     TemporaryFileRequest,
     TemporaryFile,
-    BatchApiResponse,
 } from '../entities';
 import {
     DataImportInput,
@@ -27,6 +26,7 @@ import {
 } from '../entities/dimx_inputs';
 import { PapiClient } from '../papi-client';
 import { ConfigurationsEndpoints } from './configurations';
+import { CrawlerEndpoint } from './crawler';
 
 class InstalledAddonEnpoint {
     constructor(private service: PapiClient, private addonUUID: string) {}
@@ -581,4 +581,6 @@ export class AddonEndpoint extends Endpoint<Addon> {
             return await this.service.get(url);
         },
     };
+
+    crawler = new CrawlerEndpoint(this.service, '/addons/crawler');
 }
