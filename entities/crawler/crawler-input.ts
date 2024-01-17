@@ -18,6 +18,11 @@ export interface CrawlerInput {
     LockID?: string;
 
     /**
+     * Used in multi-Crawler to define execution order.
+     */
+    BlockID?: string;
+
+    /**
      * The URL to the source - will be used to fetch pages.
      */
     SourceRelativeURL: string;
@@ -53,7 +58,7 @@ export interface CrawlerInput {
     TargetOutputs?: CrawlerTargetOutputBlueprint[];
 }
 
-interface CrawlerTargetOutputBlueprint {
+export interface CrawlerTargetOutputBlueprint {
     /**
      * The name and ID of the field.
      */
