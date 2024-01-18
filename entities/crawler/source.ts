@@ -20,7 +20,7 @@ export interface CrawlerSourceOutput {
 
     /**
      * A key that can be used to fetch the next page of the resource.
-     * If this is undefined, the crawler will stop.
+     * If this is undefined, the crawler will stop fetching pages.
      */
     NextPageKey: string | undefined;
 }
