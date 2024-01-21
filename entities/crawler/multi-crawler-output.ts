@@ -18,4 +18,23 @@ export interface MultiCrawlerOutput {
         SourceTimeInSeconds: number;
         SourceSizeInKB: number;
     };
+
+    /**
+     * The status of each crawler.
+     */
+    CrawlersStatus: {
+        [CrawlerName: string]: {
+            /**
+             * Finished - the crawler finished crawling successfully.
+             *
+             * InProgress - the crawler is still running (or waiting for retry).
+             *
+             * Aborted - the crawler was aborted but did not fail directly, for more information read message.
+             *
+             * Failed - the crawler failed, for more information read message.
+             */
+            Status: 'Finished' | 'InProgress' | 'Aborted' | 'Failed';
+            Message?: string;
+        };
+    };
 }
