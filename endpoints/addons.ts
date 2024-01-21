@@ -16,8 +16,8 @@ import {
     TemporaryFileRequest,
     TemporaryFile,
     CrawlerInput,
+    MultiCrawlerInput,
 } from '../entities';
-import { MultiCrawlerInput } from '../entities/crawler/multi-crawler-input';
 import {
     DataImportInput,
     FileExportInput,

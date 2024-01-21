@@ -1,7 +1,5 @@
 import Endpoint from '../endpoint';
-import { AddonAPIAsyncResult, CrawlerInput, CrawlerOutput } from '../entities';
-import { MultiCrawlerInput } from '../entities/crawler/multi-crawler-input';
-import { MultiCrawlerOutput } from '../entities/crawler/multi-crawler-output';
+import { AddonAPIAsyncResult, CrawlerInput, CrawlerOutput, MultiCrawlerInput, MultiCrawlerOutput } from '../entities';
 import { PapiClient } from '../papi-client';
 
 export class CrawlerEndpoint extends Endpoint<CrawlerOutput> {
