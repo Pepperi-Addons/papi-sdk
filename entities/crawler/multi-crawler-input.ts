@@ -2,6 +2,11 @@ import { CrawlerInput, CrawlerTargetOutputBlueprint } from './crawler-input';
 
 export interface MultiCrawlerInput {
     /**
+     * The ID of the lock to use, allows the caller to 'lock' the crawler to prevent multiple crawlers operations from running at the same time.
+     */
+    LockID?: string;
+
+    /**
      * Array of crawlers to run.
      */
     Crawlers: CrawlerInput[];

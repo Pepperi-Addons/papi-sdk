@@ -15,7 +15,9 @@ import {
     SearchData,
     TemporaryFileRequest,
     TemporaryFile,
+    CrawlerInput,
 } from '../entities';
+import { MultiCrawlerInput } from '../entities/crawler/multi-crawler-input';
 import {
     DataImportInput,
     FileExportInput,
@@ -26,7 +28,7 @@ import {
 } from '../entities/dimx_inputs';
 import { PapiClient } from '../papi-client';
 import { ConfigurationsEndpoints } from './configurations';
-import { CrawlerEndpoint } from './crawler';
+import { CrawlerEndpoint, MultiCrawlerEndpoint } from './crawler';
 
 class InstalledAddonEnpoint {
     constructor(private service: PapiClient, private addonUUID: string) {}
@@ -582,5 +584,14 @@ export class AddonEndpoint extends Endpoint<Addon> {
         },
     };
 
-    crawler = new CrawlerEndpoint(this.service, '/addons/crawler');
+    crawler = {
+        crawl: async (input: CrawlerInput, numberOfRetries = 1) => {
+            const crawler = new CrawlerEndpoint(this.service, '/addons/crawler');
+            return await crawler.crawl(input, numberOfRetries);
+        },
+        multi_crawl: async (input: MultiCrawlerInput, numberOfRetries = 1) => {
+            const crawler = new MultiCrawlerEndpoint(this.service, '/addons/crawler');
+            return await crawler.multi_crawl(input, numberOfRetries);
+        },
+    };
 }
