@@ -83,6 +83,7 @@ export interface PageSection {
     Columns: PageSectionColumn[];
     Split?: SplitType;
     Hide?: DataViewScreenSize[];
+    CollapseOnTablet?: boolean;
     FillHeight?: boolean;
 }
 
