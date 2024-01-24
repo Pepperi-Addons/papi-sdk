@@ -1,0 +1,45 @@
+import { NestedObject, ImageObject } from './base';
+
+export interface Item {
+    ExternalID: string;
+    MainCategoryID: string;
+    InternalID?: number;
+    UUID?: string;
+    AllowDecimal?: boolean;
+    CampaignID?: number;
+    CaseQuantity?: number;
+    CostPrice?: number;
+    CreationDateTime?: string;
+    Dimension1Code?: string;
+    Dimension1Name?: string;
+    Dimension2Code?: string;
+    Dimension2Name?: string;
+    Discount?: number;
+    FutureAvailabilityDate?: string;
+    FutureAvailabilityQuantity?: number;
+    Hidden?: boolean;
+    Image?: ImageObject;
+    Image2?: ImageObject;
+    Image3?: ImageObject;
+    Image4?: ImageObject;
+    Image5?: ImageObject;
+    Image6?: ImageObject;
+    LongDescription?: string;
+    MainCategory?: string;
+    MinimumQuantity?: number;
+    ModificationDateTime?: string;
+    Name?: string;
+    Price?: number;
+    Prop1?: string;
+    Prop2?: string;
+    Prop3?: string;
+    Prop4?: string;
+    Prop5?: string;
+    Prop6?: string;
+    Prop7?: string;
+    Prop8?: string;
+    Prop9?: string;
+    SecondaryPrice?: number;
+    UPC?: string;
+    Inventory?: NestedObject;
+}

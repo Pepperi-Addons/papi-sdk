@@ -10,6 +10,7 @@ export interface UserDefinedTableRow {
 }
 
 export interface UserDefinedTableMetaData {
+    InternalID?: number;
     TableID: string;
     MainKeyType: {
         ID: number;
@@ -19,14 +20,11 @@ export interface UserDefinedTableMetaData {
         ID: number;
         Name: string;
     };
-    CreationDate?: string;
-    ModificationDate?: string;
-    MemoryMode: {
+    CreationDateTime?: string;
+    ModificationDateTime?: string;
+    MemoryMode?: {
         Dormant: boolean;
         Volatile: false;
     };
     Hidden?: boolean;
-    Owner?: {
-        UUID: string;
-    };
 }

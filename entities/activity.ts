@@ -24,7 +24,7 @@ interface Activity {
     Account?: NestedObject;
     Agent?: NestedObject;
     ContactPerson?: NestedObject;
-    Creator: NestedObject;
+    Creator?: NestedObject;
     [key: string]: any;
 }
 
