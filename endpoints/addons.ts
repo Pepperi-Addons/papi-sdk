@@ -29,6 +29,7 @@ import {
 import { PapiClient } from '../papi-client';
 import { ConfigurationsEndpoints } from './configurations';
 import { CrawlerEndpoint, MultiCrawlerEndpoint } from './crawler';
+import { UpdateByQueryResponse } from '../entities/data-index';
 
 class InstalledAddonEnpoint {
     constructor(private service: PapiClient, private addonUUID: string) {}
@@ -417,7 +418,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
             return {
                 uuid: (addonUUID: string) => {
                     return {
-                        resource: async (resourceName: string) => {
+                        resource: async (resourceName: string): Promise<UpdateByQueryResponse> => {
                             return await this.service.post(
                                 `/addons/index/update/${addonUUID}/${resourceName}`,
                                 dslQuery,
@@ -522,7 +523,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         return {
                             uuid: (addonUUID: string) => {
                                 return {
-                                    resource: async (resourceName: string) => {
+                                    resource: async (resourceName: string): Promise<UpdateByQueryResponse> => {
                                         return await this.service.post(
                                             `/addons/shared_index/index/${indexName}/update/${addonUUID}/${resourceName}`,
                                             dslQuery,
