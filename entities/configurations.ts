@@ -61,4 +61,5 @@ export interface ConfigurationObject extends AddonData {
     Version: string; //reference to the version
     Profile: string; //reference to the profile
     Data: DraftData;
+    AddonUUID: string;
 }
