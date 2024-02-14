@@ -40,6 +40,7 @@ export * from './permissions-manager/policy';
 export * from './permissions-manager/profile';
 export * from './crawler/multi-crawler-input';
 export * from './crawler/multi-crawler-output';
+export * from './sync-cache';
 
 // need something here that can be transpiled to js
 // all the other entities are interfaces
