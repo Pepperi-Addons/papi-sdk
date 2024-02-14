@@ -12,17 +12,21 @@ export interface CacheScheme {
 }
 
 export interface SyncPathData {
-    // Stop all reference paths on the first resource that exists in this array
-    // The current user resource is allways appended to this array
-    // if no users resources exist
+    /** Stop all reference paths on the first resource that exists in this array
+     * The current user resource is always appended to this array
+     * if no users resources exist
+     */
     Destinations: {
         Resource: string; // e.g. "accounts"
         Key: string;
     }[];
-    // Return only resources that have one of these resources in one their reference paths
+    /**
+     * Return only resources that have one of these resources in one their reference paths
+     */
     IncludedResources: string[];
 
-    // Return all resources expect these that have one of these resources in one their reference paths
+    /**Return all resources expect these that have one of these resources in one their reference paths
+     */
     ExcludedResources: string[];
 }
 
@@ -44,11 +48,15 @@ export interface CacheDeltaResult {
             };
             Keys: string[];
             HiddenKeys: string[];
-            // what was stores in the scheme when it was upserted
+            /** what was stored in the scheme when it was upserted
+             */
             SyncDataConfiguration: any;
         },
     ];
-    NextPageKey: string; // only if there are additional pages left
+    /**
+     * Only if there are additional pages left
+     */
+    NextPageKey?: string;
 }
 
 export interface CacheChangesInput {
