@@ -32,7 +32,7 @@ import { CrawlerEndpoint, MultiCrawlerEndpoint } from './crawler';
 import { UpdateByQueryResponse } from '../entities/data-index';
 
 class InstalledAddonEnpoint {
-    constructor(private service: PapiClient, private addonUUID: string) { }
+    constructor(private service: PapiClient, private addonUUID: string) {}
     async install(version = ''): Promise<AddonAPIAsyncResult> {
         if (version) return await this.service.post(`/addons/installed_addons/${this.addonUUID}/install/${version}`);
         else return await this.service.post(`/addons/installed_addons/${this.addonUUID}/install`);
@@ -74,7 +74,7 @@ class AddonApiEndpoint {
         sync: true,
         queryString: '',
     };
-    constructor(private service: PapiClient) { }
+    constructor(private service: PapiClient) {}
 
     uuid(uuid: string) {
         this.options.uuid = uuid;
@@ -134,7 +134,7 @@ class BatchEndpoint {
             MaxPageSize?: number;
         },
         private headers: any = undefined,
-    ) { }
+    ) {}
 
     uuid(addonUUID: string) {
         return {
