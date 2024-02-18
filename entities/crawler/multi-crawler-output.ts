@@ -11,7 +11,7 @@ export interface MultiCrawlerOutput {
     /**
      * Combined statistics of the crawlers.
      */
-    TotalStatistics: {
+    Statistics: {
         SourcePagesCount: number;
         SourceObjectsCount: number;
         TargetTimeInSeconds: number;
@@ -22,7 +22,7 @@ export interface MultiCrawlerOutput {
     /**
      * The status of each crawler.
      */
-    CrawlersStatus: {
+    Statuses: {
         [CrawlerName: string]: {
             /**
              * Finished - the crawler finished crawling successfully.
