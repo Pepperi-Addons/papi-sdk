@@ -11,6 +11,7 @@ export interface FlowParam {
 export interface FlowBaseStep {
     Name: string;
     Disabled: boolean;
+    DisabledConditionFilter: any;
 }
 
 export interface FlowGroupStep extends FlowBaseStep {
