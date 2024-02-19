@@ -72,21 +72,67 @@ export interface AddonDataScheme {
     Fields?: {
         [key: string]: SchemeField;
     };
-    DataSourceData?: any;
+    DataSourceData?: {
+        NumberOfShards?: number;
+        IndexName?: string;
+        IndexVersion?: number;
+        ReindexIsOngoing?: boolean;
+        ReindexActionUUID?: string;
+        [key: string]: any;
+    };
     Validator?: string;
     DataSourceURL?: string;
     Lock?: string;
     GenericResource?: boolean;
     AddonUUID?: string;
+    /**
+     * Defines if and how the table will be synced (via {@link https://github.com/Pepperi-Addons/Nebula Nebula}, using {@link  GDB}).
+     */
     SyncData?: {
+        /**
+         * Should the table be synced.
+         *
+         * Default - false.
+         */
         Sync: boolean;
+        /**
+         * Should the records of the table be synced.
+         *
+         * Default - true.
+         */
+        SyncRecords?: boolean;
+        /**
+         * If false, data that is added to the schema from the CPI-side will not be pushed to the server
+         * and other users/devices will not be able to see it.
+         * Default - false.
+         */
+        PushLocalChanges?: boolean;
         GDBQuery?: string;
         SyncFieldLevel?: boolean;
         IndexedField?: string;
+        /**
+         * If present - means that this is a {@link https://en.wikipedia.org/wiki/Many-to-many_(data_model) many-to-many table}.
+         *
+         * No data from this table will be synced, instead it will used to create edges in the graph
+         * (using the two reference fields listed).
+         */
+        Associative?: {
+            FieldID1: string;
+            FieldID2: string;
+        };
+    };
+    Extends?: {
+        AddonUUID: string;
+        Name: string;
+    };
+    SuperTypes?: string[];
+    PurgeTaskID?: string;
+    Internals?: {
+        [key: string]: any;
     };
 }
 
-export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigate';
+export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigate' | 'CPIAddonAPI';
 
 export interface Relation extends AddonData {
     AddonUUID: string;
@@ -134,13 +180,46 @@ export interface AddonFile extends AddonData {
     ];
     Sync?: 'None' | 'Device' | 'DeviceThumbnail' | 'Always';
     URL?: string;
+    /**
+     * DataURI ot a URL link to the file.
+     * Mutually exclusive with "TemporaryFileURLs".
+     */
     URI?: string;
+    /**
+     * @deprecated PresignedURL functionality is deprecated starting at PFS 1.3. Use "URI" or "TemporaryFileURLs" instead.
+     */
     PresignedURL?: string;
     FileVersion?: string;
     Cache?: boolean;
     UploadedBy?: string;
     FileSize?: number;
+    /**
+     * A list of TemporaryFileURLs from which the final file will be constructed.
+     * Mutually exclusive with "URI".
+     */
+    TemporaryFileURLs?: string[];
 }
+
+export interface TemporaryFile {
+    /**
+     * The URL to which the file should be uploaded using PUT method.
+     */
+    PutURL: string;
+
+    /**
+     * The URL from which you can download the file.
+     * Can be passed in the AddonFile.TemporaryFileURLs property.
+     */
+    TemporaryFileURL: string;
+}
+
+export type TemporaryFileRequest = {
+    /**
+     * The file name to be used when saving the file.
+     * If not provided, the file name will be a random UUID.
+     */
+    FileName?: string;
+};
 
 export interface Job extends AddonData {
     Key: string;
@@ -186,4 +265,15 @@ export interface SchemeField {
     };
     Sync?: boolean;
     Unique?: boolean;
+    // Is the field inherited from base schema
+    ExtendedField?: boolean;
+    // should this field be used as a user scope filter (sync)
+    ApplySystemFilter?: boolean;
+    DefaultValue?: any;
+}
+
+export interface SearchData<T> {
+    Objects: T[];
+    Count?: number;
+    NextPageKey?: string;
 }

@@ -11,6 +11,12 @@ import {
     AddonFile,
     ElasticSearchDocument,
     DIMXObject,
+    SearchBody,
+    SearchData,
+    TemporaryFileRequest,
+    TemporaryFile,
+    CrawlerInput,
+    MultiCrawlerInput,
 } from '../entities';
 import {
     DataImportInput,
@@ -21,6 +27,9 @@ import {
     RecursiveImportInput,
 } from '../entities/dimx_inputs';
 import { PapiClient } from '../papi-client';
+import { ConfigurationsEndpoints } from './configurations';
+import { CrawlerEndpoint, MultiCrawlerEndpoint } from './crawler';
+import { UpdateByQueryResponse } from '../entities/data-index';
 
 class InstalledAddonEnpoint {
     constructor(private service: PapiClient, private addonUUID: string) {}
@@ -114,6 +123,27 @@ class AddonVersionEndpoint extends Endpoint<AddonVersion> {
     }
 }
 
+class BatchEndpoint {
+    constructor(
+        private service: PapiClient,
+        private baseURL: string,
+        private body: {
+            Objects: AddonData[];
+            OverwriteObject?: boolean;
+            WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+            MaxPageSize?: number;
+        },
+        private headers: any = undefined,
+    ) {}
+
+    uuid(addonUUID: string) {
+        return {
+            resource: async (resourceName: string): Promise<DIMXObject[]> => {
+                return await this.service.post(`${this.baseURL}/${addonUUID}/${resourceName}`, this.body, this.headers);
+            },
+        };
+    }
+}
 class TableEndpoint extends Endpoint<AddonData> {
     private addonUUID: string;
     private tableName: string;
@@ -122,6 +152,16 @@ class TableEndpoint extends Endpoint<AddonData> {
         super(service, `/addons/data/${addonUUID}/${tableName}`);
         this.addonUUID = addonUUID;
         this.tableName = tableName;
+    }
+
+    async upsert(object: AddonData, waitForIndex = false): Promise<AddonData> {
+        let headers = undefined;
+        if (waitForIndex) {
+            headers = {
+                'x-pepperi-await-indexing': true,
+            };
+        }
+        return this.service.post(this.getEndpointURL(), object, headers);
     }
 
     key(keyName: string) {
@@ -148,6 +188,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
     installedAddons = new InstalledAddonsEnpoint(this.service);
     versions = new AddonVersionEndpoint(this.service);
     api = new AddonApiEndpoint(this.service);
+    configurations = new ConfigurationsEndpoints(this.service, '/addons/configurations');
     // data = new AddonDataEndpoint(this.service);
 
     data = {
@@ -175,6 +216,17 @@ export class AddonEndpoint extends Endpoint<Addon> {
                     return new TableEndpoint(this.service, addonUUID, tableName);
                 },
             };
+        },
+        batch: (
+            body: {
+                Objects: AddonData[];
+                OverwriteObject?: boolean;
+                WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+                MaxPageSize?: number;
+            },
+            headers: any = undefined,
+        ) => {
+            return new BatchEndpoint(this.service, '/addons/data/batch', body, headers);
         },
         relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
         import: {
@@ -269,6 +321,22 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 };
             },
         },
+        search: {
+            uuid: (addonUUID: string) => {
+                return {
+                    table: (tableName: string) => {
+                        return {
+                            post: async (searchBody: SearchBody): Promise<SearchData<AddonData>> => {
+                                return await this.service.post(
+                                    `/addons/data/search/${addonUUID}/${tableName}`,
+                                    searchBody,
+                                );
+                            },
+                        };
+                    },
+                };
+            },
+        },
     };
 
     index = {
@@ -308,16 +376,15 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 },
             };
         },
-        batch: (body: ElasticSearchDocument[]) => {
-            return {
-                uuid: (addonUUID: string) => {
-                    return {
-                        resource: async (resourceName: string) => {
-                            return await this.service.post(`/addons/index/batch/${addonUUID}/${resourceName}`, body);
-                        },
-                    };
-                },
-            };
+        batch: (
+            body: {
+                Objects: ElasticSearchDocument[];
+                OverwriteObject?: boolean;
+                WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+            },
+            headers: any = undefined,
+        ) => {
+            return new BatchEndpoint(this.service, '/addons/index/batch', body, headers);
         },
         search: (dslQuery: any) => {
             return {
@@ -351,7 +418,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
             return {
                 uuid: (addonUUID: string) => {
                     return {
-                        resource: async (resourceName: string) => {
+                        resource: async (resourceName: string): Promise<UpdateByQueryResponse> => {
                             return await this.service.post(
                                 `/addons/index/update/${addonUUID}/${resourceName}`,
                                 dslQuery,
@@ -408,19 +475,21 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             },
                         };
                     },
-                    batch: (body: ElasticSearchDocument[]) => {
-                        return {
-                            uuid: (addonUUID: string) => {
-                                return {
-                                    resource: async (resourceName: string) => {
-                                        return await this.service.post(
-                                            `/addons/shared_index/index/${indexName}/batch/${addonUUID}/${resourceName}`,
-                                            body,
-                                        );
-                                    },
-                                };
-                            },
-                        };
+                    batch: (
+                        body: {
+                            Objects: ElasticSearchDocument[];
+                            OverwriteObject?: boolean;
+                            WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+                            StaleModificationFieldID?: string;
+                        },
+                        headers: any = undefined,
+                    ) => {
+                        return new BatchEndpoint(
+                            this.service,
+                            `/addons/shared_index/index/${indexName}/batch`,
+                            body,
+                            headers,
+                        );
                     },
                     search: (dslQuery: any) => {
                         return {
@@ -454,7 +523,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         return {
                             uuid: (addonUUID: string) => {
                                 return {
-                                    resource: async (resourceName: string) => {
+                                    resource: async (resourceName: string): Promise<UpdateByQueryResponse> => {
                                         return await this.service.post(
                                             `/addons/shared_index/index/${indexName}/update/${addonUUID}/${resourceName}`,
                                             dslQuery,
@@ -495,6 +564,9 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 },
             };
         },
+        temporaryFile: async (temporaryFileRequest?: TemporaryFileRequest): Promise<TemporaryFile> => {
+            return await this.service.post(`/addons/pfs/temporary_file`, temporaryFileRequest ?? {});
+        },
     };
 
     jobs = {
@@ -510,6 +582,17 @@ export class AddonEndpoint extends Endpoint<Addon> {
             const query = Endpoint.encodeQueryParams(params);
             url = query ? url + '?' + query : url;
             return await this.service.get(url);
+        },
+    };
+
+    crawler = {
+        crawl: async (input: CrawlerInput, numberOfRetries = 1) => {
+            const crawler = new CrawlerEndpoint(this.service, '/addons/crawler');
+            return await crawler.crawl(input, numberOfRetries);
+        },
+        multi_crawl: async (input: MultiCrawlerInput, numberOfRetries = 1) => {
+            const crawler = new MultiCrawlerEndpoint(this.service, '/addons/crawler');
+            return await crawler.multi_crawl(input, numberOfRetries);
         },
     };
 }

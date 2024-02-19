@@ -11,6 +11,7 @@ import {
     NotificationEndpoint,
     SchemesEndpoint,
     GenericResourceEndpoint,
+    FlowsEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -31,6 +32,8 @@ import {
     Page,
     DataView,
     AddonData,
+    PermissionsPolicy,
+    PermissionsProfile,
 } from './entities';
 
 import { papi_fetch, getPerformance } from './papi-module';
@@ -44,6 +47,7 @@ interface PapiClientOptions {
     suppressLogging?: boolean;
     addonSecretKey?: string;
     actionUUID?: string;
+    codeJobUUID?: string;
 }
 
 export class PapiClient {
@@ -92,6 +96,9 @@ export class PapiClient {
             return new GenericResourceEndpoint(this, `/resources/${resourceName}`);
         },
     };
+    userDefinedFlows = new FlowsEndpoint(this);
+    policies = new Endpoint<PermissionsPolicy>(this, '/policies');
+    policyProfiles = new Endpoint<PermissionsProfile>(this, '/policy_profiles');
 
     constructor(private options: PapiClientOptions) {}
 
@@ -135,6 +142,10 @@ export class PapiClient {
 
         if (this.options.actionUUID) {
             options.headers['X-Pepperi-ActionID'] = this.options.actionUUID;
+        }
+
+        if (this.options.codeJobUUID) {
+            options.headers['X-Pepperi-CodeJobID'] = this.options.codeJobUUID;
         }
         const performance = getPerformance();
         const t0 = performance?.now();
