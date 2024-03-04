@@ -381,6 +381,8 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 Objects: ElasticSearchDocument[];
                 OverwriteObject?: boolean;
                 WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
+                StaleModificationFieldID?: string;
+                StaleHandlingStrategy?: 'GreaterThanEqual' | 'GreaterThan';
             },
             headers: any = undefined,
         ) => {
@@ -481,6 +483,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             OverwriteObject?: boolean;
                             WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
                             StaleModificationFieldID?: string;
+                            StaleHandlingStrategy?: 'GreaterThanEqual' | 'GreaterThan';
                         },
                         headers: any = undefined,
                     ) => {
