@@ -29,7 +29,7 @@ import {
 import { PapiClient } from '../papi-client';
 import { ConfigurationsEndpoints } from './configurations';
 import { CrawlerEndpoint, MultiCrawlerEndpoint } from './crawler';
-import { UpdateByQueryResponse } from '../entities/data-index';
+import { UpdateByQueryResponse, DataIndexBatchRequestBody } from '../entities/data-index';
 
 class InstalledAddonEnpoint {
     constructor(private service: PapiClient, private addonUUID: string) {}
@@ -376,14 +376,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 },
             };
         },
-        batch: (
-            body: {
-                Objects: ElasticSearchDocument[];
-                OverwriteObject?: boolean;
-                WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
-            },
-            headers: any = undefined,
-        ) => {
+        batch: (body: DataIndexBatchRequestBody, headers: any = undefined) => {
             return new BatchEndpoint(this.service, '/addons/index/batch', body, headers);
         },
         search: (dslQuery: any) => {
@@ -475,15 +468,7 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             },
                         };
                     },
-                    batch: (
-                        body: {
-                            Objects: ElasticSearchDocument[];
-                            OverwriteObject?: boolean;
-                            WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
-                            StaleModificationFieldID?: string;
-                        },
-                        headers: any = undefined,
-                    ) => {
+                    batch: (body: DataIndexBatchRequestBody, headers: any = undefined) => {
                         return new BatchEndpoint(
                             this.service,
                             `/addons/shared_index/index/${indexName}/batch`,
