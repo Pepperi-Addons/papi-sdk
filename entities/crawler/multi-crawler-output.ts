@@ -1,3 +1,5 @@
+import { CrawlerStatistics } from './crawler-output';
+
 export interface MultiCrawlerOutput {
     /**
      * All crawlers outputs.
@@ -11,13 +13,7 @@ export interface MultiCrawlerOutput {
     /**
      * Combined statistics of the crawlers.
      */
-    Statistics: {
-        SourcePagesCount: number;
-        SourceObjectsCount: number;
-        TargetTimeInSeconds: number;
-        SourceTimeInSeconds: number;
-        SourceSizeInKB: number;
-    };
+    Statistics: CrawlerStatistics;
 
     /**
      * The status of each crawler.
