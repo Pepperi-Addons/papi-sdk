@@ -1,5 +1,5 @@
 import { CrawlerInput, CrawlerTargetOutputBlueprint } from './crawler-input';
-import { PagerCrawlerInput } from './pager-input';
+import { PagerCrawlerInput } from './pager';
 
 export interface MultiCrawlerInput {
     /**
