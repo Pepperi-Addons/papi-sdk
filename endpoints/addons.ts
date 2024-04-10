@@ -17,6 +17,8 @@ import {
     TemporaryFile,
     CrawlerInput,
     MultiCrawlerInput,
+    DistinctValuesBody,
+    DistinctValuesResponse,
 } from '../entities';
 import {
     DataImportInput,
@@ -144,6 +146,24 @@ class BatchEndpoint {
         };
     }
 }
+
+class DistinctValuesEndpoint {
+    constructor(
+        private service: PapiClient,
+        private baseURL: string,
+        private body: DistinctValuesBody,
+        private headers: any = undefined,
+    ) {}
+
+    uuid(addonUUID: string) {
+        return {
+            resource: async (resourceName: string): Promise<DistinctValuesResponse> => {
+                return await this.service.post(`${this.baseURL}/${addonUUID}/${resourceName}`, this.body, this.headers);
+            },
+        };
+    }
+}
+
 class TableEndpoint extends Endpoint<AddonData> {
     private addonUUID: string;
     private tableName: string;
@@ -227,6 +247,9 @@ export class AddonEndpoint extends Endpoint<Addon> {
             headers: any = undefined,
         ) => {
             return new BatchEndpoint(this.service, '/addons/data/batch', body, headers);
+        },
+        distinct_values: (body: DistinctValuesBody, headers: any = undefined) => {
+            return new DistinctValuesEndpoint(this.service, '/addons/data/distinct_values', body, headers);
         },
         relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
         import: {
@@ -379,6 +402,9 @@ export class AddonEndpoint extends Endpoint<Addon> {
         batch: (body: DataIndexBatchRequestBody, headers: any = undefined) => {
             return new BatchEndpoint(this.service, '/addons/index/batch', body, headers);
         },
+        distinct_values: (body: DistinctValuesBody, headers: any = undefined) => {
+            return new DistinctValuesEndpoint(this.service, '/addons/index/distinct_values', body, headers);
+        },
         search: (dslQuery: any) => {
             return {
                 uuid: (addonUUID: string) => {
@@ -472,6 +498,14 @@ export class AddonEndpoint extends Endpoint<Addon> {
                         return new BatchEndpoint(
                             this.service,
                             `/addons/shared_index/index/${indexName}/batch`,
+                            body,
+                            headers,
+                        );
+                    },
+                    distinct_values: (body: DistinctValuesBody, headers: any = undefined) => {
+                        return new DistinctValuesEndpoint(
+                            this.service,
+                            `/addons/shared_index/index/${indexName}/distinct_values`,
                             body,
                             headers,
                         );

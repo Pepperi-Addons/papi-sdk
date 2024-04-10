@@ -41,6 +41,7 @@ export * from './permissions-manager/profile';
 export * from './crawler/multi-crawler-input';
 export * from './crawler/multi-crawler-output';
 export * from './sync-cache';
+export * from './distinct-values';
 
 // need something here that can be transpiled to js
 // all the other entities are interfaces
