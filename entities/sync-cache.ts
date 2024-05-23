@@ -40,23 +40,23 @@ export interface CacheDeltaInput {
 }
 
 export interface CacheDeltaResult {
-    Resources: [
-        {
-            Scheme: {
-                AddonUUID: string;
-                Name: string;
-            };
-            Keys: string[];
-            HiddenKeys: string[];
-            /** what was stored in the scheme when it was upserted
-             */
-            SyncDataConfiguration: any;
-        },
-    ];
+    Resources: {
+        Scheme: {
+            AddonUUID: string;
+            Name: string;
+        };
+        Keys: string[];
+        HiddenKeys: string[];
+        /**
+         * What was stored in the scheme when it was upserted.
+         */
+        SyncDataConfiguration?: any;
+    }[];
     /**
-     * Only if there are additional pages left
+     * Only if there are additional pages left.
      */
     NextPageKey?: string;
+    LastSyncDateTime?: string;
 }
 
 export interface CacheChangesInput {
