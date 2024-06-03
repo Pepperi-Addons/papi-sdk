@@ -41,7 +41,7 @@ export interface CacheDeltaInput {
 
 export interface CacheDeltaResult {
     Resources: {
-        Scheme: {
+        Schema: {
             AddonUUID: string;
             Name: string;
         };
