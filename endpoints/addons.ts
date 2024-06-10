@@ -19,6 +19,7 @@ import {
     MultiCrawlerInput,
     DistinctValuesBody,
     DistinctValuesResponse,
+    FilterObject,
 } from '../entities';
 import {
     DataImportInput,
@@ -612,6 +613,41 @@ export class AddonEndpoint extends Endpoint<Addon> {
         multi_crawl: async (input: MultiCrawlerInput, numberOfRetries = 1) => {
             const crawler = new MultiCrawlerEndpoint(this.service, '/addons/crawler');
             return await crawler.multi_crawl(input, numberOfRetries);
+        },
+    };
+
+    febula = {
+        profile_filters: {
+            find: async (params: FindOptions): Promise<FilterObject[]> => {
+                let url = '/addons/api/cebb251f-1c80-4d80-b62c-442e48e678e8/api/profile_filters';
+                const query = Endpoint.encodeQueryParams(params);
+                url = query ? url + '?' + query : url;
+                return await this.service.get(url);
+            },
+            upsert: async (body: FilterObject): Promise<FilterObject> => {
+                const url = '/addons/api/cebb251f-1c80-4d80-b62c-442e48e678e8/api/profile_filters';
+                return await this.service.post(url, body);
+            },
+            delete: async (keys: string[]): Promise<FilterObject[]> => {
+                const url = '/addons/api/cebb251f-1c80-4d80-b62c-442e48e678e8/api/profile_filters_delete';
+                return await this.service.post(url, { Keys: keys });
+            },
+        },
+        filters: {
+            find: async (params: FindOptions): Promise<FilterObject[]> => {
+                let url = '/addons/api/cebb251f-1c80-4d80-b62c-442e48e678e8/api/filters';
+                const query = Endpoint.encodeQueryParams(params);
+                url = query ? url + '?' + query : url;
+                return await this.service.get(url);
+            },
+            upsert: async (body: FilterObject): Promise<FilterObject> => {
+                const url = '/addons/api/cebb251f-1c80-4d80-b62c-442e48e678e8/api/filters';
+                return await this.service.post(url, body);
+            },
+            delete: async (keys: string[]): Promise<FilterObject[]> => {
+                const url = '/addons/api/cebb251f-1c80-4d80-b62c-442e48e678e8/api/filters_delete';
+                return await this.service.post(url, { Keys: keys });
+            },
         },
     };
 }
