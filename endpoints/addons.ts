@@ -19,6 +19,8 @@ import {
     MultiCrawlerInput,
     DistinctValuesBody,
     DistinctValuesResponse,
+    MultiGetInput,
+    MultiGetOutput,
     FilterObject,
 } from '../entities';
 import {
@@ -360,6 +362,9 @@ export class AddonEndpoint extends Endpoint<Addon> {
                     },
                 };
             },
+        },
+        multi_get: async (input: MultiGetInput): Promise<MultiGetOutput> => {
+            return await this.service.post(`/addons/data/multi_get`, input);
         },
     };
 
