@@ -4,6 +4,7 @@ export * from './item';
 export * from './page';
 export * from './types';
 export * from './image';
+export * from './febula';
 export * from './addons';
 export * from './export';
 export * from './survey';

@@ -21,6 +21,7 @@ import {
     DistinctValuesResponse,
     MultiGetInput,
     MultiGetOutput,
+    FilterObject,
 } from '../entities';
 import {
     DataImportInput,
@@ -617,6 +618,33 @@ export class AddonEndpoint extends Endpoint<Addon> {
         multi_crawl: async (input: MultiCrawlerInput, numberOfRetries = 1) => {
             const crawler = new MultiCrawlerEndpoint(this.service, '/addons/crawler');
             return await crawler.multi_crawl(input, numberOfRetries);
+        },
+    };
+
+    febula = {
+        profile_filters: {
+            find: async (params: FindOptions): Promise<FilterObject[]> => {
+                let url = '/addons/febula/profile_filters';
+                const query = Endpoint.encodeQueryParams(params);
+                url = query ? url + '?' + query : url;
+                return await this.service.get(url);
+            },
+            upsert: async (body: FilterObject): Promise<FilterObject> => {
+                const url = '/addons/febula/profile_filters';
+                return await this.service.post(url, body);
+            },
+        },
+        filters: {
+            find: async (params: FindOptions): Promise<FilterObject[]> => {
+                let url = '/addons/febula/filters';
+                const query = Endpoint.encodeQueryParams(params);
+                url = query ? url + '?' + query : url;
+                return await this.service.get(url);
+            },
+            upsert: async (body: FilterObject): Promise<FilterObject> => {
+                const url = '/addons/febula/filters';
+                return await this.service.post(url, body);
+            },
         },
     };
 }
