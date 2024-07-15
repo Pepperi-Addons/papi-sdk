@@ -12,6 +12,7 @@ export * from './account';
 export * from './profile';
 export * from './catalog';
 export * from './contact';
+export * from './nebulus';
 export * from './codeJobs';
 export * from './activity';
 export * from './multi_get';
