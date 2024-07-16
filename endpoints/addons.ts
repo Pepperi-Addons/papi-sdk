@@ -22,6 +22,7 @@ import {
     MultiGetInput,
     MultiGetOutput,
     FilterObject,
+    NebulusRebuildInput,
 } from '../entities';
 import {
     DataImportInput,
@@ -645,6 +646,13 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 const url = '/addons/febula/filters';
                 return await this.service.post(url, body);
             },
+        },
+    };
+
+    nebulus = {
+        rebuild: async (param: NebulusRebuildInput): Promise<AddonAPIAsyncResult> => {
+            const url = '/addons/nebulus/rebuild';
+            return await this.service.post(url, param);
         },
     };
 }
