@@ -125,6 +125,12 @@ export interface AddonDataScheme {
          */
         SyncRules?: {
             /**
+             * Was there a change to the rules.
+             *
+             * Reset after rebuild.
+             */
+            Dirty: boolean;
+            /**
              * The profile that the rules apply to.
              */
             ProfileKey: string;
