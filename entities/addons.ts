@@ -125,9 +125,9 @@ export interface AddonDataScheme {
          */
         SyncRules?: {
             /**
-             * The profile ID that the rules apply to.
+             * The profile that the rules apply to.
              */
-            ProfileID: string;
+            ProfileKey: string;
             /**
              * The sync rules array.
              * If empty - the entire table will be synced.
