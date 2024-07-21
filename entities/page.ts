@@ -85,6 +85,12 @@ export interface PageSection {
     Hide?: DataViewScreenSize[];
     CollapseOnTablet?: boolean;
     FillHeight?: boolean;
+    Padding?: PepPaddingSettings;
+}
+
+export interface PepPaddingSettings {
+    isUniform: boolean;
+    paddingValue: string;
 }
 
 export interface PageSectionColumn {
