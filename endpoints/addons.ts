@@ -17,6 +17,12 @@ import {
     TemporaryFile,
     CrawlerInput,
     MultiCrawlerInput,
+    DistinctValuesBody,
+    DistinctValuesResponse,
+    MultiGetInput,
+    MultiGetOutput,
+    FilterObject,
+    NebulusRebuildInput,
 } from '../entities';
 import {
     DataImportInput,
@@ -29,7 +35,7 @@ import {
 import { PapiClient } from '../papi-client';
 import { ConfigurationsEndpoints } from './configurations';
 import { CrawlerEndpoint, MultiCrawlerEndpoint } from './crawler';
-import { UpdateByQueryResponse } from '../entities/data-index';
+import { UpdateByQueryResponse, DataIndexBatchRequestBody } from '../entities/data-index';
 
 class InstalledAddonEnpoint {
     constructor(private service: PapiClient, private addonUUID: string) {}
@@ -144,6 +150,24 @@ class BatchEndpoint {
         };
     }
 }
+
+class DistinctValuesEndpoint {
+    constructor(
+        private service: PapiClient,
+        private baseURL: string,
+        private body: DistinctValuesBody,
+        private headers: any = undefined,
+    ) {}
+
+    uuid(addonUUID: string) {
+        return {
+            resource: async (resourceName: string): Promise<DistinctValuesResponse> => {
+                return await this.service.post(`${this.baseURL}/${addonUUID}/${resourceName}`, this.body, this.headers);
+            },
+        };
+    }
+}
+
 class TableEndpoint extends Endpoint<AddonData> {
     private addonUUID: string;
     private tableName: string;
@@ -227,6 +251,9 @@ export class AddonEndpoint extends Endpoint<Addon> {
             headers: any = undefined,
         ) => {
             return new BatchEndpoint(this.service, '/addons/data/batch', body, headers);
+        },
+        distinct_values: (body: DistinctValuesBody, headers: any = undefined) => {
+            return new DistinctValuesEndpoint(this.service, '/addons/data/distinct_values', body, headers);
         },
         relations: new Endpoint<Relation>(this.service, '/addons/data/relations'),
         import: {
@@ -337,6 +364,9 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 };
             },
         },
+        multi_get: async (input: MultiGetInput): Promise<MultiGetOutput> => {
+            return await this.service.post(`/addons/data/multi_get`, input);
+        },
     };
 
     index = {
@@ -376,15 +406,11 @@ export class AddonEndpoint extends Endpoint<Addon> {
                 },
             };
         },
-        batch: (
-            body: {
-                Objects: ElasticSearchDocument[];
-                OverwriteObject?: boolean;
-                WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
-            },
-            headers: any = undefined,
-        ) => {
+        batch: (body: DataIndexBatchRequestBody, headers: any = undefined) => {
             return new BatchEndpoint(this.service, '/addons/index/batch', body, headers);
+        },
+        distinct_values: (body: DistinctValuesBody, headers: any = undefined) => {
+            return new DistinctValuesEndpoint(this.service, '/addons/index/distinct_values', body, headers);
         },
         search: (dslQuery: any) => {
             return {
@@ -475,18 +501,18 @@ export class AddonEndpoint extends Endpoint<Addon> {
                             },
                         };
                     },
-                    batch: (
-                        body: {
-                            Objects: ElasticSearchDocument[];
-                            OverwriteObject?: boolean;
-                            WriteMode?: 'Merge' | 'Overwrite' | 'Insert';
-                            StaleModificationFieldID?: string;
-                        },
-                        headers: any = undefined,
-                    ) => {
+                    batch: (body: DataIndexBatchRequestBody, headers: any = undefined) => {
                         return new BatchEndpoint(
                             this.service,
                             `/addons/shared_index/index/${indexName}/batch`,
+                            body,
+                            headers,
+                        );
+                    },
+                    distinct_values: (body: DistinctValuesBody, headers: any = undefined) => {
+                        return new DistinctValuesEndpoint(
+                            this.service,
+                            `/addons/shared_index/index/${indexName}/distinct_values`,
                             body,
                             headers,
                         );
@@ -593,6 +619,40 @@ export class AddonEndpoint extends Endpoint<Addon> {
         multi_crawl: async (input: MultiCrawlerInput, numberOfRetries = 1) => {
             const crawler = new MultiCrawlerEndpoint(this.service, '/addons/crawler');
             return await crawler.multi_crawl(input, numberOfRetries);
+        },
+    };
+
+    febula = {
+        profile_filters: {
+            find: async (params: FindOptions): Promise<FilterObject[]> => {
+                let url = '/addons/febula/profile_filters';
+                const query = Endpoint.encodeQueryParams(params);
+                url = query ? url + '?' + query : url;
+                return await this.service.get(url);
+            },
+            upsert: async (body: FilterObject): Promise<FilterObject> => {
+                const url = '/addons/febula/profile_filters';
+                return await this.service.post(url, body);
+            },
+        },
+        filters: {
+            find: async (params: FindOptions): Promise<FilterObject[]> => {
+                let url = '/addons/febula/filters';
+                const query = Endpoint.encodeQueryParams(params);
+                url = query ? url + '?' + query : url;
+                return await this.service.get(url);
+            },
+            upsert: async (body: FilterObject): Promise<FilterObject> => {
+                const url = '/addons/febula/filters';
+                return await this.service.post(url, body);
+            },
+        },
+    };
+
+    nebulus = {
+        rebuild: async (param: NebulusRebuildInput): Promise<AddonAPIAsyncResult> => {
+            const url = '/addons/nebulus/rebuild';
+            return await this.service.post(url, param);
         },
     };
 }

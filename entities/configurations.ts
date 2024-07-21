@@ -63,3 +63,12 @@ export interface ConfigurationObject extends AddonData {
     Data: DraftData;
     AddonUUID: string;
 }
+
+export interface DraftOf<T extends DraftData> extends Draft {
+    Data: Partial<T>;
+    Profiles: { Key: string; Data: Partial<T> }[];
+}
+
+export interface ConfigurationObjectOf<T extends DraftData> extends ConfigurationObject {
+    Data: T;
+}

@@ -3,6 +3,11 @@
  */
 export interface CrawlerInput {
     /**
+     * The type of the crawl, default: Crawler.
+     */
+    Type?: 'Crawler';
+
+    /**
      * The name of the crawler action.
      */
     Name: string;

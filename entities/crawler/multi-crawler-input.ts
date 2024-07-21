@@ -1,4 +1,5 @@
 import { CrawlerInput, CrawlerTargetOutputBlueprint } from './crawler-input';
+import { PagerCrawlerInput } from './pager';
 
 export interface MultiCrawlerInput {
     /**
@@ -9,7 +10,7 @@ export interface MultiCrawlerInput {
     /**
      * Array of crawlers to run.
      */
-    Crawlers: CrawlerInput[];
+    Crawlers: (CrawlerInput | PagerCrawlerInput)[];
 
     /**
      * Default values for optional crawler parameters.
@@ -23,14 +24,14 @@ export interface MultiCrawlerInput {
     };
 
     /**
-     * Maximum number of parallel calls to the targets.
+     * Maximum number of parallel calls to the sources.
      *
      * Default: 5, Max: 10.
      */
     MaxSourcesConcurrency?: number;
 
     /**
-     * Should the multi-crawl be aborted if one of the crawlers fails?
+     * Maximum number of parallel calls to the targets.
      *
      * Default: false.
      */

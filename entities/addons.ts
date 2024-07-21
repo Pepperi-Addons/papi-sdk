@@ -120,6 +120,33 @@ export interface AddonDataScheme {
             FieldID1: string;
             FieldID2: string;
         };
+        /**
+         * An array of rules per profile that defines how the table should be synced.
+         */
+        SyncRules?: {
+            /**
+             * The profile that the rules apply to.
+             */
+            ProfileKey: string;
+            /**
+             * The sync rules array.
+             * If empty - the entire table will be synced.
+             */
+            Rules: {
+                /**
+                 * The name of the source table (points to current table).
+                 */
+                SourceTable: string;
+                /**
+                 * The field ID in the source table that points to the current table.
+                 */
+                SourceFieldID: string;
+                /**
+                 * The field ID in the current table that connects SourceTable to it.
+                 */
+                TargetFieldID: string;
+            }[];
+        }[];
     };
     Extends?: {
         AddonUUID: string;

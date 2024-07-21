@@ -4,6 +4,7 @@ export * from './item';
 export * from './page';
 export * from './types';
 export * from './image';
+export * from './febula';
 export * from './addons';
 export * from './export';
 export * from './survey';
@@ -11,10 +12,13 @@ export * from './account';
 export * from './profile';
 export * from './catalog';
 export * from './contact';
+export * from './nebulus';
 export * from './codeJobs';
 export * from './activity';
+export * from './multi_get';
 export * from './data-view';
 export * from './ui-control';
+export * from './sync-cache';
 export * from './audit-logs';
 export * from './maintenance';
 export * from './dimx_inputs';
@@ -27,6 +31,7 @@ export * from './pepperi-object';
 export * from './configurations';
 export * from './crawler/source';
 export * from './crawler/target';
+export * from './distinct-values';
 export * from './api-field-object';
 export * from './generic-resource';
 export * from './transaction-lines';
@@ -40,8 +45,6 @@ export * from './permissions-manager/policy';
 export * from './permissions-manager/profile';
 export * from './crawler/multi-crawler-input';
 export * from './crawler/multi-crawler-output';
-export * from './sync-cache';
-
 // need something here that can be transpiled to js
 // all the other entities are interfaces
 export class Entities {}
