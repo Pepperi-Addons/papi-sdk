@@ -89,8 +89,8 @@ export interface PageSection {
 }
 
 export interface PepPaddingSettings {
-    isUniform: boolean;
-    paddingValue: string;
+    IsUniform: boolean;
+    PaddingValue: string;
 }
 
 export interface PageSectionColumn {
