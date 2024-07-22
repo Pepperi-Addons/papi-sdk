@@ -125,12 +125,6 @@ export interface AddonDataScheme {
          */
         SyncRules?: {
             /**
-             * Was there a change to the rules.
-             *
-             * Reset after rebuild.
-             */
-            Dirty: boolean;
-            /**
              * The profile that the rules apply to.
              */
             ProfileKey: string;
@@ -153,6 +147,12 @@ export interface AddonDataScheme {
                 TargetFieldID: string;
             }[];
         }[];
+        /**
+         * Was there a change to the sync configuration.
+         *
+         * Reset after applying changes.
+         */
+        Dirty: boolean;
     };
     Extends?: {
         AddonUUID: string;
