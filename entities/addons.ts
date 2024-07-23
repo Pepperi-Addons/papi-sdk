@@ -148,6 +148,12 @@ export interface AddonDataScheme {
             }[];
         }[];
     };
+    /**
+     * Was there a change to the sync configuration.
+     *
+     * Reset after applying changes.
+     */
+    SyncDataDirty?: boolean;
     Extends?: {
         AddonUUID: string;
         Name: string;
