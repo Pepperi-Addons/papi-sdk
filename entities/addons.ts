@@ -147,13 +147,13 @@ export interface AddonDataScheme {
                 TargetFieldID: string;
             }[];
         }[];
-        /**
-         * Was there a change to the sync configuration.
-         *
-         * Reset after applying changes.
-         */
-        Dirty: boolean;
     };
+    /**
+     * Was there a change to the sync configuration.
+     *
+     * Reset after applying changes.
+     */
+    SyncDataDirty?: boolean;
     Extends?: {
         AddonUUID: string;
         Name: string;
