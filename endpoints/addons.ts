@@ -612,13 +612,13 @@ export class AddonEndpoint extends Endpoint<Addon> {
     };
 
     crawler = {
-        crawl: async (input: CrawlerInput, numberOfRetries = 1) => {
+        crawl: async (input: CrawlerInput, numberOfRetries = 1, callbackEncodedUrl?: string) => {
             const crawler = new CrawlerEndpoint(this.service, '/addons/crawler');
-            return await crawler.crawl(input, numberOfRetries);
+            return await crawler.crawl(input, numberOfRetries, callbackEncodedUrl);
         },
-        multi_crawl: async (input: MultiCrawlerInput, numberOfRetries = 1) => {
+        multi_crawl: async (input: MultiCrawlerInput, numberOfRetries = 1, callbackEncodedUrl?: string) => {
             const crawler = new MultiCrawlerEndpoint(this.service, '/addons/crawler');
-            return await crawler.multi_crawl(input, numberOfRetries);
+            return await crawler.multi_crawl(input, numberOfRetries, callbackEncodedUrl);
         },
     };
 
@@ -650,8 +650,10 @@ export class AddonEndpoint extends Endpoint<Addon> {
     };
 
     nebulus = {
-        rebuild: async (param: NebulusRebuildInput): Promise<AddonAPIAsyncResult> => {
-            const url = '/addons/nebulus/rebuild';
+        rebuild: async (param: NebulusRebuildInput, callbackEncodedUrl?: string): Promise<AddonAPIAsyncResult> => {
+            const url = `/addons/nebulus/rebuild${
+                callbackEncodedUrl ? `?callback_encoded_url=${callbackEncodedUrl}` : ''
+            }`;
             return await this.service.post(url, param);
         },
     };
