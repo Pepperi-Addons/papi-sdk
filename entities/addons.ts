@@ -85,69 +85,8 @@ export interface AddonDataScheme {
     Lock?: string;
     GenericResource?: boolean;
     AddonUUID?: string;
-    /**
-     * Defines if and how the table will be synced (via {@link https://github.com/Pepperi-Addons/Nebula Nebula}, using {@link  GDB}).
-     */
-    SyncData?: {
-        /**
-         * Should the table be synced.
-         *
-         * Default - false.
-         */
-        Sync: boolean;
-        /**
-         * Should the records of the table be synced.
-         *
-         * Default - true.
-         */
-        SyncRecords?: boolean;
-        /**
-         * If false, data that is added to the schema from the CPI-side will not be pushed to the server
-         * and other users/devices will not be able to see it.
-         * Default - false.
-         */
-        PushLocalChanges?: boolean;
-        GDBQuery?: string;
-        SyncFieldLevel?: boolean;
-        IndexedField?: string;
-        /**
-         * If present - means that this is a {@link https://en.wikipedia.org/wiki/Many-to-many_(data_model) many-to-many table}.
-         *
-         * No data from this table will be synced, instead it will used to create edges in the graph
-         * (using the two reference fields listed).
-         */
-        Associative?: {
-            FieldID1: string;
-            FieldID2: string;
-        };
-        /**
-         * An array of rules per profile that defines how the table should be synced.
-         */
-        SyncRules?: {
-            /**
-             * The profile that the rules apply to.
-             */
-            ProfileKey: string;
-            /**
-             * The sync rules array.
-             * If empty - the entire table will be synced.
-             */
-            Rules: {
-                /**
-                 * The name of the source table (points to current table).
-                 */
-                SourceTable: string;
-                /**
-                 * The field ID in the source table that points to the current table.
-                 */
-                SourceFieldID: string;
-                /**
-                 * The field ID in the current table that connects SourceTable to it.
-                 */
-                TargetFieldID: string;
-            }[];
-        }[];
-    };
+
+    SyncData?: SchemeSyncData;
     /**
      * Was there a change to the sync configuration.
      *
@@ -163,6 +102,74 @@ export interface AddonDataScheme {
     Internals?: {
         [key: string]: any;
     };
+}
+
+/**
+ * Defines if and how the table will be synced (via {@link https://github.com/Pepperi-Addons/Nebula Nebula}, using {@link  GDB}).
+ */
+export interface SchemeSyncData {
+    /**
+     * Should the table be synced.
+     *
+     * Default - false.
+     */
+    Sync: boolean;
+    /**
+     * Should the records of the table be synced.
+     *
+     * Default - true.
+     */
+    SyncRecords?: boolean;
+    /**
+     * If false, data that is added to the schema from the CPI-side will not be pushed to the server
+     * and other users/devices will not be able to see it.
+     * Default - false.
+     */
+    PushLocalChanges?: boolean;
+    GDBQuery?: string;
+    SyncFieldLevel?: boolean;
+    IndexedField?: string;
+    /**
+     * If present - means that this is a {@link https://en.wikipedia.org/wiki/Many-to-many_(data_model) many-to-many table}.
+     *
+     * No data from this table will be synced, instead it will used to create edges in the graph
+     * (using the two reference fields listed).
+     */
+    Associative?: {
+        FieldID1: string;
+        FieldID2: string;
+    };
+    SyncRules?: SchemeSyncProfileRules[];
+}
+
+/**
+ * An array of rules per profile that defines how the table should be synced.
+ */
+export interface SchemeSyncProfileRules {
+    /**
+     * The profile that the rules apply to.
+     */
+    ProfileKey: string;
+    /**
+     * The sync rules array.
+     * If empty - the entire table will be synced.
+     */
+    Rules: SchemesSyncRule[];
+}
+
+export interface SchemesSyncRule {
+    /**
+     * The name of the source table (points to current table).
+     */
+    SourceTable: string;
+    /**
+     * The field ID in the source table that points to the current table.
+     */
+    SourceFieldID: string;
+    /**
+     * The field ID in the current table that connects SourceTable to it.
+     */
+    TargetFieldID: string;
 }
 
 export type RelationType = 'AddonAPI' | 'NgComponent' | 'Navigate' | 'CPIAddonAPI';
