@@ -34,6 +34,7 @@ export * from './crawler/target';
 export * from './distinct-values';
 export * from './api-field-object';
 export * from './generic-resource';
+export * from './graph-sync-cache';
 export * from './transaction-lines';
 export * from './batch-api-response';
 export * from './user-defined-flows';
