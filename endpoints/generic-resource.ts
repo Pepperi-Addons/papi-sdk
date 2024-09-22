@@ -3,6 +3,8 @@ import {
     AddonAPIAsyncResult,
     AddonData,
     DataImportInput,
+    DistinctValuesBody,
+    DistinctValuesResponse,
     FileExportInput,
     FileImportInput,
     SearchBody,
@@ -41,6 +43,10 @@ export class GenericResourceEndpoint {
 
     async search(body: SearchBody): Promise<SearchData<AddonData>> {
         return await this.service.post(`${this.baseUrl}/search`, body);
+    }
+
+    async distinct_values(body: DistinctValuesBody): Promise<DistinctValuesResponse> {
+        return await this.service.post(`${this.baseUrl}/distinct_values`, body);
     }
 
     import = {
