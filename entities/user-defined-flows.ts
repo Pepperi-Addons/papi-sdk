@@ -6,6 +6,7 @@ export interface FlowParam {
     Description?: string;
     DefaultValue: any;
     Internal: boolean;
+    ObjectStructure?: string;
 }
 
 export interface FlowBaseStep {
