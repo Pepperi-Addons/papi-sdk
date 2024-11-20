@@ -89,3 +89,11 @@ export interface CacheRemoveInput {
     SchemeName: string;
     Keys: string[];
 }
+
+export interface CacheRemoveOutput {
+    Updates: {
+        Key: string;
+        Status: 'Ignore' | 'Remove' | 'Error';
+        Details: string;
+    }[];
+}
