@@ -1,3 +1,5 @@
+import { CacheRemoveOutput } from './sync-cache';
+
 /**
  * Defines a scheme that only exists to define edges.
  *
@@ -57,17 +59,17 @@ export interface CacheEdgeLabelOutput extends CacheEdgeLabelInput {
     Key: string;
 }
 
-export interface CacheEdgesUpdateInput {
-    SourceAddonUUID: string;
-    LabelName: string;
-    Updates: CacheEdge[];
-}
-
 export interface CacheEdge {
     SourceKey: string;
     TargetKey: string;
     ObjectModificationDateTime?: string;
     Hidden?: boolean;
+}
+
+export interface CacheEdgesUpdateInput {
+    SourceAddonUUID: string;
+    LabelName: string;
+    Updates: CacheEdge[];
 }
 
 export interface CacheEdgesUpdateOutput {
@@ -77,3 +79,14 @@ export interface CacheEdgesUpdateOutput {
         Details: string;
     }[];
 }
+
+export interface DeleteEdgesInput {
+    SourceAddonUUID: string;
+    LabelName: string;
+    Edges: {
+        SourceKey: string;
+        TargetKey: string;
+    }[];
+}
+
+export type DeleteEdgesOutput = CacheRemoveOutput;
