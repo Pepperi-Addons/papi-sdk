@@ -109,7 +109,7 @@ To contribute commit your changes to a separate branch, and then create a PR at 
 
 Before submitting your PR make sure:
 - The you have read and are complient with the [Style Guide](#style-guide). 
-That you have tested your changes. See [Debugging](#debugging) on how you can do this without creating a version.
+- That you have tested your changes. See [Debugging](#debugging) on how you can do this without creating a version.
 - That your branch compiles `npm run compile`.
 - That your branch follows this repo's linting guides `npm run lint`.
   You can fix most linting issues by running `npm run fix-lint`. Make sure that these scripts do not return an error or warning.
@@ -133,8 +133,8 @@ should include all the endpoints known properties.
 
 ### Endpoints
 
-#### Fluid API
-The `PapiClient` object is used for all API calls. We chose the [Fluid Interface API Style](https://en.wikipedia.org/wiki/Fluent_interface) for this object. 
+#### Fluent API
+The `PapiClient` object is used for all API calls. We chose the [Fluent Interface API Style](https://en.wikipedia.org/wiki/Fluent_interface) for this object. 
 
 This means that all functionality in the `PapiClient` is done by chaining commands to the object like so: 
 
