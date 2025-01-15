@@ -1,14 +1,27 @@
 // all interfaces are described here:
 // https://apidesign.pepperi.com/sync/open-sync/cache-interface.html
 
+import { GraphSchemeCacheConfiguration } from './graph-sync-cache';
+
 export interface CacheScheme {
     SourceAddonUUID: string;
     SchemeAddonUUID: string;
     SchemeName: string;
-    CacheConfiguration?: any;
-    SyncDataConfiguration?: any;
-    TrackChanges?: boolean;
+    CreationDateTime?: string;
+    /**
+     * Default is ModificationDateTime, value must be a valid ISO DateTime.
+     */
     ModificationDateTimeFieldID?: string;
+    ModificationDateTime?: string;
+    /**
+     * Object that will be sent in the delta, saved and returned as string.
+     */
+    SyncDataConfiguration?: string;
+    /**
+     * Specific cache configuration, defined by each specific cache addon.
+     */
+    CacheConfiguration?: GraphSchemeCacheConfiguration;
+    Hidden?: boolean;
 }
 
 export interface SyncPathData {
