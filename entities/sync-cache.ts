@@ -11,7 +11,7 @@ export interface CacheScheme {
     /**
      * Default is ModificationDateTime, value must be a valid ISO DateTime.
      */
-    ModificationDateTimeFieldID?: string;
+    ModificationFieldID?: string;
     ModificationDateTime?: string;
     /**
      * Object that will be sent in the delta, saved and returned as string.
