@@ -39,6 +39,7 @@ export * from './transaction-lines';
 export * from './batch-api-response';
 export * from './user-defined-flows';
 export * from './user-defined-tables';
+export * from './user-defined-parameters';
 export * from './crawler/crawler-input';
 export * from './crawler/crawler-output';
 export * from './user_defined_collections';
