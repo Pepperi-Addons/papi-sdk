@@ -12,6 +12,7 @@ import {
     SchemesEndpoint,
     GenericResourceEndpoint,
     FlowsEndpoint,
+    GraphCacheEndpoint,
 } from './endpoints';
 import {
     UserDefinedTableMetaData,
@@ -99,6 +100,7 @@ export class PapiClient {
     userDefinedFlows = new FlowsEndpoint(this);
     policies = new Endpoint<PermissionsPolicy>(this, '/policies');
     policyProfiles = new Endpoint<PermissionsProfile>(this, '/policy_profiles');
+    graph_cache = new GraphCacheEndpoint(this);
 
     constructor(private options: PapiClientOptions) {}
 

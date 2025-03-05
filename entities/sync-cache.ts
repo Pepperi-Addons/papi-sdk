@@ -3,10 +3,25 @@
 
 import { GraphSchemeCacheConfiguration } from './graph-sync-cache';
 
-export interface CacheScheme {
+export interface CacheSchemePurgeInput {
     SourceAddonUUID: string;
     SchemeAddonUUID: string;
     SchemeName: string;
+}
+
+export interface CacheSchemePurgeOutput {
+    /**
+     * Legacy - always true
+     */
+    Success: true;
+    /**
+     * True means finished, false means call again
+     */
+    Done: boolean;
+    Count: number;
+}
+
+export interface CacheScheme extends CacheSchemePurgeInput {
     CreationDateTime?: string;
     /**
      * Default is ModificationDateTime, value must be a valid ISO DateTime.
