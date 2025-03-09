@@ -6,7 +6,6 @@ export interface IUserDefinedParameterConfiguration {
     Type: SchemeFieldType;
     DefaultValue?: any;
     Persistency?: boolean;
-    Disabled?: boolean;
 }
 
 export interface IUserDefinedParameterValue {
@@ -22,5 +21,5 @@ export interface IUserDefinedParametersValuesBody {
 }
 
 export const SYSTEM_PARAMETERS: IUserDefinedParameterConfiguration[] = [
-    { Key: 'AccountUUID', Type: 'String', Disabled: true },
+    { Key: 'AccountUUID', Type: 'String' },
 ];
