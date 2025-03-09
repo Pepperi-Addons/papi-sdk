@@ -659,9 +659,9 @@ export class AddonEndpoint extends Endpoint<Addon> {
     };
 
     user_defined_parameters = {
-        get_global_parameters: async (param: NebulusRebuildInput): Promise<AddonAPIAsyncResult> => {
-            const url = `/addons/user_defined_parameters/get_global_parameters`;
-            return await this.service.post(url, param);
+        user_defined_parameters: async (): Promise<AddonAPIAsyncResult> => {
+            const url = `/user_defined_parameters`;
+            return await this.service.get(url);
         },
     };
 }
