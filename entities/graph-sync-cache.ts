@@ -27,7 +27,7 @@ export interface GraphSchemeCacheConfiguration {
 }
 
 export interface GraphSchemeCacheConfigurationProfile {
-    InternalID: number;
+    ProfileID: number;
     /**
      * default is true, if phantom is true this is always false
      */
