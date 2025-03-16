@@ -20,6 +20,4 @@ export interface IUserDefinedParametersValuesBody {
     Parameters: IUserDefinedParameterValue[];
 }
 
-export const SYSTEM_PARAMETERS: IUserDefinedParameterConfiguration[] = [
-    { Key: 'AccountUUID', Type: 'String' },
-];
+export const SYSTEM_PARAMETERS: IUserDefinedParameterConfiguration[] = [{ Key: 'AccountUUID', Type: 'String' }];
