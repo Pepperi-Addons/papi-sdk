@@ -657,4 +657,11 @@ export class AddonEndpoint extends Endpoint<Addon> {
             return await this.service.post(url, param);
         },
     };
+
+    user_defined_parameters = {
+        user_defined_parameters: async (): Promise<AddonAPIAsyncResult> => {
+            const url = `/user_defined_parameters`;
+            return await this.service.get(url);
+        },
+    };
 }
