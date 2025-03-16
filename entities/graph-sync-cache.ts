@@ -1,4 +1,4 @@
-import { CacheRemoveOutput } from './sync-cache';
+import { CacheRemoveOutput, CacheSchemePurgeOutput } from './sync-cache';
 
 /**
  * Defines a scheme that only exists to define edges.
@@ -27,7 +27,7 @@ export interface GraphSchemeCacheConfiguration {
 }
 
 export interface GraphSchemeCacheConfigurationProfile {
-    InternalID: number;
+    ProfileID: number;
     /**
      * default is true, if phantom is true this is always false
      */
@@ -58,6 +58,13 @@ export interface CacheEdgeLabelInput {
 export interface CacheEdgeLabelOutput extends CacheEdgeLabelInput {
     Key: string;
 }
+
+export interface CacheEdgeLabelPurgeInput {
+    SourceAddonUUID: string;
+    LabelName: string;
+}
+
+export type CacheEdgeLabelPurgeOutput = CacheSchemePurgeOutput;
 
 export interface CacheEdge {
     SourceKey: string;
