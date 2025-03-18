@@ -24,7 +24,7 @@ The following are the options when creating the PapiClient object.
 
 `actionUUID`: Sets the `X-Pepperi-ActionID` request header on the API call. 
 
-Sending this parameter will allow tracibility of a single call between services, since the ActionUUID is logged in each service. When a ActionUUID is not provided the recieving API will generate a new one and return it in the `X-Pepperi-ActionID` response header.
+Sending this parameter will allow tracibility of a single call between services, since the ActionUUID is logged in each service. When a ActionUUID is not provided the receiving API will generate a new one and return it in the `X-Pepperi-ActionID` response header.
 
 **BEWARE:** Do **NOT** send this paramater when making an async API call, since the value will be used as the async API's `ActionUUID` which may override an already existing async API.
 
@@ -40,7 +40,7 @@ Used when maked API calls to system endpoints that require addon authentication 
 
 `addonSecretKey`: Sets the `X-Pepperi-SecretKey` request header on the API call.
 
-Used when maked API calls to system endpoints that require addon authentication (eg. some of the ADAL endpoint are blocked to the addon owning the ADAL tables).
+Used when making API calls to system endpoints that require addon authentication (eg. some of the ADAL endpoint are blocked to the addon owning the ADAL tables).
 
 **Beware:** Do not send your addon's secret call to every API call, and surely do not send it to endpoint you do not trust. 
 
@@ -182,7 +182,7 @@ The `iter` function on all endpoints support the same parameters that the `GET` 
 
 etc. See https://developer.pepperi.com/account-resources/apis/get/accounts
 
-When adding such and endpoint inherit one of the base classes `IterableEndpoint` and `Endpoint` to implement your API. 
+When adding such an endpoint inherit one of the base classes `IterableEndpoint` and `Endpoint` to implement your API.
 
 ## Deployment
 This SDK is distributed as a Javascript + types package on npm, under the `@pepperi-addons/papi-sdk` name. 
@@ -190,7 +190,7 @@ This SDK is distributed as a Javascript + types package on npm, under the `@pepp
 When a commit is made to master via direct commit or via PR, there is a Github action that builds the code & publishes it on npm. The bumping on the version need to be done manually, so if a commit is made to the master without the version bump the publish to npm will fail. 
 
 The reason to bump needs to be done manually is: 
-- The master branch is blocked to direct commits, therefore the Github action can't commit the version bump
+- The master branch is blocked to direct commits, therefore the Github action can't commit the version bump.
 - The editor of the changes should know if it is a major, minor or patch. 
 
 ## Versioning
@@ -213,5 +213,5 @@ Run `npm version minor` to increment a minor.
 Run `npm version major` to increment a major. You probably shouldn't do this if you are not sure.
 
 ## Debugging
-To locally test your changes, run `npm pack`. Then run `npm install <path_to_local_papi_sdk>` in the project you want to test the papi-sdk in.
+To locally test your changes run `npm pack`, then run `npm install <path_to_local_papi_sdk>` in the project you want to test the papi-sdk in.
 This reroute the dependency in your `package.json` file to a local version of the `papi-sdk`. Be sure not to commit this change to your `package.json` as it will only work locally.
