@@ -1,14 +1,42 @@
 // all interfaces are described here:
 // https://apidesign.pepperi.com/sync/open-sync/cache-interface.html
 
-export interface CacheScheme {
+import { GraphSchemeCacheConfiguration } from './graph-sync-cache';
+
+export interface CacheSchemePurgeInput {
     SourceAddonUUID: string;
     SchemeAddonUUID: string;
     SchemeName: string;
-    CacheConfiguration?: any;
-    SyncDataConfiguration?: any;
-    TrackChanges?: boolean;
-    ModificationDateTimeFieldID?: string;
+}
+
+export interface CacheSchemePurgeOutput {
+    /**
+     * Legacy - always true
+     */
+    Success: true;
+    /**
+     * True means finished, false means call again
+     */
+    Done: boolean;
+    Count: number;
+}
+
+export interface CacheScheme extends CacheSchemePurgeInput {
+    CreationDateTime?: string;
+    /**
+     * Default is ModificationDateTime, value must be a valid ISO DateTime.
+     */
+    ModificationFieldID?: string;
+    ModificationDateTime?: string;
+    /**
+     * Object that will be sent in the delta, saved and returned as string.
+     */
+    SyncDataConfiguration?: string;
+    /**
+     * Specific cache configuration, defined by each specific cache addon.
+     */
+    CacheConfiguration?: GraphSchemeCacheConfiguration;
+    Hidden?: boolean;
 }
 
 export interface SyncPathData {
@@ -88,4 +116,12 @@ export interface CacheRemoveInput {
     SchemeAddonUUID: string;
     SchemeName: string;
     Keys: string[];
+}
+
+export interface CacheRemoveOutput {
+    Updates: {
+        Key: string;
+        Status: 'Ignore' | 'Remove' | 'Error';
+        Details: string;
+    }[];
 }

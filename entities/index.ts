@@ -41,6 +41,7 @@ export * from './user-defined-flows';
 export * from './user-defined-tables';
 export * from './crawler/crawler-input';
 export * from './crawler/crawler-output';
+export * from './user-defined-parameters';
 export * from './user_defined_collections';
 export * from './permissions-manager/policy';
 export * from './permissions-manager/profile';
