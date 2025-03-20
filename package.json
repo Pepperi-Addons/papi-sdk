@@ -18,7 +18,11 @@
         "node-fetch": "^2.6.0"
     },
     "devDependencies": {
-        "@types/node": "^14.0.4",
+        "@pepperi-addons/addon-infra-sdk": "^2.0.36",
+        "@pepperi-addons/debug-server": "^0.0.39",
+        "@types/aws-lambda": "^8.10.147",
+        "@types/express": "^5.0.0",
+        "@types/node": "^16.18.126",
         "@types/node-fetch": "^2.5.7",
         "@typescript-eslint/eslint-plugin": "^3.3.0",
         "@typescript-eslint/parser": "^3.3.0",
@@ -26,7 +30,7 @@
         "eslint-config-prettier": "^6.11.0",
         "eslint-plugin-prettier": "^3.1.4",
         "prettier": "^2.0.5",
-        "typescript": "^3.9.3"
+        "typescript": "^5.8.2"
     },
     "files": [
         "dist/**"

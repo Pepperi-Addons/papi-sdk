@@ -1,3 +1,4 @@
+import { BabylonPapiClient } from './babylon/babylon-papi-client';
 import Endpoint, { IterableEndpoint } from './endpoint';
 import {
     AddonEndpoint,
@@ -41,7 +42,7 @@ import { papi_fetch, getPerformance } from './papi-module';
 
 type HttpMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
-interface PapiClientOptions {
+export interface PapiClientOptions {
     token: string;
     baseURL: string;
     addonUUID?: string;
@@ -101,6 +102,8 @@ export class PapiClient {
     policies = new Endpoint<PermissionsPolicy>(this, '/policies');
     policyProfiles = new Endpoint<PermissionsProfile>(this, '/policy_profiles');
     graph_cache = new GraphCacheEndpoint(this);
+
+    babylon = new BabylonPapiClient(this.options);
 
     constructor(private options: PapiClientOptions) {}
 
